@@ -1,3 +1,6 @@
+@value variables: "../../styles/variables.css";
+@value _menuwidth from variables;
+
 .Sidedrawer {
     position: fixed;
     width: 300px;
@@ -11,17 +14,9 @@
     transition: transform 0.3s ease-out;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: _menuwidth) {
     .Sidedrawer {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 240px;
-        height: 100%;
-        border-right: 1px solid #999;
-        padding: 1rem;
-        transform: translateX(0) !important;
-        box-shadow: none;
+        display: none;
     }
 }
 

@@ -1,0 +1,8 @@
+/* Layout variables */
+
+@value _innerwidth: 760px;
+
+/* Media query breaks */
+
+@value _menuwidth: 500px;
+@value _widescreen: 1200px;

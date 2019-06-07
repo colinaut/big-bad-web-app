@@ -1,3 +1,5 @@
+@value variables: "../../styles/variables.css";
+@value _menuwidth from variables;
 
 .Navbar {
     background: #333;
@@ -7,9 +9,21 @@
     position: sticky;
     top: 0;
     z-index: 100;
+    display: flex;
+    justify-content: space-between;
 }
 .Title {
     margin: 0;
     padding: 17px 0;
     font-size: 20px;
+}
+
+.Nav {
+    display: none;
+}
+
+@media only screen and (min-width: _menuwidth) {
+    .Nav {
+        display: block;
+    }
 }

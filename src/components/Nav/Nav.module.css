@@ -1,4 +1,17 @@
+@value variables: "../../styles/variables.css";
+@value _menuwidth from variables;
+
 .NavList {
- margin: 0;
- padding: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@media (min-width: _menuwidth) {
+    .NavList {
+        flex-direction: row;
+    }
 }

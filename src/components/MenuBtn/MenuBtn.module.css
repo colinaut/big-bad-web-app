@@ -1,3 +1,6 @@
+@value variables: "../../styles/variables.css";
+@value _menuwidth from variables;
+
 .Menubtn {
     font: inherit;
     display: inline-block;
@@ -82,7 +85,7 @@
     transform: rotate(-90deg);
 }
 
-@media only screen and (min-width: 600px) { 
+@media only screen and (min-width: _menuwidth) { 
     .Menubtn {
         display: none;
     }
