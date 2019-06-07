@@ -9,8 +9,6 @@ export const fetchBlog = () => {
     return dispatch => {
         return axios.get(blogPosts)
             .then(response => {
-                // Dispatch another action
-                // to consume data
                 dispatch(fetchBlogSuccess(response.data))
             })
             .catch(error => {

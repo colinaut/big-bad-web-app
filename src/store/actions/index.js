@@ -1,5 +1,5 @@
 export {fetchBlog,fetchBlogSuccess} from './blog';
 
-export {auth} from './auth';
+export {auth,checkLocalStorageAuth} from './auth';
 
-export {fetchEvents} from './events';
+export {fetchEvents,checkLocalStorageEvents} from './events';

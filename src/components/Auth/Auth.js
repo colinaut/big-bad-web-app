@@ -64,8 +64,9 @@ const Auth = props => {
       config: controls[key]
     })
   }
-
-  return (
+  if (props.authToken) {
+    return null
+  } else return (
     <div className={styles.Auth}>
       <form onSubmit={submitHandler}>
         {formFields.map((formElement) => 
@@ -85,10 +86,15 @@ const Auth = props => {
   )
 }
 
+const mapStateToProps = state => {
+  return {
+    authToken: state.token
+  }
+}
 const mapDispatchToProps = dispatch => {
   return {
     onAuth: (login, password) => dispatch(actions.auth(login, password))
   }
 }
 
-export default connect(null,mapDispatchToProps)(Auth)
+export default connect(mapStateToProps,mapDispatchToProps)(Auth)
