@@ -10,10 +10,10 @@ export const authStart = () => {
     }
 }
 
-export const authSuccess = (token) => {
+export const authSuccess = (authToken) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
-        token
+        authToken
     }
 }
 
@@ -44,7 +44,6 @@ export const auth = (username, password) => {
 
 export const checkLocalStorageAuth = () => {
     const authToken = localStorage.getItem('authToken')
-    
     return dispatch => {
         if (authToken) {
             dispatch(authSuccess(authToken))

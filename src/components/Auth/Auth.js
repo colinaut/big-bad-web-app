@@ -94,7 +94,8 @@ const Auth = props => {
 
 const mapStateToProps = state => {
   return {
-    authToken: state.token
+    authToken: state.authToken,
+    authStatus: state.authStatus
   }
 }
 const mapDispatchToProps = dispatch => {

@@ -9,7 +9,7 @@ const allEventsUrl = 'https://www.bigbadcon.com:8091/api/events/all'
 export const fetchEvents = () => {
     return (dispatch, getState) => {
         const state = getState();
-        const authData = {headers: {Authorization: (state.token)}}
+        const authData = {headers: {Authorization: (state.authToken)}}
         return axios.get(allEventsUrl, authData)
             .then(response => {
                 const sortedEvents = sortEvents(response.data)

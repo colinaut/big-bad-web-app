@@ -3,8 +3,9 @@ import * as actionTypes from './actions/actionTypes';
 const initialState = {
     blog: [],
     events: [],
-    loginStatus: false,
-    token: ""
+    authStatus: false,
+    authToken: "",
+    error: ""
 }
 
 const reducer = (state = initialState, action) => {
@@ -15,7 +16,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.EVENTS:
             return {...state, events: action.events}
         case actionTypes.AUTH_SUCCESS:
-            return {...state, token: action.token, loginStatus: true}
+            return {...state, authToken: action.authToken, authStatus: true}
         default: return state
     }
 }
