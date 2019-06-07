@@ -1,0 +1,15 @@
+
+.Navbar {
+    background: #333;
+    color: #fff;
+    padding: 0px 0px 15px 20px;
+    height: 55px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.Title {
+    margin: 0;
+    padding: 17px 0;
+    font-size: 20px;
+}

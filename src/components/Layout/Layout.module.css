@@ -1,0 +1,15 @@
+
+.Layout {
+
+}
+
+@media only screen and (min-width: 600px) {
+    .Layout {
+        margin-left: 240px;
+    }
+}
+
+:global(body) {
+    margin: 0;
+    padding: 0;
+}
