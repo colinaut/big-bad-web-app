@@ -4,7 +4,7 @@ import styles from './Events.module.css';
 import * as actions from '../../store/actions';
 import { connect } from 'react-redux';
 import Card from '../Card';
-import EventSummary from '../EventSummary';
+import Event from '../Event';
 import Auth from '../Auth'
 
 const Events = props => {
@@ -12,7 +12,7 @@ const Events = props => {
   const eventsList = props.events.map((event) => {
     return (
       <Card key={event.eventId}>
-        <EventSummary 
+        <Event 
           name={event.eventName} 
           startDate={event.eventStartDate}
           endDate={event.eventEndDate}

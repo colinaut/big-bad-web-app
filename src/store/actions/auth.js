@@ -49,9 +49,6 @@ export const checkLocalStorageAuth = () => {
         if (authToken) {
             dispatch(authSuccess(authToken))
             dispatch(actions.checkLocalStorageEvents())
-            console.log("logged in")
-        } else {
-            console.log("not logged in")
-        }   
+        }  
     }
 }
