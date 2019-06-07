@@ -10,8 +10,8 @@ const Blog = props => {
   
   const posts = props.blog.map((post) => {
           return (
-            <Card>
-              <div className={styles.Post} key={post.id}>
+            <Card key={post.id}>
+              <div className={styles.Post} >
                 <h3 className={styles.PostTitle} dangerouslySetInnerHTML={getMarkup(post.title.rendered)}/>
                 <div className={styles.Excerpt} dangerouslySetInnerHTML={getMarkup(post.excerpt.rendered)}/>
               </div>

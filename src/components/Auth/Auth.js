@@ -11,6 +11,7 @@ const Auth = props => {
 
   const [controls, setControls] = useState({
     username: {
+      order: 0,
       elementType: 'input',
       elementConfig: {
         type: 'username',
@@ -24,6 +25,7 @@ const Auth = props => {
       touched: false
     },
     password: {
+      order: 1,
       elementType: 'input',
       elementConfig: {
         type: 'password',
@@ -64,6 +66,10 @@ const Auth = props => {
       config: controls[key]
     })
   }
+
+  formFields.sort((a,b) => (a.config.order > b.config.order) ? 1 : -1);
+
+
   if (props.authToken) {
     return null
   } else return (
