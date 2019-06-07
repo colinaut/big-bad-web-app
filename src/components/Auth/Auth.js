@@ -2,7 +2,8 @@
 import React, {useState} from 'react'
 import styles from './Auth.module.css';
 import Input from '../Input/Input';
-import Button from '../Button/Button'
+import Button from '../Button/Button';
+import {checkValidity} from '../../util/validation'
 
 const Auth = props => {
 
@@ -35,7 +36,18 @@ const Auth = props => {
     }
   });
 
-  const inputChangedHandler = () => setControls( menuToggle => !menuToggle )
+  const inputChangedHandler = (event, id) => {
+    const updatedControls = {
+      ...controls,
+      [id]: {
+        ...controls[id],
+        value: event.target.value,
+        valid: checkValidity(event.target.value,controls[id].validation),
+        touched: true
+      }
+    }
+    setControls( updatedControls )
+  }
 
   const formFields = []
 
