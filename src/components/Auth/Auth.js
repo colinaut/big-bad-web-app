@@ -3,12 +3,14 @@ import React, {useState} from 'react'
 import styles from './Auth.module.css';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
-import {checkValidity} from '../../util/validation'
+import {checkValidity} from '../../util/validation';
+import * as actions from '../../store/actions';
+import { connect } from 'react-redux';
 
 const Auth = props => {
 
   const [controls, setControls] = useState({
-    email: {
+    username: {
       elementType: 'input',
       elementConfig: {
         type: 'username',
@@ -49,6 +51,11 @@ const Auth = props => {
     setControls( updatedControls )
   }
 
+  const submitHandler = (event) => {
+    event.preventDefault();
+    props.onAuth(controls.username.value,controls.password.value)
+  }
+
   const formFields = []
 
   for (let key in controls) {
@@ -60,7 +67,7 @@ const Auth = props => {
 
   return (
     <div className={styles.Auth}>
-      <form>
+      <form onSubmit={submitHandler}>
         {formFields.map((formElement) => 
           <Input 
             key={formElement.id}
@@ -78,4 +85,10 @@ const Auth = props => {
   )
 }
 
-export default Auth
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuth: (login, password) => dispatch(actions.auth(login, password))
+  }
+}
+
+export default connect(null,mapDispatchToProps)(Auth)

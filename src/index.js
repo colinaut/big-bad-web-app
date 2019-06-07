@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import reducer from './store/reducer';
 import thunk from 'redux-thunk';
 
-import {fetchBlog} from './store/actions'
+import {fetchBlog} from './store/actions/blog'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer, composeEnhancers( applyMiddleware(thunk)));

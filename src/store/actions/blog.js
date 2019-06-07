@@ -1,6 +1,5 @@
 import axios from 'axios'
-// Action types
-export const BLOG = 'BLOG';
+import * as actionTypes from './actionTypes';
 
 // Async Action
 
@@ -24,7 +23,7 @@ export const fetchBlog = () => {
 
 export const fetchBlogSuccess = (blog) => {
     return {
-        type: BLOG,
+        type: actionTypes.BLOG,
         blog
       }
 }

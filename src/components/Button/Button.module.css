@@ -6,13 +6,10 @@
     cursor: pointer;
     font: inherit;
     padding: 10px;
-    margin: 10px;
+    margin: 10px auto;
     font-weight: bold;
-}
-
-.Button:first-of-type {
-    margin-left: 0;
-    padding-left: 0;
+    display: block;
+    width: 5rem;
 }
 
 .Button:disabled {

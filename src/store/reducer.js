@@ -1,14 +1,20 @@
-import {BLOG} from './actions'
+import * as actionTypes from './actions/actionTypes';
 
 const initialState = {
-    blog: [] 
+    blog: [],
+    events: [],
+    token: ""
 }
 
 const reducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case BLOG:
+        case actionTypes.BLOG:
             return {...state, blog: action.blog}
+        case actionTypes.EVENTS:
+            return {...state, events: action.events}
+        case actionTypes.AUTH_SUCCESS:
+            return {...state, token: action.token}
         default: return state
     }
 }
