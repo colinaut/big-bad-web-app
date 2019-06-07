@@ -37,7 +37,7 @@ const DisplayEvents = ({events}) => {
             description={event.postContent}
             categories={event.categories}
             eventOwner={event.eventOwner}
-            metaData={event.metadata}
+            metadata={event.metadata}
             />
         </Card>
       ))}

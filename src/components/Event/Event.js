@@ -10,6 +10,15 @@ const Eventsummary = props => {
 
   function createMarkup(markup) { return {__html: markup}; };
 
+  let metaFields = {}
+
+
+  if (props.metadata) {
+    props.metadata.map((meta)=> {
+      metaFields = {...metaFields, [meta.metaKey]:meta.metaValue}
+    })
+  }
+  
   return (
     <div className={`${styles.Event} ${expand ? styles.Active : null}`} onClick={expandToggle}>
       <div className={styles.Eventsummary} >
