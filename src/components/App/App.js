@@ -9,7 +9,7 @@ import Events from '../Events';
 import Pagewrapper from '../Pagewrapper'
 
 const sections = [
-  {name: "home", title:"Big Bad Con", path: "/", component: <Home/>},
+  {name: "home", title:"Home", path: "/", component: <Home/>},
   {name: "events", title:"Events", path: "/events", component: <Events/>},
   {name: "blog", title:"Blog", path: "/blog", component: <Blog/> }
 ]
