@@ -9,7 +9,7 @@ const Blog = props => {
   
   const posts = props.blog.map((post) => {
           return (
-            <div className={styles.Post}>
+            <div className={styles.Post} key={post.id}>
               <h3 className={styles.PostTitle} dangerouslySetInnerHTML={getMarkup(post.title.rendered)}/>
               <div className={styles.Excerpt} dangerouslySetInnerHTML={getMarkup(post.excerpt.rendered)}/>
             </div>

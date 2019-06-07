@@ -3,11 +3,13 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Layout from '../Layout';
 import Navbar from '../Navbar';
-import Blog from '../Blog'
+import Blog from '../Blog';
+import Games from '../Games';
+import Auth from '../Auth'
 
 const sections = [
-  {name: "home", title:"Big Bad Con", path: "/"},
-  {name: "games", title:"Games", path: "/games"},
+  {name: "home", title:"Big Bad Con", path: "/", component: <Auth/>},
+  {name: "games", title:"Games", path: "/games", component: <Games/>},
   {name: "blog", title:"Blog", path: "/blog", component: <Blog/> }
 ]
 
