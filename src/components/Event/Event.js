@@ -21,10 +21,14 @@ const Event = props => {
   return (
     <div className={`${styles.Event} ${expand ? styles.Active : null}`} onClick={expandToggle}>
       <div className={styles.Eventsummary} >
-        <div className={styles.Title}>{props.name}</div>
-        <div className={styles.System}>{metaFields.System}</div>
-        <div className={styles.DateTime}>{props.startDate}</div>
-        <div className={styles.Time}>{props.startTime} - {props.endTime}</div>
+        <div className={styles.TitleColumn}>
+          <div className={styles.Title}>{props.name}</div>
+          <div className={styles.System}>{metaFields.System}</div>
+        </div>
+        <div className={styles.TimeColumn}>
+          <div className={styles.Date}>{props.startDate}</div>
+          <div className={styles.Time}>{props.startTime} - {props.endTime}</div>
+        </div>
       </div>
       {expand ? <div className={styles.Description} dangerouslySetInnerHTML={getMarkup(props.description)} /> : null}
     </div>
