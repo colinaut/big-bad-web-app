@@ -1,10 +1,10 @@
 
 import React, {useState} from 'react'
 import styles from './Event.module.css';
-import getMarkup from '../../util/getMarkup';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
-import FavStar from '../FavStar'
+import FavStar from '../FavStar';
+import EventDetails from '../EventDetails'
 
 const Event = props => {
 
@@ -18,7 +18,6 @@ const Event = props => {
       return metaFields = {...metaFields, [meta.metaKey]:meta.metaValue}
     })
   }
-  //console.log(metaFields)
 
   const favStarStatus = props.favEvents.includes(props.id)
 
@@ -26,6 +25,30 @@ const Event = props => {
       if (favStarStatus) {
         props.removeFavEvent(props.id);
       } else props.addFavEvent(props.id);
+  }
+
+  const convertTime = (time) => {
+    switch (time) {
+      case "00:00:00":
+        return ""
+      default:
+        return time.substring(0,5)
+    }
+  }
+
+  const convertDate = (date) => {
+    switch (date) {
+      case "2019-10-10":
+        return "Thursday, 10th"
+      case "2019-10-11":
+        return "Friday, 11th"
+      case "2019-10-12":
+        return "Saturday, 12th"
+      case "2019-10-13":
+        return "Sunday, 13th"
+      default:
+          return "Date/Time TBA"
+    }
   }
 
   return (
@@ -36,12 +59,12 @@ const Event = props => {
           <div className={styles.System}>{metaFields.System}</div>
         </div>
         <div className={styles.TimeColumn} onClick={expandToggle}>
-          <div className={styles.Date}>{props.startDate}</div>
-          <div className={styles.Time}>{props.startTime} - {props.endTime}</div>
+          <div className={styles.Date}>{convertDate(props.startDate)}</div>
+          <div className={styles.Time}>{convertTime(props.startTime)} - {convertTime(props.endTime)}</div>
         </div>
-        <div className={styles.FavStar}><FavStar fav={favStarStatus} click={favStarToggle}/></div>
       </div>
-      {expand ? <div className={styles.Description} onClick={expandToggle} dangerouslySetInnerHTML={getMarkup(props.description)} /> : null}
+      <div className={styles.FavStar}><FavStar fav={favStarStatus} click={favStarToggle}/></div>
+      {expand ? <EventDetails click={expandToggle} description={props.description} meta={metaFields} /> : null}
     </div>
 
   )
