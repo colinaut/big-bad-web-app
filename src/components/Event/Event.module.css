@@ -22,14 +22,19 @@
 @media only screen and (min-width: _menuwidth) {
     .Eventsummary {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
     }
     .TitleColumn {
-        flex: 0 1 auto;
+        flex: 1 1 auto;
         padding-right: 1rem;
     }
     .TimeColumn {
         width: 10rem;
         flex: 0 0 auto;
+    }
+    .FavStar {
+        width: 40px;
+        flex: 0 0 auto;
+        text-align: right;
     }
 }

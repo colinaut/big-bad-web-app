@@ -5,7 +5,8 @@ const initialState = {
     events: [],
     authStatus: false,
     authToken: "",
-    error: ""
+    error: "",
+    favEvents: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -17,6 +18,10 @@ const reducer = (state = initialState, action) => {
             return {...state, events: action.events}
         case actionTypes.AUTH_SUCCESS:
             return {...state, authToken: action.authToken, authStatus: true}
+        case actionTypes.ADD_FAV_EVENT:
+            return {...state, favEvents: [...state.favEvents, action.eventId]} //Need to fix
+        case actionTypes.REMOVE_FAV_EVENT:
+            return {...state, favEvents: state.favEvents.filter(item => action.eventId !== item)} //Need to fix
         default: return state
     }
 }

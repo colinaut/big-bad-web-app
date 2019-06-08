@@ -30,16 +30,33 @@ const fetchEventsSuccess = events => {
 }
 
 const sortEvents = events => {
-    return events.sort((a, b) => (a.eventStartDate > b.eventStartDate) ? 1 : (a.eventStartDate === b.eventStartDate) ? ((a.eventStartTime > b.eventStartTime) ? 1 : -1) : -1 )
+    return events.sort((a, b) => (a.eventStartDate > b.eventStartDate) ? 1 : (a.eventStartDate === b.eventStartDate) ? ((a.eventStartTime > b.eventStartTime) ? 1 : ((a.eventName > b.eventName) ? 1 : -1 )) : -1 )
 }
 
 export const checkLocalStorageEvents = () => {
     const events = JSON.parse(localStorage.getItem('events'))
     return dispatch => {
         if (events) {
-            dispatch(fetchEventsSuccess(events))
+            const sortedEvents = sortEvents(events)
+            dispatch(fetchEventsSuccess(sortedEvents))
         } else {
             dispatch(actions.fetchEvents())
         }   
     }
+}
+
+// Favorite Events List
+
+export const addFavEvent = eventId => {
+    return {
+        type: actionTypes.ADD_FAV_EVENT,
+        eventId
+      }
+}
+
+export const removeFavEvent = eventId => {
+    return {
+        type: actionTypes.REMOVE_FAV_EVENT,
+        eventId
+      }
 }
