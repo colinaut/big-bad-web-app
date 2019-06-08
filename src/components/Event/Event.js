@@ -32,7 +32,18 @@ const Event = props => {
       case "00:00:00":
         return ""
       default:
-        return time.substring(0,5)
+        return toStandardTime(time)
+    }
+  }
+
+  function toStandardTime(militaryTime) {
+    militaryTime = militaryTime.split(':');
+    if (militaryTime[0].charAt(0) == 2 || (militaryTime[0].charAt(0) == 1 && militaryTime[0].charAt(1) > 2)) {
+      return (militaryTime[0] - 12) + ':' + militaryTime[1] + 'pm';
+    } else if (militaryTime[0].charAt(0) == 0) {
+      return militaryTime[0].charAt(1) + ':' + militaryTime[1] + 'am';
+    } else {
+      return militaryTime[0] + ':' + militaryTime[1] + 'am';
     }
   }
 
