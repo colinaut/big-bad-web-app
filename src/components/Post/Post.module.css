@@ -1,0 +1,32 @@
+.Post {
+    padding: .5rem;
+    cursor: pointer;
+    transition: 1s all;
+}
+
+.PostTitle {
+    margin: 0 0 .5rem;
+}
+
+.Content img {
+    max-width: 100%;
+    height: auto;
+}
+
+.Content :global(.alignright) {
+    float: left;
+    margin: 0 1rem 1rem 0;
+}
+
+.Closed {
+    height: 100px;
+    overflow: hidden;
+}
+
+.Closed .Content {
+    opacity: .2;
+}
+
+.Open {
+    height: auto;
+}
