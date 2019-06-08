@@ -47,11 +47,37 @@ export const checkLocalStorageEvents = () => {
 
 // Favorite Events List
 
+export const changeFavsAdd = eventId => {
+    return (dispatch, getState) => {
+        const state = getState();
+        localStorage.setItem("favEvents",JSON.stringify([...state.favEvents, eventId]));
+        dispatch(addFavEvent(eventId));
+    }
+}
+
+export const changeFavsRemove = eventId => {
+    return (dispatch, getState) => {
+        const state = getState();
+        localStorage.setItem("favEvents",JSON.stringify([...state.favEvents, eventId]));
+        dispatch(removeFavEvent(eventId));
+    }
+}
+
+export const checkFavsLocalStorage = () => {
+    const favs = JSON.parse(localStorage.getItem('favEvents'))
+    if (favs) {
+        return {
+            type: actionTypes.FAV_EVENT_LOCAL_STORAGE,
+            favs
+        }
+    } 
+}
+
 export const addFavEvent = eventId => {
     return {
         type: actionTypes.ADD_FAV_EVENT,
         eventId
-      }
+    }
 }
 
 export const removeFavEvent = eventId => {

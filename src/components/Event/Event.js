@@ -4,7 +4,8 @@ import styles from './Event.module.css';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
 import FavStar from '../FavStar';
-import EventDetails from '../EventDetails'
+import EventDetails from '../EventDetails';
+import Card from '../Card';
 
 const Event = props => {
 
@@ -62,7 +63,10 @@ const Event = props => {
     }
   }
 
-  return (
+  return (props.filterFavs && !favStarStatus) ? (
+    null
+  ) : (
+    <Card>
     <div className={`${styles.Event} ${expand ? styles.Active : null}`}>
       <div className={styles.Eventsummary}>
         <div className={styles.TitleColumn} onClick={expandToggle}>
@@ -77,7 +81,7 @@ const Event = props => {
       <div className={styles.FavStar}><FavStar fav={favStarStatus} click={favStarToggle}/></div>
       {expand ? <EventDetails click={expandToggle} description={props.description} meta={metaFields} categories={props.categories}/> : null}
     </div>
-
+    </Card>
   )
 }
 
@@ -89,8 +93,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addFavEvent: (id) => dispatch(actions.addFavEvent(id)),
-    removeFavEvent: (id) => dispatch(actions.removeFavEvent(id))
+    addFavEvent: (id) => dispatch(actions.changeFavsAdd(id)),
+    removeFavEvent: (id) => dispatch(actions.changeFavsRemove(id))
   }
 }
 
