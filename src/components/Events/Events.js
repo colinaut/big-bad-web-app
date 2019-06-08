@@ -1,58 +1,32 @@
 
-import React, {useState} from 'react'
+import React from 'react'
 import styles from './Events.module.css';
 import * as actions from '../../store/actions';
 import { connect } from 'react-redux';
-import Card from '../Card';
-import Event from '../Event';
 import Auth from '../Auth';
 import LoadingSpinner from '../LoadingSpinner';
+import EventList from '../EventList';
+import PageTitle from '../PageTitle';
 
 const Events = props => {
 
-  const [filteredEvents, setEvents] = useState(props.events);
-
-  const favsFilterToggle = () => {
-    setEvents(filteredEvents.filter(item => "2257" !== item.eventId))
+  const PageLoad = ({events, auth}) => {
+    if (!auth) {
+      return <Auth/>
+    } else if (events.length === 0) {
+      return <LoadingSpinner />
+    } else {
+      return <EventList events={events} />
+    }
   }
 
-  return props.authStatus ? (
+  return (
     <div className={styles.Events}>
-      <h2>Events</h2>
-    
-      <DisplayEvents events={filteredEvents}/>
-    </div>
-  ) : (
-    <div className={styles.Events}>
-      <h2>Events</h2>
-      <Auth/>
+      <PageTitle title="Events"/>
+      <PageLoad events={props.events} auth={props.authStatus}/>
     </div>
   )
-}
 
-const DisplayEvents = ({events}) => {
-  return events.length ? (
-    <div className={styles.EventsList}>
-      {events.map((event) => (
-        <Card key={event.eventId}>
-          <Event 
-            id={event.eventId}
-            name={event.eventName} 
-            startDate={event.eventStartDate}
-            endDate={event.eventEndDate}
-            startTime={event.eventStartTime}
-            endTime={event.eventEndTime}
-            description={event.postContent}
-            categories={event.categories}
-            eventOwner={event.eventOwner}
-            metadata={event.metadata}
-            />
-        </Card>
-      ))}
-    </div>
-  ) : (
-    <LoadingSpinner />
-  )
 }
 
 const mapStateToProps = state => {

@@ -1,0 +1,11 @@
+
+.Eventsfilter {
+    display: flex;
+}
+.Panel {
+    padding: .5rem;
+}
+.PanelLabel {
+    margin: 0 1rem .5rem 0 ;
+    display: inline-block;
+}

@@ -38,9 +38,9 @@ const Event = props => {
 
   function toStandardTime(militaryTime) {
     militaryTime = militaryTime.split(':');
-    if (militaryTime[0].charAt(0) == 2 || (militaryTime[0].charAt(0) == 1 && militaryTime[0].charAt(1) > 2)) {
+    if (militaryTime[0].charAt(0) === 2 || (militaryTime[0].charAt(0) === 1 && militaryTime[0].charAt(1) > 2)) {
       return (militaryTime[0] - 12) + ':' + militaryTime[1] + 'pm';
-    } else if (militaryTime[0].charAt(0) == 0) {
+    } else if (militaryTime[0].charAt(0) === 0) {
       return militaryTime[0].charAt(1) + ':' + militaryTime[1] + 'am';
     } else {
       return militaryTime[0] + ':' + militaryTime[1] + 'am';

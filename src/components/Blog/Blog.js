@@ -4,13 +4,14 @@ import styles from './Blog.module.css';
 import { connect } from 'react-redux';
 import Card from '../Card';
 import LoadingSpinner from '../LoadingSpinner';
-import Post from '../Post'
+import Post from '../Post';
+import PageTitle from '../PageTitle'
 
 const Blog = props => {
   
   return (
     <div className={styles.Blog}>
-      <h2>Blog</h2>
+      <PageTitle title="Blog"/>
       <DisplayPosts posts={props.blog}/>
     </div>
   )
