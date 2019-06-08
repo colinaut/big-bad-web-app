@@ -75,7 +75,7 @@ const Event = props => {
         </div>
       </div>
       <div className={styles.FavStar}><FavStar fav={favStarStatus} click={favStarToggle}/></div>
-      {expand ? <EventDetails click={expandToggle} description={props.description} meta={metaFields} /> : null}
+      {expand ? <EventDetails click={expandToggle} description={props.description} meta={metaFields} categories={props.categories}/> : null}
     </div>
 
   )

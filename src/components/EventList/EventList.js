@@ -8,7 +8,15 @@ import EventsFilter from '../EventsFilter'
 const Eventlist = props => {
   
   const [eventsFilter, setEventsFilter] = useState(props.events);
-  const filterEvents = () => setEventsFilter( events => !events );
+
+  const filterEvents = (name,filter) => {
+    const newFilter = props.events.filter((event) => {
+      return event[name] === filter;
+    });
+    setEventsFilter( newFilter );
+  }
+
+  const unfilterEvents = () => setEventsFilter( props.events )
 
   const filterButtons = [
     {
@@ -51,23 +59,23 @@ const Eventlist = props => {
       buttons: [
         {
           name:"All",
-          click:()=>console.log("All")
+          click:()=>unfilterEvents()
         },
         {
           name:"Thurs",
-          click:()=>console.log("Thurs")
+          click:()=>filterEvents("eventStartDate","2019-10-10")
         },
         {
           name:"Fri",
-          click:()=>console.log("Fri")
+          click:()=>filterEvents("eventStartDate","2019-10-11")
         },
         {
           name:"Sat",
-          click:()=>console.log("Sat")
+          click:()=>filterEvents("eventStartDate","2019-10-12")
         },
         {
           name:"Sun",
-          click:()=>console.log("Sun")
+          click:()=>filterEvents("eventStartDate","2019-10-13")
         }
       ]
     },

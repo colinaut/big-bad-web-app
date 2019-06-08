@@ -1,6 +1,7 @@
 
 import React from 'react'
 import styles from './EventsFilter.module.css';
+import useToggle from 'react-use-toggle';
 
 const Eventsfilter = props => {
   
@@ -25,6 +26,13 @@ const ButtonPanel = (props) => {
   )
 }
 
-const FilterButton = (props) => <button className={styles.FilterButton} onClick={props.click}>{props.name}</button>
+const FilterButton = (props) => {
+  const [checked, toggle] = useToggle(false);
+  const buttonClick = () => {
+    props.click();
+    //toggle();
+  }
+  return <button className={`${styles.FilterButton} ${checked ? styles.On : styles.Off}`} onClick={buttonClick}>{props.name}</button>
+}
 
 export default Eventsfilter

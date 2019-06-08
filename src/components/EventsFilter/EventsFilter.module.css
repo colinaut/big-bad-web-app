@@ -6,6 +6,14 @@
     padding: .5rem;
 }
 .PanelLabel {
-    margin: 0 1rem .5rem 0 ;
+    margin: 0 .3rem .5rem 0 ;
     display: inline-block;
+    font-size: .9rem;
+}
+
+.FilterButton {
+    font-size: .9rem;
+}
+.FilterButton.On {
+    background: green;
 }
