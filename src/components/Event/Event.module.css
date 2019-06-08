@@ -7,36 +7,39 @@
     cursor: pointer;
 }
 .Eventsummary {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
+
 }
 
 .Active {
     background: #eee;
 }
-
-.Title {
+.Title { 
     font-weight: 700;
-    flex: 1 1 auto;
-    padding-right: 1rem;
-}
-
-.Date {
-    width: 7rem;
-    flex: 0 0 auto;
-    padding-right: 1rem;
-}
-
-.Time {
-    width: 10rem;
-    flex: 0 0 auto;
 }
 .Description {
     margin: 1rem 0 0;
 }
 @media only screen and (min-width: _menuwidth) {
     .Eventsummary {
-        flex-direction: row;
+        display: grid;
+        grid-template-columns: auto 15rem;
+        grid-template-rows: auto;
+        grid-template-areas: 
+        "title date"
+        "system time";
+    }
+    .Title {
+        grid-area: title;
+        padding-right: 1rem;
+    }
+    .System {
+        grid-area: system;
+        padding-right: 1rem;
+    }
+    .Date {
+        grid-area: date;
+    }
+    .Time {
+        grid-area: time;
     }
 }

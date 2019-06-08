@@ -1,35 +1,35 @@
 
 import React, {useState} from 'react'
 import styles from './Event.module.css';
+import getMarkup from '../../util/getMarkup';
 
-const Eventsummary = props => {
+const Event = props => {
 
   const [expand, setExpand] = useState(false);
 
-  const expandToggle = () => setExpand( expand => !expand )
-
-  function createMarkup(markup) { return {__html: markup}; };
+  const expandToggle = () => setExpand( expand => !expand );
 
   let metaFields = {}
 
-
   if (props.metadata) {
     props.metadata.map((meta)=> {
-      metaFields = {...metaFields, [meta.metaKey]:meta.metaValue}
+      return metaFields = {...metaFields, [meta.metaKey]:meta.metaValue}
     })
   }
-  
+  console.log(metaFields)
+
   return (
     <div className={`${styles.Event} ${expand ? styles.Active : null}`} onClick={expandToggle}>
       <div className={styles.Eventsummary} >
         <div className={styles.Title}>{props.name}</div>
-        <div className={styles.Date}>{props.startDate}</div>
+        <div className={styles.System}>{metaFields.System}</div>
+        <div className={styles.DateTime}>{props.startDate}</div>
         <div className={styles.Time}>{props.startTime} - {props.endTime}</div>
       </div>
-      {expand ? <div className={styles.Description} dangerouslySetInnerHTML={createMarkup(props.description)} /> : null}
+      {expand ? <div className={styles.Description} dangerouslySetInnerHTML={getMarkup(props.description)} /> : null}
     </div>
 
   )
 }
 
-export default Eventsummary
+export default Event
