@@ -14,7 +14,7 @@ const store = createStore(reducer, composeEnhancers( applyMiddleware(thunk)));
 
 store.dispatch(fetchBlog());
 store.dispatch(checkLocalStorageAuth());
-store.dispatch(checkFavsLocalStorage());
+
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
