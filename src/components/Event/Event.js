@@ -34,7 +34,7 @@ const Event = props => {
       case "00:00:00":
         return ""
       default:
-        return moment(time,"HH:mm:ss").format("h:mm a")
+        return moment(time,"HH:mm:ss").format("h:mma")
     }
   }
 
