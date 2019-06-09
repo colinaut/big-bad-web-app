@@ -30,7 +30,6 @@ const fetchEventsSuccess = events => {
 }
 
 const sortEvents = events => {
-    console.log(events)
     return events.sort((a, b) => {
         if (a.eventStartDate > b.eventStartDate) {
             return 1
