@@ -7,13 +7,14 @@ import * as serviceWorker from './serviceWorker';
 import reducer from './store/reducer';
 import thunk from 'redux-thunk';
 
-import {fetchBlog,checkLocalStorageAuth} from './store/actions/'
+import {fetchBlog,checkLocalStorageAuth,checkFavsLocalStorage} from './store/actions/'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer, composeEnhancers( applyMiddleware(thunk)));
 
 store.dispatch(fetchBlog());
 store.dispatch(checkLocalStorageAuth());
+store.dispatch(checkFavsLocalStorage());
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 

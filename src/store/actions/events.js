@@ -65,12 +65,13 @@ export const changeFavsRemove = eventId => {
 
 export const checkFavsLocalStorage = () => {
     const favs = JSON.parse(localStorage.getItem('favEvents'))
-    if (favs) {
-        return {
-            type: actionTypes.FAV_EVENT_LOCAL_STORAGE,
-            favs
-        }
-    } 
+    if (favs) {return dispatch => dispatch(favEventLocalStorage(favs))}
+}
+export const favEventLocalStorage = favs => {
+    return {
+        type: actionTypes.FAV_EVENT_LOCAL_STORAGE,
+        favs
+    }
 }
 
 export const addFavEvent = eventId => {

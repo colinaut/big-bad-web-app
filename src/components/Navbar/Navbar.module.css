@@ -10,7 +10,6 @@
     top: 0;
     z-index: 100;
     display: flex;
-    justify-content: space-between;
 }
 .Title {
     margin: 0;
@@ -18,12 +17,31 @@
     font-size: 20px;
 }
 
-.Nav {
+.NavWrapper {
     display: none;
 }
 
+.LogoWrapper {
+    flex: 1 1 auto;
+    min-width: 8rem;
+}
+.LogoutWrapper {
+    flex: 2 1 auto;
+}
+
+.LogoutButton {
+    background: #444;
+    padding: .2rem .4rem .4rem .4rem;
+    border: 1px solid #aaa;
+    color: #fff;
+    margin: .9rem 3rem .5rem 1rem;
+    cursor: pointer;
+    font-size: .9rem;
+}
+
 @media only screen and (min-width: _menuwidth) {
-    .Nav {
+    .NavWrapper {
         display: block;
+        padding-right: 1rem;
     }
 }

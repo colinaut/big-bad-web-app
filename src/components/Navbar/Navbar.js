@@ -1,4 +1,6 @@
-import React, {useState, Fragment} from 'react'
+import React, {useState, Fragment} from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions';
 import styles from './Navbar.module.css';
 import MenuBtn from '../MenuBtn';
 import Slidedrawer from '../Sidedrawer';
@@ -13,13 +15,14 @@ const Navbar = props => {
   return (
     <Fragment>
       <div className={styles.Navbar}>
-        <div className={styles.Logo}>
+        <div className={styles.LogoWrapper}>
           <h1 className={styles.Title}>{props.title}</h1>
         </div>
-        <div className={styles.Nav}>
+        {props.authStatus ? <div className={styles.LogoutWrapper}><button className={styles.LogoutButton} onClick={props.logout}>Logout</button></div> : null}
+        <div className={styles.NavWrapper}>
           <Nav sections={props.sections}/>
         </div>
-        <div className={styles.Hamburger}>
+        <div className={styles.HamburgerWrapper}>
           <MenuBtn click={toggleMenu} active={menuToggle} anim="Squeeze" />
         </div>
       </div>
@@ -28,4 +31,16 @@ const Navbar = props => {
   )
 }
 
-export default Navbar
+const mapStateToProps = state => {
+  return {
+      authStatus: state.authStatus
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: () => dispatch(actions.logout())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

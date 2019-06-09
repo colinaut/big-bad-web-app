@@ -18,6 +18,8 @@ const reducer = (state = initialState, action) => {
             return {...state, events: action.events}
         case actionTypes.AUTH_SUCCESS:
             return {...state, authToken: action.authToken, authStatus: true}
+        case actionTypes.AUTH_LOGOUT:
+            return {...state, authToken: "", authStatus: false}
         case actionTypes.FAV_EVENT_LOCAL_STORAGE:
             return {...state, favEvents: action.favs}
         case actionTypes.ADD_FAV_EVENT:

@@ -51,3 +51,18 @@ export const checkLocalStorageAuth = () => {
         }  
     }
 }
+
+export const logout = () => {
+    localStorage.removeItem("authToken")
+    localStorage.removeItem("events")
+    return dispatch => {
+        dispatch(authLogout())
+    }
+}
+
+export const authLogout = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT,
+    }
+}
+
