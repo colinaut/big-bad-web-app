@@ -63,26 +63,37 @@ const Event = props => {
     }
   }
 
-  return (props.filterFavs && !favStarStatus) ? (
-    null
-  ) : (
-    <Card>
-    <div className={`${styles.Event} ${expand ? styles.Active : null}`}>
-      <div className={styles.Eventsummary}>
-        <div className={styles.TitleColumn} onClick={expandToggle}>
-          <div className={styles.Title}>{props.name}</div>
-          <div className={styles.System}>{metaFields.System}</div>
+  const categoriesSlugArray = props.categories.map((cat) => { return cat.categorySlug })
+
+  const displayEvent = () => {
+    if (props.filters.favs && !favStarStatus) return false;
+    if (props.filters.days !== "all" && props.filters.days !== props.startDate) return false;
+    if (props.filters.categories !== "all" && !categoriesSlugArray.includes(props.filters.categories)) return false;
+    return true;
+  }
+
+  
+
+  if (displayEvent()) {
+    return (
+      <Card>
+        <div className={`${styles.Event} ${expand ? styles.Active : null}`}>
+          <div className={styles.Eventsummary}>
+            <div className={styles.TitleColumn} onClick={expandToggle}>
+              <div className={styles.Title}>{props.name}</div>
+              <div className={styles.System}>{metaFields.System}</div>
+            </div>
+            <div className={styles.TimeColumn} onClick={expandToggle}>
+              <div className={styles.Date}>{convertDate(props.startDate)}</div>
+              <div className={styles.Time}>{convertTime(props.startTime)} - {convertTime(props.endTime)}</div>
+            </div>
+          </div>
+          <div className={styles.FavStar}><FavStar fav={favStarStatus} click={favStarToggle}/></div>
+          {expand ? <EventDetails click={expandToggle} description={props.description} meta={metaFields} categories={props.categories}/> : null}
         </div>
-        <div className={styles.TimeColumn} onClick={expandToggle}>
-          <div className={styles.Date}>{convertDate(props.startDate)}</div>
-          <div className={styles.Time}>{convertTime(props.startTime)} - {convertTime(props.endTime)}</div>
-        </div>
-      </div>
-      <div className={styles.FavStar}><FavStar fav={favStarStatus} click={favStarToggle}/></div>
-      {expand ? <EventDetails click={expandToggle} description={props.description} meta={metaFields} categories={props.categories}/> : null}
-    </div>
-    </Card>
-  )
+      </Card>
+    )
+  } else return null
 }
 
 const mapStateToProps = state => {
