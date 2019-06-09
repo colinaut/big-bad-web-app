@@ -30,7 +30,21 @@ const fetchEventsSuccess = events => {
 }
 
 const sortEvents = events => {
-    return events.sort((a, b) => (a.eventStartDate > b.eventStartDate) ? 1 : (a.eventStartDate === b.eventStartDate) ? ((a.eventStartTime > b.eventStartTime) ? 1 : ((a.eventName > b.eventName) ? 1 : -1 )) : -1 )
+    console.log(events)
+    return events.sort((a, b) => {
+        if (a.eventStartDate > b.eventStartDate) {
+            return 1
+        } else if (a.eventStartDate === b.eventStartDate) {
+            if (a.eventStartTime > b.eventStartTime) {
+                return 1
+            } else if (a.eventStartTime === b.eventStartTime) {
+                if (a.eventName > b.eventName) {
+                    return 1
+                } else {return -1}
+            } else {return -1}
+        } else {return -1}
+
+    }) 
 }
 
 export const checkLocalStorageEvents = () => {
