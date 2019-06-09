@@ -6,6 +6,7 @@ import * as actions from '../../store/actions';
 import FavStar from '../FavStar';
 import EventDetails from '../EventDetails';
 import Card from '../Card';
+import moment from 'moment';
 
 const Event = props => {
 
@@ -33,18 +34,7 @@ const Event = props => {
       case "00:00:00":
         return ""
       default:
-        return toStandardTime(time)
-    }
-  }
-
-  function toStandardTime(militaryTime) {
-    militaryTime = militaryTime.split(':');
-    if (militaryTime[0].charAt(0) === 2 || (militaryTime[0].charAt(0) === 1 && militaryTime[0].charAt(1) > 2)) {
-      return (militaryTime[0] - 12) + ':' + militaryTime[1] + 'pm';
-    } else if (militaryTime[0].charAt(0) === 0) {
-      return militaryTime[0].charAt(1) + ':' + militaryTime[1] + 'am';
-    } else {
-      return militaryTime[0] + ':' + militaryTime[1] + 'am';
+        return moment(time,"HH:mm:ss").format("h:mm a")
     }
   }
 
@@ -72,7 +62,6 @@ const Event = props => {
     return true;
   }
 
-  
 
   if (displayEvent()) {
     return (
