@@ -1,6 +1,7 @@
 import axios from 'axios'
 import * as actionTypes from './actionTypes';
 import * as actions from '../../store/actions';
+import getAPIurl from '../../util/getAPIurl'
 
 // Auth 
 
@@ -31,7 +32,7 @@ export const auth = (username, password) => {
             "username": username,
             "password": password
         }
-        axios.post('https://www.bigbadcon.com:8091/api/login',authData)
+        axios.post(getAPIurl("login"),authData)
         .then(response => {
             const authToken = response.headers.authorization
             localStorage.setItem('authToken',authToken)

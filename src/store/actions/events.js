@@ -1,16 +1,15 @@
 import axios from 'axios'
 import * as actionTypes from './actionTypes';
 import * as actions from '../../store/actions';
+import getAPIurl from '../../util/getAPIurl'        
 
 // Async Action
-
-const allEventsUrl = 'https://www.bigbadcon.com:8091/api/events/all'
 
 export const fetchEvents = () => {
     return (dispatch, getState) => {
         const state = getState();
         const authData = {headers: {Authorization: (state.authToken)}}
-        return axios.get(allEventsUrl, authData)
+        return axios.get(getAPIurl("events"), authData)
             .then(response => {
                 const sortedEvents = sortEvents(response.data)
                 localStorage.setItem("events",JSON.stringify(sortedEvents))

@@ -129,7 +129,6 @@ const Eventlist = props => {
       }
     }))
   }
-  console.log(currentFilters)
 
   const filterCategories = (filter) => {
     setCurrentFilters({...currentFilters, categories:filter});

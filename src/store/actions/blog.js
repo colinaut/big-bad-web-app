@@ -1,13 +1,12 @@
 import axios from 'axios'
 import * as actionTypes from './actionTypes';
+import getAPIurl from '../../util/getAPIurl'
 
 // Async Action
 
-const blogPosts = 'https://bigbadcon.com/wp-json/wp/v2/posts'
-
 export const fetchBlog = () => {
     return dispatch => {
-        return axios.get(blogPosts)
+        return axios.get(getAPIurl("posts"))
             .then(response => {
                 dispatch(fetchBlogSuccess(response.data))
             })
