@@ -69,7 +69,6 @@ const Auth = props => {
 
   formFields.sort((a,b) => (a.config.order > b.config.order) ? 1 : -1);
 
-
   if (props.authToken) {
     return null
   } else return (

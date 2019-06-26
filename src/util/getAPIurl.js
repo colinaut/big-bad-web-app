@@ -1,24 +1,18 @@
-const isProdrodution = true; //set to true to use bigbadcon.com
+const isProdution = true; //set to true to use bigbadcon.com
 
 const getAPIurl = (type) => {
-    const baseurl = isProdrodution? "https://www.bigbadcon.com" : "http://www.logictwine.com"
-    let url = "";
+    const eventAPIurl = isProdution? "https://www.bigbadcon.com:8091/api/" : "http://www.logictwine.com:8092/"
 
     switch(type){
         case "posts":
-            url = "/wp-json/wp/v2/posts";
-            break;
+            return 'https://www.bigbadcon.com/wp-json/wp/v2/posts'; //only set up to connect to BBC for blog posts at the moment
         case "events":
-            url = ":8091/api/events/all";
-            break;
+            return eventAPIurl + '/events/all';
         case "login":
-            url = ":8091/api/login";
-            break;
+            return eventAPIurl + '/login';
         default:
-            url = "";
+            return false;
     }
-
-    return baseurl + url
 }
 
 export default getAPIurl
