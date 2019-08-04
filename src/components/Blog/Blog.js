@@ -1,14 +1,23 @@
 
-import React from 'react'
-import styles from './Blog.module.css';
 import { connect } from 'react-redux';
+import React, {useEffect} from 'react'
+
+import * as actions from '../../store/actions';
 import Card from '../Card';
 import LoadingSpinner from '../LoadingSpinner';
+import PageTitle from '../PageTitle';
 import Post from '../Post';
-import PageTitle from '../PageTitle'
+
+import styles from './Blog.module.css';
 
 const Blog = props => {
   
+  const {blog,fetchBlog} = props;
+
+  useEffect(()=>{
+    if (!blog) {fetchBlog()}
+  },[blog,fetchBlog])
+
   return (
     <div className={styles.Blog}>
       <PageTitle>Blog</PageTitle>
@@ -43,4 +52,10 @@ const mapStateToProps = ({blog}) => {
   }
 }
 
-export default connect( mapStateToProps )(Blog)
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchBlog: () => dispatch(actions.fetchBlog())
+  }
+}
+
+export default connect( mapStateToProps,mapDispatchToProps )(Blog)

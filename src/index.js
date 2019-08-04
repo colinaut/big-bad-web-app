@@ -7,10 +7,6 @@ import * as serviceWorker from './serviceWorker';
 import { PersistGate } from 'redux-persist/integration/react'
 import {Provider} from 'react-redux';
 import {store,persistor} from './store/store'
-import * as actions from './store/actions/'
-
-store.dispatch(actions.fetchBlog());
-store.dispatch(actions.fetchEventsPublic())
 
 ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><App /></PersistGate></Provider>, document.getElementById('root'));
 
