@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as actionTypes from './actionTypes';
 import * as actions from '../../store/actions';
-import getAPIurl from '../../util/getAPIurl'
+import * as APIurl from '../../util/APIurl';  
 
 // Auth 
 
@@ -32,7 +32,7 @@ export const auth = (username, password) => {
             "username": username,
             "password": password
         }
-        axios.post(getAPIurl("login"),authData)
+        axios.post(APIurl.getUrl(APIurl.LOGIN),authData)
         .then(response => {
             const authToken = response.headers.authorization
             localStorage.setItem('authToken',authToken)

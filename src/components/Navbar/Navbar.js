@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { Link } from "react-router-dom";
 import React, {Fragment} from 'react';
 import useToggle from 'react-use-toggle';
 
@@ -25,7 +26,7 @@ const Navbar = props => {
     <Fragment>
       <div className={styles.Navbar}>
         <div className={styles.LogoWrapper}>
-          <img className={styles.LogoImg} src={logo} alt='Big Bad Con'/>
+          <Link to='/'><img className={styles.LogoImg} src={logo} alt='Big Bad Con'/></Link>
         </div>
         <div className={styles.Login}>
           {props.authStatus ? <Button style={{float:'left'}} clicked={props.logout}>Logout</Button> : <Button style={{float:'left'}} clicked={toggleLogin}>Login</Button> }

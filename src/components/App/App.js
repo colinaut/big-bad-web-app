@@ -9,7 +9,6 @@ import Events from '../Events';
 import Pagewrapper from '../Pagewrapper'
 
 const sections = [
-  {name: "home", title:"Home", path: "/", component: <Home/>},
   {name: "events", title:"Events", path: "/events", component: <Events/>},
   {name: "blog", title:"Blog", path: "/blog", component: <Blog/> }
 ]
@@ -26,6 +25,7 @@ const App = props => {
       <Navbar sections={sections} />
       <Pagewrapper>
         <Switch>
+          <Route path='/' exact><Home/></Route>
           {routes}
         </Switch>
       </Pagewrapper> 

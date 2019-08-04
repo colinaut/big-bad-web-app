@@ -1,12 +1,25 @@
 import axios from 'axios'
 import * as actionTypes from './actionTypes';
-import getAPIurl from '../../util/getAPIurl';     
+import * as APIurl from '../../util/APIurl';  
+import unixTime from 'unix-time';
 
 // Async Action
 
 export const fetchEventsPublic = () => {
     return (dispatch) => {
-        return axios.get(getAPIurl("events all public"))
+        return axios.get(APIurl.getUrl(APIurl.EVENTS_ALL_PUBLIC))
+            .then(response => {
+                const sortedEvents = sortEvents(response.data)
+                dispatch(fetchEventsPublicSuccess(sortedEvents))
+            })
+            .catch(error => {
+                throw(error);
+            });
+    }
+}
+export const fetchEventsSincePublic = () => {
+    return (dispatch) => {
+        return axios.get(APIurl.getUrl(APIurl.EVENTS_SINCE_PUBLIC,{}))
             .then(response => {
                 const sortedEvents = sortEvents(response.data)
                 dispatch(fetchEventsPublicSuccess(sortedEvents))
@@ -20,7 +33,8 @@ export const fetchEventsPublic = () => {
 const fetchEventsPublicSuccess = events => {
     return {
         type: actionTypes.GET_EVENTS_ALL_PUBLIC,
-        events
+        events,
+        epochtime: unixTime(new Date())
       }
 }
 
@@ -28,7 +42,7 @@ export const fetchEvents = () => {
     return (dispatch, getState) => {
         const state = getState();
         const authData = {headers: {Authorization: (state.auth.authToken)}}
-        return axios.get(getAPIurl("events all"), authData)
+        return axios.get(APIurl.getUrl(APIurl.EVENTS_ALL), authData)
             .then(response => {
                 const sortedEvents = sortEvents(response.data)
                 dispatch(fetchEventsSuccess(sortedEvents))
@@ -42,7 +56,8 @@ export const fetchEvents = () => {
 const fetchEventsSuccess = events => {
     return {
         type: actionTypes.GET_EVENTS_ALL,
-        events
+        events,
+        epochtime: unixTime(new Date())
       }
 }
 

@@ -1,12 +1,12 @@
 import axios from 'axios'
 import * as actionTypes from './actionTypes';
-import getAPIurl from '../../util/getAPIurl'
+import * as APIurl from '../../util/APIurl'
 
 // Async Action
 
 export const fetchBlog = () => {
     return dispatch => {
-        return axios.get(getAPIurl("posts"))
+        return axios.get(APIurl.getUrl(APIurl.POSTS))
             .then(response => {
                 dispatch(fetchBlogSuccess(response.data))
             })
