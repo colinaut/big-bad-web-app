@@ -27,8 +27,8 @@ const fetchEventsPublicSuccess = events => {
 export const fetchEvents = () => {
     return (dispatch, getState) => {
         const state = getState();
-        const authData = {headers: {Authorization: (state.authToken)}}
-        return axios.get(getAPIurl("events"), authData)
+        const authData = {headers: {Authorization: (state.auth.authToken)}}
+        return axios.get(getAPIurl("events all"), authData)
             .then(response => {
                 const sortedEvents = sortEvents(response.data)
                 dispatch(fetchEventsSuccess(sortedEvents))

@@ -45,9 +45,9 @@ const Navbar = props => {
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({auth}) => {
   return {
-      authStatus: state.authStatus
+      authStatus: auth.authStatus
   }
 }
 
