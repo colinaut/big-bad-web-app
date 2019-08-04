@@ -1,44 +1,41 @@
-
 import React from 'react'
 import styles from './Events.module.css';
 import * as actions from '../../store/actions';
 import { connect } from 'react-redux';
 import Auth from '../Auth';
-import LoadingSpinner from '../LoadingSpinner';
 import EventList from '../EventList';
 import PageTitle from '../PageTitle';
+import LoadingSpinner from '../LoadingSpinner';
 
 const Events = props => {
 
-  const PageLoad = ({events, auth}) => {
+  const AuthLoad = ({auth}) => {
     if (!auth) {
       return <Auth/>
-    } else if (events.length === 0) {
-      return <LoadingSpinner />
     } else {
-      return <EventList events={events} />
+      return <p>Logged in</p>
     }
   }
 
   return (
     <div className={styles.Events}>
-      <PageTitle title="Events"/>
-      <PageLoad events={props.events} auth={props.authStatus}/>
+      <PageTitle>Events</PageTitle>
+      <AuthLoad events={props.events} auth={props.authStatus}/>
+      {props.events ? <EventList events={props.events} /> : <LoadingSpinner/>}
     </div>
   )
-
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({auth,events}) => {
   return {
-      events: state.events,
-      authStatus: state.authStatus
+      events: events.events,
+      authStatus: auth.authStatus
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchEvents: () => dispatch(actions.fetchEvents())
+    fetchEventsPublic: () => dispatch(actions.fetchEventsPublic())
   }
 }
 

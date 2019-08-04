@@ -1,9 +1,28 @@
 import axios from 'axios'
 import * as actionTypes from './actionTypes';
-import * as actions from '../../store/actions';
-import getAPIurl from '../../util/getAPIurl'        
+import getAPIurl from '../../util/getAPIurl';     
 
 // Async Action
+
+export const fetchEventsPublic = () => {
+    return (dispatch) => {
+        return axios.get(getAPIurl("events all public"))
+            .then(response => {
+                const sortedEvents = sortEvents(response.data)
+                dispatch(fetchEventsPublicSuccess(sortedEvents))
+            })
+            .catch(error => {
+                throw(error);
+            });
+    }
+}
+
+const fetchEventsPublicSuccess = events => {
+    return {
+        type: actionTypes.GET_EVENTS_ALL_PUBLIC,
+        events
+      }
+}
 
 export const fetchEvents = () => {
     return (dispatch, getState) => {
@@ -12,7 +31,6 @@ export const fetchEvents = () => {
         return axios.get(getAPIurl("events"), authData)
             .then(response => {
                 const sortedEvents = sortEvents(response.data)
-                localStorage.setItem("events",JSON.stringify(sortedEvents))
                 dispatch(fetchEventsSuccess(sortedEvents))
             })
             .catch(error => {
@@ -23,7 +41,7 @@ export const fetchEvents = () => {
 
 const fetchEventsSuccess = events => {
     return {
-        type: actionTypes.EVENTS,
+        type: actionTypes.GET_EVENTS_ALL,
         events
       }
 }
@@ -45,49 +63,17 @@ const sortEvents = events => {
     }) 
 }
 
-export const checkLocalStorageEvents = () => {
-    const events = JSON.parse(localStorage.getItem('events'))
-    return dispatch => {
-        if (events) {
-            const sortedEvents = sortEvents(events)
-            dispatch(fetchEventsSuccess(sortedEvents))
-        } else {
-            dispatch(actions.fetchEvents())
-        }   
-    }
-}
-
 // Favorite Events List
 
 export const changeFavsAdd = eventId => {
-    return (dispatch, getState) => {
-        const state = getState();
-        localStorage.setItem("favEvents",JSON.stringify([...state.favEvents, eventId]));
+    return (dispatch) => {
         dispatch(addFavEvent(eventId));
     }
 }
 
 export const changeFavsRemove = eventId => {
-    return (dispatch, getState) => {
-        const state = getState();
-        localStorage.setItem("favEvents",JSON.stringify([...state.favEvents, eventId]));
+    return (dispatch) => {
         dispatch(removeFavEvent(eventId));
-    }
-}
-
-export const checkFavsLocalStorage = () => {
-    const favs = JSON.parse(localStorage.getItem('favEvents'))
-    return dispatch => {
-        if (favs) {
-            dispatch(favEventLocalStorage(favs))
-        } 
-    }
-}
-
-export const favEventLocalStorage = favs => {
-    return {
-        type: actionTypes.FAV_EVENT_LOCAL_STORAGE,
-        favs
     }
 }
 

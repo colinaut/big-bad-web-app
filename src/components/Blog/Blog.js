@@ -11,14 +11,14 @@ const Blog = props => {
   
   return (
     <div className={styles.Blog}>
-      <PageTitle title="Blog"/>
+      <PageTitle>Blog</PageTitle>
       <DisplayPosts posts={props.blog}/>
     </div>
   )
 }
 
 const DisplayPosts = ({posts}) => {
-  return posts.length ? (
+  return (posts && posts.length) ? (
     <div className={styles.PostsList}>
       {posts.map((post) => (
         <Card key={post.id}>
@@ -37,12 +37,10 @@ const DisplayPosts = ({posts}) => {
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({blog}) => {
   return {
-      blog: state.blog
+      blog: blog.blog
   }
 }
 
-export default connect(
-  mapStateToProps
-)(Blog)
+export default connect( mapStateToProps )(Blog)

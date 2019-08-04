@@ -20,7 +20,7 @@ export const fetchBlog = () => {
 
 export const fetchBlogSuccess = (blog) => {
     return {
-        type: actionTypes.BLOG,
+        type: actionTypes.GET_BLOG,
         blog
       }
 }

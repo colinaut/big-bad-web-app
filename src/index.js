@@ -1,22 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
-import {createStore, applyMiddleware, compose} from 'redux';
-import {Provider} from 'react-redux';
 import * as serviceWorker from './serviceWorker';
-import reducer from './store/reducer';
-import thunk from 'redux-thunk';
 
-import {fetchBlog,checkLocalStorageAuth,checkFavsLocalStorage} from './store/actions/'
+// Redux
+import { PersistGate } from 'redux-persist/integration/react'
+import {Provider} from 'react-redux';
+import {store,persistor} from './store/store'
+import * as actions from './store/actions/'
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducer, composeEnhancers( applyMiddleware(thunk)));
+store.dispatch(actions.fetchBlog());
+store.dispatch(actions.fetchEventsPublic())
 
-store.dispatch(fetchBlog());
-store.dispatch(checkLocalStorageAuth());
-store.dispatch(checkFavsLocalStorage());
-
-ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><App /></PersistGate></Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -2,7 +2,8 @@
 import React, {useState} from 'react'
 import styles from './EventList.module.css';
 import Event from '../Event';
-import EventsFilter from '../EventsFilter'
+import EventsFilter from '../EventsFilter';
+import uuid from 'react-uuid';
 
 const Eventlist = props => {
 
@@ -183,7 +184,7 @@ const Eventlist = props => {
         {props.events.map((event) => (
           
           <Event 
-            key={event.eventId}
+            key={event.eventId + uuid()}
             id={event.eventId}
             name={event.eventName} 
             startDate={event.eventStartDate}

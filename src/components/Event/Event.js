@@ -85,9 +85,9 @@ const Event = props => {
   } else return null
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({events}) => {
   return {
-      favEvents: state.favEvents
+      favEvents: events.favEvents
   }
 }
 

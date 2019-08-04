@@ -48,7 +48,6 @@ export const checkLocalStorageAuth = () => {
     return dispatch => {
         if (authToken) {
             dispatch(authSuccess(authToken))
-            dispatch(actions.checkLocalStorageEvents())
         }  
     }
 }
