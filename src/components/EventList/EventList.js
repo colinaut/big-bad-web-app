@@ -1,110 +1,33 @@
 
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styles from './EventList.module.css';
 import Event from '../Event';
 import EventsFilter from '../EventsFilter';
 import uuid from 'react-uuid';
+import {transformObjectToArray} from '../../util/helpers';
+import {convertDate} from '../../util/helpers';
 
-const Eventlist = props => {
+const EventList = props => {
 
-  const [currentFilters, setCurrentFilters] = useState({categories: "all",days:"all", favs:false});
+  const {categories, dates} = props;
+  
+  const [currentFilters, setCurrentFilters] = useState({categories: "all",dates:"all", favs:false});
 
   // Setting up all the Filter buttons
-  // Need to double check that the categories are right. Better if I grabbed categories from server.
-  // NOTE: that this is specific for 2019. Likely need to set all the dates up to be dynamic somehow.
-  const [filterButtons, setFilterButtons] = useState([
-    {
-      name: "categories",
+  const [filterButtons, setFilterButtons] = useState({
+    categories: {
       label: "Categories",
       buttons: [
-        {
-          slug:"all",
-          name:"All",
-          click:()=>showAll("categories"),
-          active: true
-        },
-        {
-          slug:"rpg",
-          name:"RPG",
-          click:()=>filterCategories("rpg"),
-          active: false
-        },
-        {
-          slug:"larp",
-          name:"LARP",
-          click:()=>filterCategories("larp"),
-          active: false
-        },
-        {
-          slug:"playtest",
-          name:"Playtest",
-          click:()=>filterCategories("playtest"),
-          active: false
-        },
-        {
-          slug:"all-ages",
-          name:"All Ages",
-          click:()=>filterCategories("all-ages"),
-          active: false
-        },
-        {
-          slug:"board-game",
-          name:"Board/Card Game",
-          click:()=>filterCategories("board-game"),
-          active: false
-        },
-        {
-          slug:"workshop",
-          name:"Workshop",
-          click:()=>filterCategories("workshop"),
-          active: false
-        },
-        {
-          slug:"volunteer-shift",
-          name:"Volunteer Shift",
-          click:()=>filterCategories("volunteer-shift"),
-          active: false
-        }
-      ]
+        { slug:"all", name:"All", click:()=>filterList('categories','all'), active: true }, 
+        ...categories.map(c => { return {slug:c.slug, name: c.name, click: ()=>filterList("categories",c.slug),active:false}})]
     },
-    {
-      name: "days",
+    dates: {
       label: "Day",
       buttons: [
-        {
-          slug: "all",
-          name:"All",
-          click:()=>showAll("days"),
-          active: true
-        },
-        {
-          slug:"2019-10-10",
-          name:"Thu",
-          click:()=>filterEvents("eventStartDate","2019-10-10"),
-          active: false
-        },
-        {
-          slug:"2019-10-11",
-          name:"Fri",
-          click:()=>filterEvents("eventStartDate","2019-10-11"),
-          active: false
-        },
-        {
-          slug:"2019-10-12",
-          name:"Sat",
-          click:()=>filterEvents("eventStartDate","2019-10-12"),
-          active: false
-        },
-        {
-          slug:"2019-10-13",
-          name:"Sun",
-          click:()=>filterEvents("eventStartDate","2019-10-13"),
-          active: false
-        }
-      ]
+        { slug:"all", name:"All", click:()=>filterList('dates','all'), active: true }, 
+        ...dates.map(d => { return {slug:d, name: convertDate(d,'ddd'), click: ()=>filterList("dates",d),active:false}})] 
     },
-    {
-      name: "favs",
+    favs: {
       label: false,
       buttons: [
         {
@@ -115,70 +38,49 @@ const Eventlist = props => {
         }
       ]
     }
-  ]);
+  });
 
-  //NOTE Really should refactor all the filter click code to be more DRY
-  const filterEvents = (name,filter) => {
-    setCurrentFilters({...currentFilters, days:filter});
+  useEffect(()=>{  //TODO: change filter buttons when categories change
+    const categoryButtons = [
+      { slug:"all", name:"All", click:()=>filterList('categories','all'), active: true }, 
+      ...categories.map(c => { return {slug:c.slug, name: c.name, click: ()=>filterList("categories",c.slug),active:false}})] 
 
-    setFilterButtons(prevState => prevState.map(panel => {
-      if (panel.name === "days") {
-        const resetButtons = panel.buttons.map(button => button.slug === filter ? {...button, active: true} : {...button, active: false})
-        return {...panel, buttons: resetButtons}
-      } else {
-        return panel
-      }
-    }))
+    setFilterButtons(prevState => { 
+      return {...prevState, categories:{...prevState.categories, buttons:categoryButtons }}
+    })
+  },[categories])
+
+  useEffect(()=>{  //TODO: change filter buttons when categories change
+    const dateButtons = [
+      { slug:"all", name:"All", click:()=>filterList('dates','all'), active: true }, 
+      ...dates.map(d => { return {slug:d, name: convertDate(d,'ddd'), click: ()=>filterList("dates",d),active:false}})] 
+
+    setFilterButtons(prevState => { 
+      return {...prevState, dates:{...prevState.dates, buttons:dateButtons }}
+    })
+  },[dates])
+
+  const filterList = (type,filter) => {
+    setCurrentFilters(prevState => { return {...prevState, [type]:filter}});
+
+    setFilterButtons(prevState => { 
+      const resetButtons = prevState[type].buttons.map(button => button.slug === filter ? {...button, active: true} : {...button, active: false})
+      return {...prevState, [type]:{...prevState[type], buttons:resetButtons }}
+    });
   }
 
-  const filterCategories = (filter) => {
-    setCurrentFilters({...currentFilters, categories:filter});
-
-    setFilterButtons(prevState => prevState.map(panel => {
-      if (panel.name === "categories") {
-        const resetButtons = panel.buttons.map(button => button.slug === filter ? {...button, active: true} : {...button, active: false})
-        return {...panel, buttons: resetButtons}
-      } else {
-        return panel
-      }
-    }))
-  }
-  
   const filterFavs = () => {
-    setCurrentFilters(prevState => { return {...currentFilters, favs:!prevState.favs}});
-    setFilterButtons(prevState => prevState.map(panel => {
-      if (panel.name === "favs") {
-        const resetButtons = panel.buttons.map((button) => { 
-          if (button.slug === "favs") {
-            return {...button, active: !button.active}
-          } else {
-            return {...button, active: !button.active}
-          }
-        })
-        return {...panel, buttons: resetButtons}
-      } else {
-        return panel
-      }
-    }))
-  }
+    setCurrentFilters(prevState => { return {...prevState, favs:!prevState.favs}});
 
-  const showAll = (panelName) => {
-    setCurrentFilters({...currentFilters, [panelName]:"all"});
- 
-    setFilterButtons(filterButtons => filterButtons.map(panel => {
-        if (panel.name === panelName) {
-          const resetButtons = panel.buttons.map(button => button.slug === "all" ? {...button, active: true} : {...button, active: false})
-          return {...panel, buttons: resetButtons}
-        } else {
-          return panel
-        }
-      })
-    )
+    setFilterButtons(prevState => { 
+      return {...prevState, favs:{...prevState.favs, buttons:[{slug: "favs", name:"Favs", click:() => filterFavs(), active: !prevState.favs.buttons.active}]}}
+    });
+    
   }
   
   return (
     <div className={styles.EventlistWrapper}>
-      <EventsFilter buttonPanel={filterButtons}/>
+      <EventsFilter buttonPanel={transformObjectToArray(filterButtons)}/>
 
       <div className={styles.Eventlist}>
         {props.events.map((event) => (
@@ -203,4 +105,9 @@ const Eventlist = props => {
   )
 }
 
-export default Eventlist
+EventList.defaultProps = {
+  categories: [],
+  dates: []
+}
+
+export default EventList

@@ -11,10 +11,31 @@ export const fetchEventsPublic = () => {
             .then(response => {
                 const sortedEvents = sortEvents(response.data);
                 dispatch(fetchEventsPublicSuccess({events:response.data,sortedEvents:sortedEvents}))
+                dispatch(defineCategories(response.data))
+                dispatch(defineDates(response.data))
             })
             .catch(error => {
                 throw(error);
             });
+    }
+}
+
+const defineCategories = events => {
+    const listofCategories = [].concat(...events.filter((event)=> event.categories.length > 0).map((event) => event.categories))
+    const uniqueCategories = [...new Set(listofCategories.map(x => x.slug)) ].map(slug => {return {slug:slug, name:listofCategories.find( x => x.slug === slug).name}})
+
+    return {
+        type: actionTypes.DEFINE_CATEGORIES,
+        categories: uniqueCategories,
+    }
+}
+
+const defineDates = events => {
+    const uniqueDates = [...new Set(events.map(x => x.eventStartDate)) ]
+
+    return {
+        type: actionTypes.DEFINE_DATES,
+        dates: uniqueDates,
     }
 }
 
@@ -24,7 +45,7 @@ const fetchEventsPublicSuccess = ({events,sortedEvents}) => {
         events: events,
         sortedEvents: sortedEvents,
         epochtime: unixTime(new Date())
-      }
+    }
 }
 
 export const fetchEventsSincePublic = (payload) => {
@@ -58,6 +79,8 @@ export const fetchEvents = () => {
         return axios.get(APIurl.getUrl(APIurl.EVENTS_ALL), authData)
             .then(response => {
                 dispatch(fetchEventsSuccess({events:response.data,sortedEvents:sortEvents(response.data)}))
+                dispatch(defineCategories(response.data))
+                dispatch(defineDates(response.data))
             })
             .catch(error => {
                 throw(error);
@@ -72,6 +95,7 @@ export const fetchEventsSince = (payload) => { // TODO
         const authData = {headers: {Authorization: (state.auth.authToken)}}
         return axios.get(APIurl.getUrl(APIurl.EVENTS_SINCE,{epochtime:epochtime}), authData)
             .then(response => {
+                console.log(response.data)
                 //const sortedEvents = sortEvents(response.data)
                 //dispatch(fetchEventsSuccess(sortedEvents))
             })
@@ -104,6 +128,25 @@ const sortEvents = events => {
             } else {return -1}
         } else {return -1}
     }) 
+}
+
+export const fetchEvent = eventId => {
+    return (dispatch, getState) => {
+        const state = getState();
+        const options = {
+            headers: { Authorization: (state.auth.authToken), eventFind: { id: eventId } },
+            params: { eventFind: { id: eventId } },
+        }
+        return axios.get(APIurl.getUrl(APIurl.EVENTS_FIND_EVENT), options)
+            .then(response => {
+                console.log(response.data)
+                //const sortedEvents = sortEvents(response.data)
+                //dispatch(fetchEventsSuccess(sortedEvents))
+            })
+            .catch(error => {
+                throw(error);
+            });
+    }
 }
 
 // Favorite Events List

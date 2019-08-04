@@ -2,12 +2,12 @@
 import React from 'react'
 import styles from './EventsFilter.module.css';
 
-const Eventsfilter = props => {
+const EventsFilter = props => {
   
   return props.buttonPanel ? (
     <div className={styles.Eventsfilter}>
       {props.buttonPanel.map((panel)=>{
-        return <ButtonPanel panel={panel} key={panel.name}/>
+        return <ButtonPanel panel={panel} key={panel.keyId}/>
       })}
     </div>
   ) : null
@@ -28,4 +28,4 @@ const FilterButton = (props) => {
   return <button className={`${styles.FilterButton} ${props.active ? styles.On : styles.Off} ${props.name === 'Favs' ? styles.Favs : null}`} onClick={props.click}>{props.name}</button>
 }
 
-export default Eventsfilter
+export default EventsFilter

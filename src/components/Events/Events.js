@@ -30,13 +30,15 @@ const Events = props => {
     <div className={styles.Events}>
       <PageTitle>Events</PageTitle>
       <button onClick={props.authStatus ? props.fetchEvents : props.fetchEventsPublic}>Reload Events</button>
-      {props.events ? <EventList events={props.events} /> : <LoadingSpinner/>}
+      {props.events ? <EventList dates={props.dates} categories={props.categories} events={props.events} /> : <LoadingSpinner/>}
     </div>
   )
 }
 
 const mapStateToProps = ({auth,events}) => {
   return {
+      categories: events.categories,
+      dates: events.dates,
       events: events.events,
       epochtimePublic: events.epochtimePublic,
       epochtimeAuth: events.epochtimeAuth,

@@ -8,7 +8,8 @@ export const EVENTS_ME = 'EVENTS_ME';
 export const EVENTS_PAGED = 'EVENTS_PAGED';
 export const EVENTS_PAGED_PUBLIC = 'EVENTS_PAGED_PUBLIC';
 export const EVENTS_SINCE = 'EVENTS_SINCE';
-export const EVENTS_SINCE_PUBLIC = 'EVENTS_SINCE_PUBLIC'
+export const EVENTS_SINCE_PUBLIC = 'EVENTS_SINCE_PUBLIC';
+export const EVENTS_FIND_EVENT = 'EVENTS_FIND_EVENT'
 export const LOGIN = 'LOGIN'
 
 export const getUrl = (type,options) => {
@@ -33,6 +34,8 @@ export const getUrl = (type,options) => {
             return eventAPIurl + 'events/since/' + options.epochtime;
         case EVENTS_SINCE_PUBLIC:
             return eventAPIurl + 'events/since/' + options.epochtime + '/public';
+        case EVENTS_FIND_EVENT:
+            return eventAPIurl + 'events/find/';
         case LOGIN:
             return eventAPIurl + 'login';
         default:
