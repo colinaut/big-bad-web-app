@@ -11,20 +11,20 @@ import styles from './Events.module.css';
 
 const Events = props => {
 
-  const {events,epochtimePublic,epochtimeAuth,authStatus,fetchEventsPublic,fetchEvents} = props;
+  const {events,epochtimePublic,epochtimeAuth,authStatus,fetchEventsPublic,fetchEvents,fetchEventsSince,fetchEventsSincePublic} = props;
 
   const currentTime = unixTime(new Date() - 10) // minus ten seconds so that it doesn't reload instantly
 
   useEffect(()=>{
     if (authStatus) {
-      if (!events) {fetchEvents()}
-      if (epochtimeAuth < currentTime) {fetchEvents()}
+      if (!events || (events && events.length < 1)) {fetchEvents()}
+      if (epochtimeAuth < currentTime) {fetchEventsSince({epochtime:epochtimeAuth})}
     } else {
-      if (!events) {fetchEventsPublic()}
-      if (epochtimePublic < currentTime) {fetchEventsPublic()}
+      if (!events || (events && events.length < 1)) {fetchEventsPublic()}
+      if (epochtimePublic < currentTime) {fetchEventsSincePublic({epochtime:epochtimePublic})}
     }
     
-  },[authStatus,events,fetchEventsPublic,fetchEvents,epochtimeAuth,epochtimePublic,currentTime])
+  },[authStatus,events,fetchEventsPublic,fetchEvents,fetchEventsSince,fetchEventsSincePublic,epochtimeAuth,epochtimePublic,currentTime])
 
   return (
     <div className={styles.Events}>
@@ -46,7 +46,9 @@ const mapStateToProps = ({auth,events}) => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchEventsPublic: () => dispatch(actions.fetchEventsPublic()),
-    fetchEvents: () => dispatch(actions.fetchEvents())
+    fetchEvents: () => dispatch(actions.fetchEvents()),
+    fetchEventsSincePublic: (payload) => dispatch(actions.fetchEventsSincePublic(payload)),
+    fetchEventsSince: (payload) => dispatch(actions.fetchEventsSince(payload))
   }
 }
 

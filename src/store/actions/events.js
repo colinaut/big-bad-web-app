@@ -17,12 +17,23 @@ export const fetchEventsPublic = () => {
             });
     }
 }
-export const fetchEventsSincePublic = () => {
+
+const fetchEventsPublicSuccess = events => {
+    return {
+        type: actionTypes.GET_EVENTS_ALL_PUBLIC,
+        events,
+        epochtime: unixTime(new Date())
+      }
+}
+
+export const fetchEventsSincePublic = (payload) => {
+    const {epochtime} = payload
     return (dispatch) => {
-        return axios.get(APIurl.getUrl(APIurl.EVENTS_SINCE_PUBLIC,{}))
+        return axios.get(APIurl.getUrl(APIurl.EVENTS_SINCE_PUBLIC,{epochtime:epochtime}))
             .then(response => {
-                const sortedEvents = sortEvents(response.data)
-                dispatch(fetchEventsPublicSuccess(sortedEvents))
+                console.log(response.data);
+                //const sortedEvents = sortEvents(response.data)
+                //dispatch(fetchEventsSincePublicSuccess(sortedEvents))
             })
             .catch(error => {
                 throw(error);
@@ -30,7 +41,7 @@ export const fetchEventsSincePublic = () => {
     }
 }
 
-const fetchEventsPublicSuccess = events => {
+const fetchEventsSincePublicSuccess = events => {
     return {
         type: actionTypes.GET_EVENTS_ALL_PUBLIC,
         events,
@@ -46,6 +57,23 @@ export const fetchEvents = () => {
             .then(response => {
                 const sortedEvents = sortEvents(response.data)
                 dispatch(fetchEventsSuccess(sortedEvents))
+            })
+            .catch(error => {
+                throw(error);
+            });
+    }
+}
+
+export const fetchEventsSince = (payload) => { // TODO
+    const {epochtime} = payload
+    return (dispatch, getState) => {
+        const state = getState();
+        const authData = {headers: {Authorization: (state.auth.authToken)}}
+        return axios.get(APIurl.getUrl(APIurl.EVENTS_SINCE,{epochtime:epochtime}), authData)
+            .then(response => {
+                console.log(response.data)
+                //const sortedEvents = sortEvents(response.data)
+                //dispatch(fetchEventsSuccess(sortedEvents))
             })
             .catch(error => {
                 throw(error);
