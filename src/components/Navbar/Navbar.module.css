@@ -25,10 +25,14 @@
     flex: 0 0 auto;
     min-width: 8rem;
 }
-.LogoImg {
+.Logo {
     height: 52px;
     width: auto;
 }
+.Logo path {
+    fill: var(--yellow);
+}
+
 .Login {
     flex: 2 1 auto;
 }

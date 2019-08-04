@@ -1,17 +1,19 @@
 
-import React, {useState} from 'react'
-import styles from './Event.module.css';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions';
-import FavStar from '../FavStar';
-import EventDetails from '../EventDetails';
-import Card from '../Card';
 import moment from 'moment';
+import React from 'react'
+import useToggle from 'react-use-toggle';
+
+import * as actions from '../../store/actions';
+import Card from '../Card';
+import EventDetails from '../EventDetails';
+
+import { ReactComponent as Star } from '../../assets/star.svg';
+import styles from './Event.module.css';
 
 const Event = props => {
 
-  const [expand, setExpand] = useState(false);
-  const expandToggle = () => setExpand( expand => !expand );
+  const [expandToggle, toggleExpand] = useToggle(false);
 
   let metaFields = {}
 
@@ -23,7 +25,9 @@ const Event = props => {
 
   const favStarStatus = props.favEvents.includes(props.id)
 
-  const favStarToggle = () => {
+  const favStarStyle = (props.favEvents.includes(props.id)) ? [styles.FavStar, styles.FavStarActive].join(' ') : styles.FavStar;
+
+  const toggleFavStar = () => {
       if (favStarStatus) {
         props.removeFavEvent(props.id);
       } else props.addFavEvent(props.id);
@@ -66,19 +70,19 @@ const Event = props => {
   if (displayEvent()) {
     return (
       <Card>
-        <div className={`${styles.Event} ${expand ? styles.Active : null}`}>
+        <div className={`${styles.Event} ${expandToggle ? styles.Active : null}`}>
           <div className={styles.Eventsummary}>
-            <div className={styles.TitleColumn} onClick={expandToggle}>
+            <div className={styles.TitleColumn} onClick={toggleExpand}>
               <div className={styles.Title}>{props.name}</div>
               <div className={styles.System}>{metaFields.System}</div>
             </div>
-            <div className={styles.TimeColumn} onClick={expandToggle}>
+            <div className={styles.TimeColumn} onClick={toggleExpand}>
               <div className={styles.Date}>{convertDate(props.startDate)}</div>
               <div className={styles.Time}>{convertTime(props.startTime)} - {convertTime(props.endTime)}</div>
             </div>
           </div>
-          <div className={styles.FavStar}><FavStar fav={favStarStatus} click={favStarToggle}/></div>
-          {expand ? <EventDetails click={expandToggle} gm={props.eventOwner.displayName} description={props.description} meta={metaFields} categories={props.categories}/> : null}
+          <div className={styles.FavStarWrapper}><Star className={favStarStyle} onClick={toggleFavStar} /></div> 
+          {expandToggle ? <EventDetails click={toggleExpand} gm={props.eventOwner.displayName} description={props.description} meta={metaFields} categories={props.categories}/> : null}
         </div>
       </Card>
     )

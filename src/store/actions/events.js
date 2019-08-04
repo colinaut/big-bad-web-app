@@ -72,7 +72,6 @@ export const fetchEventsSince = (payload) => { // TODO
         const authData = {headers: {Authorization: (state.auth.authToken)}}
         return axios.get(APIurl.getUrl(APIurl.EVENTS_SINCE,{epochtime:epochtime}), authData)
             .then(response => {
-                console.log(response.data)
                 //const sortedEvents = sortEvents(response.data)
                 //dispatch(fetchEventsSuccess(sortedEvents))
             })

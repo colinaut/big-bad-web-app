@@ -20,11 +20,17 @@
 .Description {
     margin: 1rem 0 0;
 }
-.FavStar {
+.FavStarWrapper {
     position: absolute;
     top: 5px;
     right: 5px;
 }
+
+.FavStarActive path {
+    fill: var(--yellow);
+    stroke: #000;
+}
+
 @media only screen and (min-width: _menuwidth) {
     .Eventsummary {
         display: flex;

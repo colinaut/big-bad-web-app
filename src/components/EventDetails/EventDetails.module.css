@@ -5,15 +5,14 @@
 }
 .Description {
     padding: 0 1rem;
+    margin-bottom: 1rem;
     font-size: .9rem;
     max-width: 45rem;
 }
-.SafetyTools, .Maturity {
-    margin-top: .5rem;
-}
 
-.Meta {
-    margin-top: 1rem;
+.Meta, .SafetyTools, .Maturity {
+    margin-top: .5rem;
+    font-size: .9rem;
 }
 .Meta span, .SafetyTools span, .Maturity span {
     margin-right: 1rem;

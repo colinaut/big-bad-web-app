@@ -9,7 +9,7 @@ import Button from '../Button';
 import MenuBtn from '../MenuBtn';
 import Nav from '../Nav';
 import Slidedrawer from '../Sidedrawer';
-import logo from '../../assets/Big-Bad-Con-Logo---Horz---yellow.png'
+import { ReactComponent as Logo } from '../../assets/Big-Bad-Con-Logo.svg';
 
 import styles from './Navbar.module.css';
 
@@ -26,7 +26,7 @@ const Navbar = props => {
     <Fragment>
       <div className={styles.Navbar}>
         <div className={styles.LogoWrapper}>
-          <Link to='/'><img className={styles.LogoImg} src={logo} alt='Big Bad Con'/></Link>
+          <Link to='/'><Logo className={styles.Logo} /></Link>
         </div>
         <div className={styles.Login}>
           {props.authStatus ? <Button style={{float:'left'}} clicked={props.logout}>Logout</Button> : <Button style={{float:'left'}} clicked={toggleLogin}>Login</Button> }
