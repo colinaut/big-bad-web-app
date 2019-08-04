@@ -9,8 +9,8 @@ export const fetchEventsPublic = () => {
     return (dispatch) => {
         return axios.get(APIurl.getUrl(APIurl.EVENTS_ALL_PUBLIC))
             .then(response => {
-                const sortedEvents = sortEvents(response.data)
-                dispatch(fetchEventsPublicSuccess(sortedEvents))
+                const sortedEvents = sortEvents(response.data);
+                dispatch(fetchEventsPublicSuccess({events:response.data,sortedEvents:sortedEvents}))
             })
             .catch(error => {
                 throw(error);
@@ -18,10 +18,11 @@ export const fetchEventsPublic = () => {
     }
 }
 
-const fetchEventsPublicSuccess = events => {
+const fetchEventsPublicSuccess = ({events,sortedEvents}) => {
     return {
         type: actionTypes.GET_EVENTS_ALL_PUBLIC,
-        events,
+        events: events,
+        sortedEvents: sortedEvents,
         epochtime: unixTime(new Date())
       }
 }
@@ -41,10 +42,11 @@ export const fetchEventsSincePublic = (payload) => {
     }
 }
 
-const fetchEventsSincePublicSuccess = events => {
+const fetchEventsSincePublicSuccess = ({events,sortedEvents}) => {
     return {
         type: actionTypes.GET_EVENTS_ALL_PUBLIC,
-        events,
+        events: events,
+        sortedEvents: sortedEvents,
         epochtime: unixTime(new Date())
       }
 }
@@ -55,8 +57,7 @@ export const fetchEvents = () => {
         const authData = {headers: {Authorization: (state.auth.authToken)}}
         return axios.get(APIurl.getUrl(APIurl.EVENTS_ALL), authData)
             .then(response => {
-                const sortedEvents = sortEvents(response.data)
-                dispatch(fetchEventsSuccess(sortedEvents))
+                dispatch(fetchEventsSuccess({events:response.data,sortedEvents:sortEvents(response.data)}))
             })
             .catch(error => {
                 throw(error);
@@ -81,10 +82,11 @@ export const fetchEventsSince = (payload) => { // TODO
     }
 }
 
-const fetchEventsSuccess = events => {
+const fetchEventsSuccess = ({events,sortedEvents}) => {
     return {
         type: actionTypes.GET_EVENTS_ALL,
-        events,
+        events: events,
+        sortedEvents: sortedEvents,
         epochtime: unixTime(new Date())
       }
 }
@@ -102,7 +104,6 @@ const sortEvents = events => {
                 } else {return -1}
             } else {return -1}
         } else {return -1}
-
     }) 
 }
 

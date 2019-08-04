@@ -29,6 +29,7 @@ const Events = props => {
   return (
     <div className={styles.Events}>
       <PageTitle>Events</PageTitle>
+      <button onClick={props.authStatus ? props.fetchEvents : props.fetchEventsPublic}>Reload Events</button>
       {props.events ? <EventList events={props.events} /> : <LoadingSpinner/>}
     </div>
   )

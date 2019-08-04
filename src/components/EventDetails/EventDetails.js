@@ -9,10 +9,18 @@ const Eventdetails = props => {
     <div className={styles.Eventdetails} onClick={props.click}>
       <div className={styles.Description} dangerouslySetInnerHTML={getMarkup(props.description)} />
       <div className={styles.Meta}>
-        <span><strong>GM:</strong> {props.meta.GM}</span>
-        <span><strong>Players:</strong> {props.meta.Players}</span>
+        <span><strong>GM:</strong> {props.gm}</span>
+        <span><strong>Players:</strong> {props.meta.Min_Players}-{props.meta.Players}</span>
         <span><strong>Length:</strong> {props.meta.Length} hrs</span>
         <span><strong>Categories:</strong> <Categories categories={props.categories}/></span>
+      </div>
+      <div className={styles.Maturity}>
+        <span><strong>Maturity:</strong> {props.meta.Maturity} </span>
+        <span><strong>GM Age:</strong> {props.meta.gm_age} </span>
+        <span><strong>Player Age:</strong> {props.meta.player_age} </span>
+      </div>
+      <div className={styles.SafetyTools}>
+        <span><strong>Safety Tools:</strong> {props.meta.safety_tools} </span>
       </div>
     </div>
   )
