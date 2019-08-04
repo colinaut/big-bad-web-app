@@ -32,6 +32,7 @@ export const auth = (username, password) => {
             "username": username,
             "password": password
         }
+        console.log(getAPIurl("login"))
         axios.post(getAPIurl("login"),authData)
         .then(response => {
             const authToken = response.headers.authorization

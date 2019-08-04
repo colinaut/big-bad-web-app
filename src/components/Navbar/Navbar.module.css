@@ -22,21 +22,24 @@
 }
 
 .LogoWrapper {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     min-width: 8rem;
 }
-.LogoutWrapper {
+.LogoImg {
+    height: 52px;
+    width: auto;
+}
+.Login {
     flex: 2 1 auto;
 }
 
-.LogoutButton {
-    background: #444;
-    padding: .2rem .4rem .4rem .4rem;
-    border: 1px solid #aaa;
-    color: #fff;
-    margin: .9rem 3rem .5rem 1rem;
-    cursor: pointer;
-    font-size: .9rem;
+.AuthPanel {
+    position: fixed;
+    top: 55px;
+    background: #555;
+    z-index: 99;
+    width: 100%;
+    border: 1px solid #333;
 }
 
 @media only screen and (min-width: _menuwidth) {

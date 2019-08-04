@@ -23,7 +23,7 @@ const App = props => {
   return (
     <Layout>
       <Router>
-      <Navbar sections={sections} title="Big Bad Con"/>
+      <Navbar sections={sections} />
       <Pagewrapper>
         <Switch>
           {routes}

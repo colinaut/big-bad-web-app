@@ -53,9 +53,12 @@ const Auth = props => {
     setControls( updatedControls )
   }
 
+  const {submitCallback = () => {} } = props
+
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onAuth(controls.username.value,controls.password.value)
+    props.onAuth(controls.username.value,controls.password.value);
+    submitCallback();
   }
 
   const formFields = []
@@ -85,7 +88,7 @@ const Auth = props => {
             touched={formElement.config.touched}
             changed={(event) => inputChangedHandler(event, formElement.id)} />
         )}
-        <Button btnType="Success">Login</Button>
+        <Button btnType='White'>Login</Button>
       </form>
     </div>
   )
