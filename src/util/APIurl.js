@@ -9,35 +9,47 @@ export const EVENTS_PAGED = 'EVENTS_PAGED';
 export const EVENTS_PAGED_PUBLIC = 'EVENTS_PAGED_PUBLIC';
 export const EVENTS_SINCE = 'EVENTS_SINCE';
 export const EVENTS_SINCE_PUBLIC = 'EVENTS_SINCE_PUBLIC';
-export const EVENTS_FIND_EVENT = 'EVENTS_FIND_EVENT'
+export const EVENTS_FIND_EVENT = 'EVENTS_FIND_EVENT';
+export const EVENTS_ME_FAV_CREATE = 'EVENTS_ME_FAV_CREATE';
+export const EVENTS_ME_FAV_DELETE = 'EVENTS_ME_FAV_DELETE';
+export const USERS_ME = 'USERS_ME';
+export const USERS_SET_MY_PASSWORD = 'USERS_SET_MY_PASSWORD';
 export const LOGIN = 'LOGIN'
 
 export const getUrl = (type,options) => {
-    const eventAPIurl = isProdution? "https://www.bigbadcon.com:8091/api/" : "https://www.logictwine.com:8091/api/"
+    const baseAPIurl = isProdution? "https://www.bigbadcon.com:8091/api/" : "https://www.logictwine.com:8091/api/"
     
     switch(type){
         case POSTS:
             return 'https://www.bigbadcon.com/wp-json/wp/v2/posts'; //only set up to connect to BBC for blog posts at the moment
         case EVENTS_ALL:
-            return eventAPIurl + 'events/all';
+            return baseAPIurl + 'events/all';
         case EVENTS_ALL_PUBLIC:
-            return eventAPIurl + 'events/all/public';
+            return baseAPIurl + 'events/all/public';
         case EVENTS_CATEGORY:
-            return eventAPIurl + 'events/category/' + options.id;
+            return baseAPIurl + 'events/category/' + options.id;
         case EVENTS_ME:
-            return eventAPIurl + 'events/me';
+            return baseAPIurl + 'events/me';
         case EVENTS_PAGED:
-            return eventAPIurl + 'events/page/' + options.length + '/' + options.offset;
+            return baseAPIurl + 'events/page/' + options.length + '/' + options.offset;
         case EVENTS_PAGED_PUBLIC:
-            return eventAPIurl + 'events/page/public' + options.length + '/' + options.offset;
+            return baseAPIurl + 'events/page/public' + options.length + '/' + options.offset;
         case EVENTS_SINCE:
-            return eventAPIurl + 'events/since/' + options.epochtime;
+            return baseAPIurl + 'events/since/' + options.epochtime;
         case EVENTS_SINCE_PUBLIC:
-            return eventAPIurl + 'events/since/' + options.epochtime + '/public';
+            return baseAPIurl + 'events/since/' + options.epochtime + '/public';
         case EVENTS_FIND_EVENT:
-            return eventAPIurl + 'events/find/';
+            return baseAPIurl + 'events/find/';
+        case EVENTS_ME_FAV_CREATE:
+            return baseAPIurl + 'events/me/favorite/create';
+        case EVENTS_ME_FAV_DELETE:
+            return baseAPIurl + 'events/me/favorite/delete';
+        case USERS_ME:
+            return baseAPIurl + 'users/me';
+        case USERS_SET_MY_PASSWORD:
+            return baseAPIurl + 'users/setMyPassword';
         case LOGIN:
-            return eventAPIurl + 'login';
+            return baseAPIurl + 'login';
         default:
             return false;
     }

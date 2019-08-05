@@ -10,7 +10,7 @@ import {convertDate} from '../../util/helpers';
 const EventList = props => {
 
   const {categories, dates} = props;
-  
+
   const [currentFilters, setCurrentFilters] = useState({categories: "all",dates:"all", favs:false});
 
   // Setting up all the Filter buttons
@@ -27,7 +27,7 @@ const EventList = props => {
         { slug:"all", name:"All", click:()=>filterList('dates','all'), active: true }, 
         ...dates.map(d => { return {slug:d, name: convertDate(d,'ddd'), click: ()=>filterList("dates",d),active:false}})] 
     },
-    favs: {
+    favs: { //TODO only show faves to logged in users
       label: false,
       buttons: [
         {

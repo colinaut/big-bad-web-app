@@ -6,88 +6,60 @@ import {transformArrayToObject} from '../../util/helpers'
 
 // Async Action
 
-export const fetchEventsPublic = () => {
-    return (dispatch) => {
-        return axios.get(APIurl.getUrl(APIurl.EVENTS_ALL_PUBLIC))
-            .then(response => {
-                const eventsById = transformArrayToObject(response.data,'eventId')
-                dispatch(fetchEventsPublicSuccess({events:sortEvents(response.data),eventsById:eventsById}))
-                dispatch(defineCategories(response.data))
-                dispatch(defineDates(response.data))
-            })
-            .catch(error => {
-                throw(error);
-            });
-    }
-}
-
-const defineCategories = events => {
-    const listofCategories = [].concat(...events.filter((event)=> event.categories.length > 0).map((event) => event.categories))
-    const uniqueCategories = [...new Set(listofCategories.map(x => x.slug)) ].map(slug => {return {slug:slug, name:listofCategories.find( x => x.slug === slug).name}})
-
-    return {
-        type: actionTypes.DEFINE_CATEGORIES,
-        categories: uniqueCategories,
-    }
-}
-
-const defineDates = events => {
-    const uniqueDates = [...new Set(events.map(x => x.eventStartDate)) ]
-
-    return {
-        type: actionTypes.DEFINE_DATES,
-        dates: uniqueDates,
-    }
-}
-
-const fetchEventsPublicSuccess = ({events,eventsById}) => {
-    return {
-        type: actionTypes.GET_EVENTS_ALL_PUBLIC,
-        events,
-        eventsById,
-        epochtime: unixTime(new Date())
-    }
-}
-
-export const fetchEventsSincePublic = (payload) => {
-    const {epochtime} = payload
-    return (dispatch) => {
-        return axios.get(APIurl.getUrl(APIurl.EVENTS_SINCE_PUBLIC,{epochtime:epochtime}))
-            .then(response => {
-                console.log(response.data);
-                //const sortedEvents = sortEvents(response.data)
-                //dispatch(fetchEventsSincePublicSuccess(sortedEvents))
-            })
-            .catch(error => {
-                throw(error);
-            });
-    }
-}
-
-const fetchEventsSincePublicSuccess = ({events,sortedEvents}) => {
-    return {
-        type: actionTypes.GET_EVENTS_ALL_PUBLIC,
-        events: events,
-        sortedEvents: sortedEvents,
-        epochtime: unixTime(new Date())
-      }
+const sortEvents = events => {
+    return [...events].sort((a, b) => {
+        if (a.eventStartDate > b.eventStartDate) {
+            return 1
+        } else if (a.eventStartDate === b.eventStartDate) {
+            if (a.eventStartTime > b.eventStartTime) {
+                return 1
+            } else if (a.eventStartTime === b.eventStartTime) {
+                if (a.eventName > b.eventName) {
+                    return 1
+                } else {return -1}
+            } else {return -1}
+        } else {return -1}
+    }) 
 }
 
 export const fetchEvents = () => {
     return (dispatch, getState) => {
-        const state = getState();
-        const authData = {headers: {Authorization: (state.auth.authToken)}}
-        return axios.get(APIurl.getUrl(APIurl.EVENTS_ALL), authData)
+        const state = getState(); 
+        const url = state.auth.authToken ? APIurl.getUrl(APIurl.EVENTS_ALL) : APIurl.getUrl(APIurl.EVENTS_ALL_PUBLIC);
+        const authData = state.auth.authToken ? {headers: {Authorization: (state.auth.authToken)}} : null;
+
+        return axios.get(url, authData)
             .then(response => {
-                const eventsById = transformArrayToObject(response.data,'eventId')
-                dispatch(fetchEventsSuccess({events:sortEvents(response.data),eventsById:eventsById}))
-                dispatch(defineCategories(response.data))
-                dispatch(defineDates(response.data))
+                const events = response.data;
+                const sortedEvents = sortEvents(events);
+                const eventsById = transformArrayToObject(events,'eventId');
+                const listofCategories = [].concat(...events.filter((event)=> event.categories.length > 0).map((event) => event.categories))
+                const uniqueCategories = [...new Set(listofCategories.map(x => x.slug)) ].map(slug => {return {slug:slug, name:listofCategories.find( x => x.slug === slug).name}})
+                const uniqueDates = [...new Set(events.map(x => x.eventStartDate)) ]
+                
+                dispatch(fetchEventsSuccess({
+                    events:sortedEvents,
+                    eventsById:eventsById,
+                    categories: uniqueCategories,
+                    dates: uniqueDates,
+                    epochtime: unixTime(new Date())
+                }))
             })
             .catch(error => {
                 throw(error);
             });
     }
+}
+
+const fetchEventsSuccess = ({events,eventsById,categories,dates,epochtime}) => {
+    return {
+        type: actionTypes.GET_EVENTS_ALL,
+        events,
+        eventsById,
+        categories,
+        dates,
+        epochtime
+      }
 }
 
 export const fetchEventsSince = (payload) => { // TODO: get this working
@@ -107,41 +79,18 @@ export const fetchEventsSince = (payload) => { // TODO: get this working
     }
 }
 
-const fetchEventsSuccess = ({events,eventsById}) => {
-    return {
-        type: actionTypes.GET_EVENTS_ALL,
-        events,
-        eventsById,
-        epochtime: unixTime(new Date())
-      }
-}
-
-const sortEvents = events => {
-    return events.sort((a, b) => {
-        if (a.eventStartDate > b.eventStartDate) {
-            return 1
-        } else if (a.eventStartDate === b.eventStartDate) {
-            if (a.eventStartTime > b.eventStartTime) {
-                return 1
-            } else if (a.eventStartTime === b.eventStartTime) {
-                if (a.eventName > b.eventName) {
-                    return 1
-                } else {return -1}
-            } else {return -1}
-        } else {return -1}
-    }) 
-}
-
 export const fetchEvent = eventId => {
     return (dispatch, getState) => {
         const state = getState();
-        const options = {
-            headers: { Authorization: (state.auth.authToken), eventFind: { id: eventId } },
-            params: { eventFind: { id: eventId } },
+        const authData = {
+            headers: { Authorization: (state.auth.authToken) }
         }
-        return axios.get(APIurl.getUrl(APIurl.EVENTS_FIND_EVENT), options)
+        const params = { id: eventId }
+        return axios.post(APIurl.getUrl(APIurl.EVENTS_FIND_EVENT), params, authData)
             .then(response => {
                 console.log(response.data)
+                //TODO: Reconfigure now that it works!!!
+
                 //const sortedEvents = sortEvents(response.data)
                 //dispatch(fetchEventsSuccess(sortedEvents))
             })
@@ -149,32 +98,4 @@ export const fetchEvent = eventId => {
                 throw(error);
             });
     }
-}
-
-// Favorite Events List
-
-export const changeFavsAdd = eventId => {
-    return (dispatch) => {
-        dispatch(addFavEvent(eventId));
-    }
-}
-
-export const changeFavsRemove = eventId => {
-    return (dispatch) => {
-        dispatch(removeFavEvent(eventId));
-    }
-}
-
-export const addFavEvent = eventId => {
-    return {
-        type: actionTypes.ADD_FAV_EVENT,
-        eventId
-    }
-}
-
-export const removeFavEvent = eventId => {
-    return {
-        type: actionTypes.REMOVE_FAV_EVENT,
-        eventId
-      }
 }

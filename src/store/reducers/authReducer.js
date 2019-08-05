@@ -7,6 +7,14 @@ export const authReducer = (state = {}, action) => {
             return {...state, authToken: action.authToken, authStatus: true}
         case actionTypes.AUTH_LOGOUT:
             return {...state, authToken: "", authStatus: false}
+        case actionTypes.GET_MY_USER_DATA:
+            return {...state, userData: action.userData, favEvents:action.favEvents}
+        case actionTypes.GET_MY_EVENTS:
+            return {...state, myEvents: action.myEvents}
+        case actionTypes.ADD_FAV_EVENT:
+            return {...state, favEvents: [...state.favEvents, action.eventId]}
+        case actionTypes.REMOVE_FAV_EVENT:
+            return {...state, favEvents: state.favEvents.filter(item => action.eventId !== item)} 
         default: return state
     }
 }

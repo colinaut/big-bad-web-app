@@ -14,17 +14,19 @@ import styles from './Event.module.css';
 
 const Event = props => {
 
+  const {favEvents,authStatus} = props
+
   const [detailsToggle, toggleDetails] = useToggle(false);
 
   const detailsStyle = (detailsToggle) ? [styles.Details, styles.DetailsActive].join(' ') : styles.Details;
 
-  const favStarStatus = props.favEvents.includes(props.id)
+  const favStarStatus = favEvents.includes(props.id)
 
   const favStarStyle = (props.favEvents.includes(props.id)) ? [styles.FavStar, styles.FavStarActive].join(' ') : styles.FavStar;
 
   const toggleFavStar = () => {
       if (favStarStatus) {
-        props.removeFavEvent(props.id);
+        props.deleteFavEvent(props.id);
       } else props.addFavEvent(props.id);
   }
 
@@ -45,6 +47,8 @@ const Event = props => {
     return true;
   }
 
+  //TODO: remove fetch event button after testing complete
+  
   if (displayEvent()) {
     return (
       <Card>
@@ -59,11 +63,12 @@ const Event = props => {
               <div className={styles.Time}>{convertTime(props.startTime)} - {convertTime(props.endTime)}</div>
             </div>
           </div>
-          <div className={styles.FavStarWrapper}><Star className={favStarStyle} onClick={toggleFavStar} /></div> 
+          { authStatus ? <div className={styles.FavStarWrapper}><Star className={favStarStyle} onClick={toggleFavStar} /></div> : null}
           {detailsToggle ? 
-            <div className={detailsStyle} onClick={toggleDetails}>
+            <div className={detailsStyle} >
+              <button onClick={() => props.fetchEvent(props.id)}>fetch event</button>
               <EventDetails eventOwner={props.eventOwner} description={props.description} meta={metaFields} categories={props.categories}/> 
-              { props.authStatus ? <EventBooking id={props.id} /> : null }
+              { authStatus ? <EventBooking id={props.id} /> : null }
             </div> 
             : null }
         </div>
@@ -72,18 +77,23 @@ const Event = props => {
   } else return null
 }
 
-const mapStateToProps = ({events, auth}) => {
+const mapStateToProps = ({auth}) => {
   return {
-      favEvents: events.favEvents,
+      favEvents: auth.favEvents,
       authStatus: auth.authStatus
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addFavEvent: (id) => dispatch(actions.changeFavsAdd(id)),
-    removeFavEvent: (id) => dispatch(actions.changeFavsRemove(id))
+    addFavEvent: (id) => dispatch(actions.addFavEvent(id)),
+    deleteFavEvent: (id) => dispatch(actions.deleteFavEvent(id)),
+    fetchEvent: (id) => dispatch(actions.fetchEvent(id))
   }
+}
+
+Event.defaultProps = {
+  favEvents: []
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Event)

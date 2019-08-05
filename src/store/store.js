@@ -12,7 +12,8 @@ const rootReducer = combineReducers({
 
 const persistConfig = {
     key: 'root',
-    storage
+    storage,
+    //blacklist: ['auth'] //TODO test blacklisting auth to see if this is what I want to do
 }
 
 // Create store with reducers and initial state

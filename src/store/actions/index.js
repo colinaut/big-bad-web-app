@@ -1,14 +1,15 @@
 export {fetchBlog,fetchBlogSuccess} from './blog';
 
-export {auth,checkLocalStorageAuth,logout} from './auth';
+export {
+    auth,
+    logout,
+    fetchMyUserData,
+    fetchMyEvents,
+    addFavEvent,
+    deleteFavEvent,
+} from './auth';
 
 export {
     fetchEvents,
-    fetchEventsPublic,
-    fetchEventsSince,
-    fetchEventsSincePublic,
-    addFavEvent,
-    removeFavEvent,
-    changeFavsAdd,
-    changeFavsRemove
+    fetchEvent,
 } from './events';

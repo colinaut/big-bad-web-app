@@ -1,0 +1,15 @@
+.AccountInfo {
+    padding: 1rem;
+    max-width: 40rem;
+    margin: 0 auto;
+}
+.Name {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.795);
+    margin: 0 0 .2rem;
+}
+.Nickname {
+    font-size: 1.0rem;
+    color: rgba(255, 255, 255, 0.562);
+    margin: 0 0 .5rem;
+}
