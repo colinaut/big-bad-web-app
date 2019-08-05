@@ -1,8 +1,14 @@
 import moment from 'moment';
 
-export function transformObjectToArray(object) {
+export function transformObjectToArray(object) { //TODO test if is object
     return object ? Object.keys(object).map((key)=>{ return {...object[key], keyId: key} }) : false
 }
+
+export const transformArrayToObject = (array, keyField) =>
+   array.reduce((obj, item) => {
+     obj[item[keyField]] = item
+     return obj
+   }, {})
 
 export const convertTime = (time, format = "h:mma") => {
     switch (time) {

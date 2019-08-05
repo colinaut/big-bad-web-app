@@ -1,3 +1,8 @@
 .EventBooking {
-
+    margin: 1rem 0 .5rem;
+    font-size: .9rem;
+}
+.Heading {
+    font-size: 1rem;
+    margin: 0 0 .5rem;
 }

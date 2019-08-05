@@ -26,10 +26,11 @@ const Events = props => {
     
   },[authStatus,events,fetchEventsPublic,fetchEvents,fetchEventsSince,fetchEventsSincePublic,epochtimeAuth,epochtimePublic,currentTime])
 
+  //TODO: remove reload events button once it is no longer needed
   return (
     <div className={styles.Events}>
       <PageTitle>Events</PageTitle>
-      <button onClick={props.authStatus ? props.fetchEvents : props.fetchEventsPublic}>Reload Events</button>
+      <button onClick={props.authStatus ? props.fetchEvents : props.fetchEventsPublic}>Reload Events</button> 
       {props.events ? <EventList dates={props.dates} categories={props.categories} events={props.events} /> : <LoadingSpinner/>}
     </div>
   )

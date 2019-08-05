@@ -9,7 +9,7 @@ const EventDetails = props => {
       <div className={styles.Description} dangerouslySetInnerHTML={getMarkup(props.description)} />
       <div className={styles.Meta}>
         {props.eventOwner ? <span><strong>GM:</strong> {props.eventOwner.displayName}</span> : null}
-        {(props.meta.Min_Players && props.meta.Min_Players < 1) ? <span><strong>Players:</strong> {props.meta.Min_Players}-{props.meta.Players}</span> : null}
+        {(props.meta.Min_Players && props.meta.Min_Players > 1) ? <span><strong>Players:</strong> {props.meta.Min_Players}-{props.meta.Players}</span> : null}
         <span><strong>Length:</strong> {props.meta.Length} hrs</span>
         {(props.categories && props.categories.length > 0) ? <span><strong>Categories:</strong> <Categories categories={props.categories}/></span> : null}
       </div>

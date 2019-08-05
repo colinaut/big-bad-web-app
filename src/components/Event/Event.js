@@ -63,7 +63,7 @@ const Event = props => {
           {detailsToggle ? 
             <div className={detailsStyle} onClick={toggleDetails}>
               <EventDetails eventOwner={props.eventOwner} description={props.description} meta={metaFields} categories={props.categories}/> 
-              { props.authStatus ? <EventBooking /> : null }
+              { props.authStatus ? <EventBooking id={props.id} /> : null }
             </div> 
             : null }
         </div>

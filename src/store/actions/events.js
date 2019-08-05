@@ -2,6 +2,7 @@ import axios from 'axios'
 import * as actionTypes from './actionTypes';
 import * as APIurl from '../../util/APIurl';  
 import unixTime from 'unix-time';
+import {transformArrayToObject} from '../../util/helpers'
 
 // Async Action
 
@@ -9,8 +10,8 @@ export const fetchEventsPublic = () => {
     return (dispatch) => {
         return axios.get(APIurl.getUrl(APIurl.EVENTS_ALL_PUBLIC))
             .then(response => {
-                const sortedEvents = sortEvents(response.data);
-                dispatch(fetchEventsPublicSuccess({events:response.data,sortedEvents:sortedEvents}))
+                const eventsById = transformArrayToObject(response.data,'eventId')
+                dispatch(fetchEventsPublicSuccess({events:sortEvents(response.data),eventsById:eventsById}))
                 dispatch(defineCategories(response.data))
                 dispatch(defineDates(response.data))
             })
@@ -39,11 +40,11 @@ const defineDates = events => {
     }
 }
 
-const fetchEventsPublicSuccess = ({events,sortedEvents}) => {
+const fetchEventsPublicSuccess = ({events,eventsById}) => {
     return {
         type: actionTypes.GET_EVENTS_ALL_PUBLIC,
-        events: events,
-        sortedEvents: sortedEvents,
+        events,
+        eventsById,
         epochtime: unixTime(new Date())
     }
 }
@@ -78,7 +79,8 @@ export const fetchEvents = () => {
         const authData = {headers: {Authorization: (state.auth.authToken)}}
         return axios.get(APIurl.getUrl(APIurl.EVENTS_ALL), authData)
             .then(response => {
-                dispatch(fetchEventsSuccess({events:response.data,sortedEvents:sortEvents(response.data)}))
+                const eventsById = transformArrayToObject(response.data,'eventId')
+                dispatch(fetchEventsSuccess({events:sortEvents(response.data),eventsById:eventsById}))
                 dispatch(defineCategories(response.data))
                 dispatch(defineDates(response.data))
             })
@@ -88,7 +90,7 @@ export const fetchEvents = () => {
     }
 }
 
-export const fetchEventsSince = (payload) => { // TODO
+export const fetchEventsSince = (payload) => { // TODO: get this working
     const {epochtime} = payload
     return (dispatch, getState) => {
         const state = getState();
@@ -105,11 +107,11 @@ export const fetchEventsSince = (payload) => { // TODO
     }
 }
 
-const fetchEventsSuccess = ({events,sortedEvents}) => {
+const fetchEventsSuccess = ({events,eventsById}) => {
     return {
         type: actionTypes.GET_EVENTS_ALL,
-        events: events,
-        sortedEvents: sortedEvents,
+        events,
+        eventsById,
         epochtime: unixTime(new Date())
       }
 }
