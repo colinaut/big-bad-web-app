@@ -47,7 +47,6 @@ const Event = props => {
     return true;
   }
 
-  //TODO: remove fetch event button after testing complete
   
   if (displayEvent()) {
     return (
@@ -66,7 +65,7 @@ const Event = props => {
           { authStatus ? <div className={styles.FavStarWrapper}><Star className={favStarStyle} onClick={toggleFavStar} /></div> : null}
           {detailsToggle ? 
             <div className={detailsStyle} >
-              <button onClick={() => props.fetchEvent(props.id)}>fetch event</button>
+    
               <EventDetails eventOwner={props.eventOwner} description={props.description} meta={metaFields} categories={props.categories}/> 
               { authStatus ? <EventBooking id={props.id} /> : null }
             </div> 

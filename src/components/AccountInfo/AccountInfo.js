@@ -12,6 +12,8 @@ const AccountInfo = props => {
     props.close();
   }
 
+  //TODO add close button
+  
   return (
     <div className={styles.AccountInfo}>
       <h3 className={styles.Name}>{props.userData.displayName}</h3>
