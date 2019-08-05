@@ -9,3 +9,4 @@ TODO:
 * Get Jerry to fix ASCII crud
 * How to show GM if not logged in?
 * Get Jerry to set CORS for delete favorite
+* Ask about term GM and what to use instead

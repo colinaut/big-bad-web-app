@@ -18,6 +18,7 @@ const AccountInfo = props => {
       <h4 className={styles.Nickname}>{props.userData.userNicename}</h4>
       <MyBookings />
       <Button clicked={logoutHandler}>Logout</Button>
+      <button onClick={props.fetchMyEvents}>fetch my events</button>
     </div>
   )
 }

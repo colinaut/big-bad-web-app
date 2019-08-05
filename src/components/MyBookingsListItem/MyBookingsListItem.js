@@ -4,17 +4,24 @@ import { connect } from 'react-redux';
 import getMarkup from '../../util/getMarkup'
 
 const MyBookingsListItem = props => {
-  const {event} = props
+  const {event,authId} = props
+
+  const owner = (event.eventOwner.id === authId) ? <span className={styles.Owner}>(Your Event)</span> : null
+
+  //TODO: Get delete booking working
+  
   return (
     <li className={styles.MyBookingsListItem}>
       <span className={styles.EventName} dangerouslySetInnerHTML={getMarkup(event.eventName)}/>
+      { owner }
     </li>
   )
 }
 
-const mapStateToProps = ({events}, ownProps) => {
+const mapStateToProps = ({events,auth}, ownProps) => {
   return {
-      event: events.eventsById[ownProps.eventId]
+      event: events.eventsById[ownProps.eventId],
+      authId: auth.userData.id
   }
 }
 

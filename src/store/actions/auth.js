@@ -74,7 +74,7 @@ export const fetchMyUserData = () => {
         const authData = {headers: {Authorization: (state.auth.authToken)}}
         return axios.get(APIurl.getUrl(APIurl.USERS_ME), authData)
             .then(response => {
-                const userData = {displayName: response.data.displayName, userNicename: response.data.userNicename}
+                const userData = {displayName: response.data.displayName, userNicename: response.data.userNicename, id:response.data.id}
                 //transform favorites into simple array of ids
                 const favEvents = response.data.bbcUserFavorites.map( fav => fav.eventId.eventId )
                 dispatch(fetchMyUserDataSuccess({userData,favEvents}))
