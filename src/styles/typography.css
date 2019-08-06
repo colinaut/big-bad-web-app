@@ -1,14 +1,23 @@
 :root {
-    --red: #c12627;
+    --bright-red: #c12627;
+    --red: #9f1c02;
     --dark-red: #5e0b0c;
     --yellow: #fcde31;
+    --light-yellow: #f8f1c9;
     --teal: #63c6c4;
+    --tan: #ebe0c3;
+    --light-tan: #f7f0df;
+    --dark-tan: #e0d5b9;
+    --off-white: rgb(255, 255, 236);
+    --blue-black: #000016;
 }
+
+@import url('https://fonts.googleapis.com/css?family=Archivo+Narrow&display=swap');
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", "Roboto", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -20,10 +29,12 @@ code {
 }
 
 h1 {
-    font-size: 1.8rem;
+    font-size: 2rem;
+    font-family: 'Archivo Narrow', sans-serif;
 }
 h2 {
     font-size: 1.6rem;
+    font-family: 'Archivo Narrow', sans-serif;
 }
 h3 {
     font-size: 1.4rem;

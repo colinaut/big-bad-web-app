@@ -4,7 +4,6 @@ import React from 'react'
 import useToggle from 'react-use-toggle';
 
 import * as actions from '../../store/actions';
-import Card from '../Card';
 import EventDetails from '../EventDetails';
 import EventBooking from '../EventBooking';
 import {convertTime, convertDate} from '../../util/helpers';
@@ -47,31 +46,30 @@ const Event = props => {
     return true;
   }
 
-  
+  //TODO make details Toggle have obvious close button
+
   if (displayEvent()) {
     return (
-      <Card>
-        <div className={`${styles.Event} ${detailsToggle ? styles.Active : null}`}>
-          <div className={styles.Eventsummary}>
-            <div className={styles.TitleColumn} onClick={toggleDetails}>
-              <div className={styles.Title}>{props.name}</div>
-              <div className={styles.System}>{metaFields.System}</div>
-            </div>
-            <div className={styles.TimeColumn} onClick={toggleDetails}>
-              <div className={styles.Date}>{convertDate(props.startDate)}</div>
-              <div className={styles.Time}>{convertTime(props.startTime)} - {convertTime(props.endTime)}</div>
-            </div>
+      <div className={`${styles.Event} ${detailsToggle ? styles.Active : null}`}>
+        <div className={styles.Eventsummary}>
+          <div className={styles.TitleColumn} onClick={toggleDetails}>
+            <div className={styles.Title}>{props.name}</div>
+            <div className={styles.System}>{metaFields.System}</div>
           </div>
-          { authStatus ? <div className={styles.FavStarWrapper}><Star className={favStarStyle} onClick={toggleFavStar} /></div> : null}
-          {detailsToggle ? 
-            <div className={detailsStyle} >
-    
-              <EventDetails eventOwner={props.eventOwner} description={props.description} meta={metaFields} categories={props.categories}/> 
-              { authStatus ? <EventBooking id={props.id} /> : null }
-            </div> 
-            : null }
+          <div className={styles.TimeColumn} onClick={toggleDetails}>
+            <div className={styles.Date}>{convertDate(props.startDate)}</div>
+            <div className={styles.Time}>{convertTime(props.startTime)} - {convertTime(props.endTime)}</div>
+          </div>
         </div>
-      </Card>
+        { authStatus ? <div className={styles.FavStarWrapper}><Star className={favStarStyle} onClick={toggleFavStar} /></div> : null}
+        {detailsToggle ? 
+          <div className={detailsStyle} >
+  
+            <EventDetails eventOwner={props.eventOwner} description={props.description} meta={metaFields} categories={props.categories}/> 
+            { authStatus ? <EventBooking id={props.id} /> : null }
+          </div> 
+          : null }
+      </div>
     )
   } else return null
 }

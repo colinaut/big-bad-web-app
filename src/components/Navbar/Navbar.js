@@ -4,12 +4,12 @@ import React, {Fragment} from 'react';
 import useToggle from 'react-use-toggle';
 
 import Auth from '../Auth';
-import Button from '../Button';
 import MenuBtn from '../MenuBtn';
 import Nav from '../Nav';
 import Slidedrawer from '../Sidedrawer';
 import AccountInfo from '../AccountInfo';
 import { ReactComponent as Logo } from '../../assets/Big-Bad-Con-Logo.svg';
+import forestBackground from '../../assets/forest-background.png'
 
 import styles from './Navbar.module.css';
 
@@ -26,14 +26,20 @@ const Navbar = props => {
   const [menuToggle, toggleMenu] = useToggle(false);
   const [authPanelToggle, toggleAuthPanel] = useToggle(false);
 
+  const navBarStyle = {
+    backgroundImage: `url(${forestBackground})`,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat'
+  }
+
   return (
     <Fragment>
-      <div className={styles.Navbar}>
+      <div className={styles.Navbar} style={navBarStyle}>
         <div className={styles.LogoWrapper}>
           <Link to='/'><Logo className={styles.Logo} /></Link>
         </div>
         <div className={styles.Login}>
-          {props.authStatus ? <Button style={{float:'left'}} clicked={toggleAuthPanel}>My Account</Button> : <Button style={{float:'left'}} clicked={toggleAuthPanel}>Login</Button> }
+          {props.authStatus ? <button className={styles.AccountBtn} onClick={toggleAuthPanel}>My Account</button> : <button className={styles.AccountBtn} onClick={toggleAuthPanel}>Login</button> }
         </div>
   
         <div className={styles.NavWrapper}>

@@ -3,19 +3,38 @@
 @value _menuwidth from variables;
 
 .Event {
-    padding: .5rem;
-    cursor: pointer;
     position: relative;
+    margin: .5rem 0;
+    border: 1px solid transparent;
+    border-radius: 3px;
 }
 .Eventsummary {
-    margin-right: 30px;
+    padding: .5rem 5rem .5rem .6rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.Eventsummary:hover {
+    background: var(--dark-tan);
 }
 
 .Active {
-    background: #eee;
+    border: 1px solid var(--dark-red);
 }
+.Active .Eventsummary {
+    background: var(--dark-tan);
+}
+.Active .Title {
+    
+}
+.Details {
+    background: var(--light-tan);
+    padding: .5rem .5rem .5rem .6rem;
+    border-radius: 4px;
+}
+
 .Title { 
     font-weight: 700;
+    color: var(--red)
 }
 .Description {
     margin: 1rem 0 0;
@@ -25,11 +44,26 @@
     top: 5px;
     right: 5px;
     z-index: 2;
+    height: 100%;
+    padding-left: 10px;
+}
+
+.FavStar {
+    cursor: pointer;
+}
+.FavStar path {
+    stroke: #000;
+    fill: #000;
+}
+.FavStar:hover path {
+    fill: var(--off-white);
 }
 
 .FavStarActive path {
     fill: var(--yellow);
-    stroke: #000;
+}
+.FavStarActive:hover path {
+    fill: #555;
 }
 
 @media only screen and (min-width: _menuwidth) {
