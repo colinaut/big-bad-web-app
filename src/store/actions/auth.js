@@ -8,7 +8,7 @@ import * as actions from '../../store/actions';
 // function to return Axios auth header
 export const authToken = (getState) => {
     const auth = getState().auth
-    return auth.authToken ? { headers: { Authorization: (auth.authToken) } } : null
+    return auth.authToken ? { Authorization: (auth.authToken) } : null
 }
 
 export const authStart = () => {
@@ -81,7 +81,8 @@ export const authLogout = () => {
 
 export const fetchMyUserData = () => {
     return (dispatch, getState) => {
-        return axios.get(APIurl.getUrl(APIurl.USERS_ME), authToken(getState))
+        const config = { headers: authToken(getState) }
+        return axios.get(APIurl.getUrl(APIurl.USERS_ME), config )
             .then(response => {
                 const allData = response.data
                 const userData = {displayName: allData.displayName, userNicename: allData.userNicename, id:allData.id}

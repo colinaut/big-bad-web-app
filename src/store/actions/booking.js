@@ -8,7 +8,8 @@ import {authToken} from './auth'
 export const addFavEvent = eventId => {
     return (dispatch, getState) => {
         const postData = { eventId: eventId }
-        return axios.post(APIurl.getUrl(APIurl.EVENTS_ME_FAV_CREATE), postData, authToken(getState))
+        const config = { headers: authToken(getState) }
+        return axios.post(APIurl.getUrl(APIurl.EVENTS_ME_FAV_CREATE), postData, config)
             .then(response => {
                 dispatch(addFavEventSuccess(eventId));
             })
@@ -21,8 +22,12 @@ export const addFavEvent = eventId => {
 export const deleteFavEvent = eventId => {
     return (dispatch, getState) => {
         const postData = { eventId: eventId }
-        return axios.delete(APIurl.getUrl(APIurl.EVENTS_ME_FAV_DELETE), postData, authToken(getState))
-            .then(response => {
+        return axios({
+            method: 'DELETE',
+            url: APIurl.getUrl(APIurl.EVENTS_ME_FAV_DELETE),
+            headers: authToken(getState),
+            data: postData
+        }).then(response => {
                 dispatch(deleteFavEventSuccess(eventId));
             })
             .catch(error => {
@@ -49,7 +54,8 @@ export const deleteFavEventSuccess = eventId => {
 
 export const fetchMyEvents = () => {
     return (dispatch, getState) => {
-        return axios.get(APIurl.getUrl(APIurl.EVENTS_ME), authToken(getState))
+        const config = { headers: authToken(getState) }
+        return axios.get(APIurl.getUrl(APIurl.EVENTS_ME), config)
             .then(response => {
                 dispatch(fetchMyEventsSuccess(response.data))
             })
@@ -69,7 +75,8 @@ export const fetchMyEventsSuccess = (myEvents) => {
 export const bookMeIntoGame = eventId => {
     return (dispatch, getState) => {
         const postData = { gameId: eventId }
-        return axios.post(APIurl.getUrl(APIurl.BOOKINGS_BOOK_ME_INTO_GAME), postData, authToken(getState))
+        const config = { headers: authToken(getState) }
+        return axios.post(APIurl.getUrl(APIurl.BOOKINGS_BOOK_ME_INTO_GAME), postData, config)
             .then(response => {
                 dispatch(bookMeIntoGameSuccess(eventId));
             })
@@ -94,7 +101,8 @@ export const unbookMeFromGame = eventId => {
 
 export const fetchMyAvailableGameSlots = () => {
     return (dispatch,getState) => {
-        return axios.get(APIurl.getUrl(APIurl.BOOKINGS_MY_AVAILABLE_GAME_SLOTS), authToken(getState))
+        const config = { headers: authToken(getState) }
+        return axios.get(APIurl.getUrl(APIurl.BOOKINGS_MY_AVAILABLE_GAME_SLOTS), config)
             .then(response => {
                 dispatch({
                     type: actionTypes.GET_MY_AVAILABLE_GAME_SLOTS,
