@@ -10,3 +10,6 @@ TODO:
 * How to show GM if not logged in?
 * Get Jerry to set CORS for delete favorite
 * Ask about term GM and what to use instead
+* Improve CSS for Blog
+* Look at how Blog grabs data
+* Make individual events fetch new data on open and incorpoarate into Redux store. Also should fetch new on booking/unbooking.

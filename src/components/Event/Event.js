@@ -1,27 +1,31 @@
 
 import { connect } from 'react-redux';
-import React from 'react'
+import React, {Fragment} from 'react'
 import useToggle from 'react-use-toggle';
 
 import * as actions from '../../store/actions';
 import EventDetails from '../EventDetails';
 import EventBooking from '../EventBooking';
 import {convertTime, convertDate} from '../../util/helpers';
+import CloseAccordianBtn from '../CloseAccordianBtn'
 
 import { ReactComponent as Star } from '../../assets/star.svg';
 import styles from './Event.module.css';
+import getMarkup from '../../util/getMarkup';
 
 const Event = props => {
 
-  const {favEvents,authStatus} = props
+  const {favEvents,authStatus,myEvents,id} = props
 
   const [detailsToggle, toggleDetails] = useToggle(false);
 
+  const eventStyle = (detailsToggle) ? [styles.Event, styles.Active].join(' ') : styles.Event;
+  const eventSummaryStyle = (myEvents && myEvents.includes(id)) ? [styles.Eventsummary, styles.MyEvent].join(' ') : styles.Eventsummary;
   const detailsStyle = (detailsToggle) ? [styles.Details, styles.DetailsActive].join(' ') : styles.Details;
 
   const favStarStatus = favEvents.includes(props.id)
-
   const favStarStyle = (props.favEvents.includes(props.id)) ? [styles.FavStar, styles.FavStarActive].join(' ') : styles.FavStar;
+
 
   const toggleFavStar = () => {
       if (favStarStatus) {
@@ -50,10 +54,10 @@ const Event = props => {
 
   if (displayEvent()) {
     return (
-      <div className={`${styles.Event} ${detailsToggle ? styles.Active : null}`}>
-        <div className={styles.Eventsummary}>
+      <div className={eventStyle}>
+        <div className={eventSummaryStyle}>
           <div className={styles.TitleColumn} onClick={toggleDetails}>
-            <div className={styles.Title}>{props.name}</div>
+            <div className={styles.Title} dangerouslySetInnerHTML={getMarkup(props.name)} />
             <div className={styles.System}>{metaFields.System}</div>
           </div>
           <div className={styles.TimeColumn} onClick={toggleDetails}>
@@ -63,11 +67,13 @@ const Event = props => {
         </div>
         { authStatus ? <div className={styles.FavStarWrapper}><Star className={favStarStyle} onClick={toggleFavStar} /></div> : null}
         {detailsToggle ? 
-          <div className={detailsStyle} >
-  
-            <EventDetails eventOwner={props.eventOwner} description={props.description} meta={metaFields} categories={props.categories}/> 
-            { authStatus ? <EventBooking id={props.id} /> : null }
-          </div> 
+          <Fragment>
+            <div className={detailsStyle} >
+              <EventDetails eventOwner={props.eventOwner} description={props.description} meta={metaFields} categories={props.categories}/> 
+              { authStatus ? <EventBooking id={props.id} /> : null }
+            </div> 
+            <CloseAccordianBtn close={toggleDetails} color='Red' />
+          </Fragment>
           : null }
       </div>
     )
@@ -77,7 +83,8 @@ const Event = props => {
 const mapStateToProps = ({auth}) => {
   return {
       favEvents: auth.favEvents,
-      authStatus: auth.authStatus
+      authStatus: auth.authStatus,
+      myEvents: auth.myEvents,
   }
 }
 

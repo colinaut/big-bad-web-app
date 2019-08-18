@@ -3,6 +3,7 @@ import * as actionTypes from './actionTypes';
 import * as APIurl from '../../util/APIurl';  
 import unixTime from 'unix-time';
 import {transformArrayToObject} from '../../util/helpers'
+import {authToken} from './auth'
 
 // Async Action
 
@@ -26,9 +27,8 @@ export const fetchEvents = () => {
     return (dispatch, getState) => {
         const state = getState(); 
         const url = state.auth.authToken ? APIurl.getUrl(APIurl.EVENTS_ALL) : APIurl.getUrl(APIurl.EVENTS_ALL_PUBLIC);
-        const authData = state.auth.authToken ? {headers: {Authorization: (state.auth.authToken)}} : null;
 
-        return axios.get(url, authData)
+        return axios.get(url, authToken(getState))
             .then(response => {
                 const events = response.data;
                 const sortedEvents = sortEvents(events);
@@ -65,9 +65,8 @@ const fetchEventsSuccess = ({events,eventsById,categories,dates,epochtime}) => {
 export const fetchEventsSince = (payload) => { // TODO: get this working
     const {epochtime} = payload
     return (dispatch, getState) => {
-        const state = getState();
-        const authData = {headers: {Authorization: (state.auth.authToken)}}
-        return axios.get(APIurl.getUrl(APIurl.EVENTS_SINCE,{epochtime:epochtime}), authData)
+
+        return axios.get(APIurl.getUrl(APIurl.EVENTS_SINCE,{epochtime:epochtime}), authToken(getState))
             .then(response => {
                 console.log(response.data)
                 //const sortedEvents = sortEvents(response.data)
@@ -81,12 +80,9 @@ export const fetchEventsSince = (payload) => { // TODO: get this working
 
 export const fetchEvent = eventId => {
     return (dispatch, getState) => {
-        const state = getState();
-        const authData = {
-            headers: { Authorization: (state.auth.authToken) }
-        }
+     
         const params = { id: eventId }
-        return axios.post(APIurl.getUrl(APIurl.EVENTS_FIND_EVENT), params, authData)
+        return axios.post(APIurl.getUrl(APIurl.EVENTS_FIND_EVENT), params, authToken(getState))
             .then(response => {
                 console.log(response.data)
                 //TODO: Reconfigure now that it works!!!

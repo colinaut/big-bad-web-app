@@ -6,6 +6,8 @@ import MyBookingsListItem from '../MyBookingsListItem'
 const MyBookings = props => {
   const {myEvents} = props;
 
+  //TODO: style the No bookings yet better
+
   return (
     <div className={styles.MyBookings}>
       <h4 className={styles.Header}>My Bookings</h4>

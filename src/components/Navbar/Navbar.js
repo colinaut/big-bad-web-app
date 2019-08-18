@@ -10,6 +10,7 @@ import Slidedrawer from '../Sidedrawer';
 import AccountInfo from '../AccountInfo';
 import { ReactComponent as Logo } from '../../assets/Big-Bad-Con-Logo.svg';
 import forestBackground from '../../assets/forest-background.png'
+import CloseAccordianBtn from '../CloseAccordianBtn'
 
 import styles from './Navbar.module.css';
 
@@ -17,6 +18,7 @@ const AuthPanel = ({show,close,authStatus}) => {
   return show ? (
     <div className={styles.AuthPanel}>
       {authStatus ? <AccountInfo close={close} /> : <Auth submitCallback={close} />  }
+      <CloseAccordianBtn close={close} color='Blue'/>
     </div>
   ) : null
 }

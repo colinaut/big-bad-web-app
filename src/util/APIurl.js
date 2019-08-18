@@ -14,6 +14,8 @@ export const EVENTS_ME_FAV_CREATE = 'EVENTS_ME_FAV_CREATE';
 export const EVENTS_ME_FAV_DELETE = 'EVENTS_ME_FAV_DELETE';
 export const USERS_ME = 'USERS_ME';
 export const USERS_SET_MY_PASSWORD = 'USERS_SET_MY_PASSWORD';
+export const BOOKINGS_BOOK_ME_INTO_GAME = 'BOOKINGS_BOOK_ME_INTO_GAME';
+export const BOOKINGS_MY_AVAILABLE_GAME_SLOTS = 'BOOKINGS_MY_AVAILABLE_GAME_SLOTS';
 export const LOGIN = 'LOGIN'
 
 export const getUrl = (type,options) => {
@@ -48,6 +50,10 @@ export const getUrl = (type,options) => {
             return baseAPIurl + 'users/me';
         case USERS_SET_MY_PASSWORD:
             return baseAPIurl + 'users/setMyPassword';
+        case BOOKINGS_BOOK_ME_INTO_GAME:
+            return baseAPIurl + 'bookings/bookMeIntoGame';
+        case BOOKINGS_MY_AVAILABLE_GAME_SLOTS:
+            return baseAPIurl + 'bookings/myAvailableSlots';
         case LOGIN:
             return baseAPIurl + 'login';
         default:

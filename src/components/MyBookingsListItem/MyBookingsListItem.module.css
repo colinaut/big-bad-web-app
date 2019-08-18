@@ -2,7 +2,12 @@
     list-style: none;
     margin: .5rem 0;
     padding: 0;
-    color: #fff;
+    color: #dddddd;
+}
+.MyBookingsListItem::before {
+    content: '•';
+    padding-right: .3rem;
+    color: var(--teal)
 }
 .Owner {
     margin-left: 1rem;

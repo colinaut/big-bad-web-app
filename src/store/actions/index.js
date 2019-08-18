@@ -7,6 +7,8 @@ export {
     fetchMyEvents,
     addFavEvent,
     deleteFavEvent,
+    bookMeIntoGame,
+    unbookMeFromGame,
 } from './auth';
 
 export {

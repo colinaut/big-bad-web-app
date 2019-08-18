@@ -3,7 +3,7 @@
 }
 .Header {
     font-size: 1rem;
-    color: #fff;
+    color: var(--teal);
     margin: 1rem 0 .2rem;
 }
 .List {

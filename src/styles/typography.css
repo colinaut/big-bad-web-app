@@ -5,11 +5,16 @@
     --yellow: #fcde31;
     --light-yellow: #f8f1c9;
     --teal: #63c6c4;
+    --light-teal: #9de9e8;
+    --dark-teal: #3c9e9c;
     --tan: #ebe0c3;
     --light-tan: #f7f0df;
     --dark-tan: #e0d5b9;
     --off-white: rgb(255, 255, 236);
+    --navy-blue: #0b0b49;
     --blue-black: #000016;
+    --blue-gray: #2c3e5f;
+    --gray: #999999;
 }
 
 @import url('https://fonts.googleapis.com/css?family=Archivo+Narrow&display=swap');

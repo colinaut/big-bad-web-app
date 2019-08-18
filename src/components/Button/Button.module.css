@@ -1,15 +1,21 @@
 .Button {
-    background-color: transparent;
-    border: none;
-    color: white;
+    background-color: var(--teal);
+    border: 1px solid var(--blue-black);
+    border-radius: 4px;
+    color: var(--blue-black);
     outline: none;
     cursor: pointer;
     font: inherit;
-    padding: 10px;
-    margin: 10px auto;
+    padding: .4rem .7rem .5rem;
     font-weight: bold;
-    display: block;
-    width: 8rem;
+    display: inline-block;
+    transition: all .5s;
+    margin: .8rem 0;
+}
+
+.Button:hover {
+    background-color: var(--light-teal);
+    color: #000;
 }
 
 .Button:disabled {
@@ -26,4 +32,7 @@
 }
 .White {
     color: #ffffff;
+}
+.Gray {
+    background-color: var(--gray);
 }

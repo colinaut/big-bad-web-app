@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import React from 'react'
+import React, {Fragment} from 'react'
 import styles from './AccountInfo.module.css';
 import Button from '../Button'
 import * as actions from '../../store/actions';
-import MyBookings from '../MyBookings'
+import MyBookings from '../MyBookings';
 
 const AccountInfo = props => {
 
@@ -12,30 +12,37 @@ const AccountInfo = props => {
     props.close();
   }
 
-  //TODO add close button
-  
   return (
-    <div className={styles.AccountInfo}>
-      <h3 className={styles.Name}>{props.userData.displayName}</h3>
-      <h4 className={styles.Nickname}>{props.userData.userNicename}</h4>
-      <MyBookings />
-      <Button clicked={logoutHandler}>Logout</Button>
-      <button onClick={props.fetchMyEvents}>fetch my events</button>
-    </div>
+    <Fragment>
+      <div className={styles.AccountInfo}>
+        <div className={styles.UserInfoWrapper}>
+          <h3 className={styles.Name}>{props.userData.displayName} <span className={styles.Nickname}>{props.userData.userNicename}</span></h3>
+          <MyBookings />
+        </div>
+        <div className={styles.LogOutWrapper}>
+        <Button clicked={logoutHandler} btnType='Gray'>Logout</Button>
+        <Button clicked={()=> props.fetchMyUserData()} btnType='Gray'>Fetch UserData</Button>
+        <Button clicked={()=> props.fetchMyEvents()} btnType='Gray'>Fetch My Events</Button>
+        <Button clicked={()=> props.fetchEvents()} btnType='Gray'>Fetch All Events</Button>
+        </div>
+      </div>
+    </Fragment>
   )
 }
 
 const mapStateToProps = ({auth}) => {
   return {
       authStatus: auth.authStatus,
-      userData: auth.userData
+      userData: auth.userData,
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(actions.logout()),
-    fetchMyEvents: () => dispatch(actions.fetchMyEvents())
+    fetchEvents: () => dispatch(actions.fetchEvents()),
+    fetchMyEvents: () => dispatch(actions.fetchMyEvents()),
+    fetchMyUserData: () => dispatch(actions.fetchMyUserData())
   }
 }
 AccountInfo.defaultProps = {

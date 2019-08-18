@@ -1,9 +1,13 @@
 
 .Auth {
     padding: .5rem 1rem;
-    max-width: 500px;
+    width: 100%;
+    background: var(--blue-gray);
+}
+.AuthForm {
+    max-width: 300px;
     margin: .5rem auto;
 }
-.Button {
-    margin: 10px auto !important;
+.ButtonWrapper {
+    text-align: center;
 }

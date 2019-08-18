@@ -12,3 +12,4 @@ export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const GET_MY_USER_DATA = 'GET_MY_USER_DATA';
 export const GET_MY_EVENTS = 'GET_MY_EVENTS';
+export const BOOK_ME_INTO_GAME = 'BOOK_ME_INTO_GAME';

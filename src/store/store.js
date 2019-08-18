@@ -18,9 +18,7 @@ const persistConfig = {
 
 // Create store with reducers and initial state
 const initialState = {
-    events: {
-        favEvents:[]
-    },
+    events: {},
     blog: {},
     auth: {}
 }

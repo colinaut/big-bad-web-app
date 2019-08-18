@@ -1,13 +1,15 @@
 
 import React from 'react'
 import styles from './EventsFilter.module.css';
+import { connect } from 'react-redux';
 
 const EventsFilter = props => {
+  const {buttonPanel,authStatus} = props
   
-  return props.buttonPanel ? (
+  return buttonPanel ? (
     <div className={styles.Eventsfilter}>
-      {props.buttonPanel.map((panel)=>{
-        return <ButtonPanel panel={panel} key={panel.keyId}/>
+      {buttonPanel.map((panel)=>{
+        return (!authStatus && panel.authOnly) ? null : <ButtonPanel panel={panel} key={panel.keyId}/>;
       })}
     </div>
   ) : null
@@ -28,4 +30,10 @@ const FilterButton = (props) => {
   return <button className={`${styles.FilterButton} ${props.active ? styles.On : styles.Off} ${props.name === 'Favs' ? styles.Favs : null}`} onClick={props.click}>{props.name}</button>
 }
 
-export default EventsFilter
+const mapStateToProps = ({auth}) => {
+  return {
+      authStatus: auth.authStatus,
+  }
+}
+
+export default connect(mapStateToProps)(EventsFilter)

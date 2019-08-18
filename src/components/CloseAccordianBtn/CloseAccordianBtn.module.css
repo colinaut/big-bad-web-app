@@ -1,0 +1,22 @@
+.CloseAccordianBtn {
+    width: 100%;
+    background: #000;
+    color: #fff;
+    border: 0;
+    transition: color .5s;
+}
+.Blue {
+    background: var(--navy-blue);
+    color: var(--dark-teal);
+}
+.Blue:hover {
+    color: var(--teal);
+}
+
+.Red {
+    background: var(--dark-red);
+    color: var(--off-white);
+}
+.Red:hover {
+    color: var(--yellow);
+}

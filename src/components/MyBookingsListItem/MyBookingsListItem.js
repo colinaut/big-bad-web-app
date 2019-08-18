@@ -6,7 +6,7 @@ import getMarkup from '../../util/getMarkup'
 const MyBookingsListItem = props => {
   const {event,authId} = props
 
-  const owner = (event.eventOwner.id === authId) ? <span className={styles.Owner}>(Your Event)</span> : null
+  const owner = (event.eventOwner && event.eventOwner.id === authId) ? <span className={styles.Owner}>(Your Event)</span> : null
 
   //TODO: Get delete booking working
   

@@ -10,6 +10,7 @@
     top: 0;
     z-index: 100;
     display: flex;
+    border-bottom: 5px solid var(--navy-blue)
 }
 .Title {
     margin: 0;
@@ -52,10 +53,8 @@
 .AuthPanel {
     position: fixed;
     top: 55px;
-    background: #555;
     z-index: 99;
     width: 100%;
-    border: 1px solid #333;
 }
 
 @media only screen and (min-width: _menuwidth) {

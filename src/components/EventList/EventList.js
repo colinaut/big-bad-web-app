@@ -29,6 +29,7 @@ const EventList = props => {
     },
     favs: { //TODO only show faves to logged in users
       label: false,
+      authOnly: true,
       buttons: [
         {
           slug: "favs",

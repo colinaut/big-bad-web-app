@@ -15,6 +15,8 @@ export const authReducer = (state = {}, action) => {
             return {...state, favEvents: [...state.favEvents, action.eventId]}
         case actionTypes.REMOVE_FAV_EVENT:
             return {...state, favEvents: state.favEvents.filter(item => action.eventId !== item)} 
+        case actionTypes.BOOK_ME_INTO_GAME:
+            return {...state, myEvents:[...state.myEvents, action.eventId]}
         default: return state
     }
 }

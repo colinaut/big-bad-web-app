@@ -72,11 +72,11 @@ const Auth = props => {
 
   formFields.sort((a,b) => (a.config.order > b.config.order) ? 1 : -1);
 
-  if (props.authToken) {
+  if (props.authStatus) {
     return null
   } else return (
     <div className={styles.Auth}>
-      <form onSubmit={submitHandler}>
+      <form className={styles.AuthForm} onSubmit={submitHandler}>
         {formFields.map((formElement) => 
           <Input 
             key={formElement.id}
@@ -88,7 +88,7 @@ const Auth = props => {
             touched={formElement.config.touched}
             changed={(event) => inputChangedHandler(event, formElement.id)} />
         )}
-        <Button btnType='White'>Login</Button>
+        <div className={styles.ButtonWrapper}><Button btnType='White'>Login</Button></div>
       </form>
     </div>
   )
@@ -96,7 +96,6 @@ const Auth = props => {
 
 const mapStateToProps = state => {
   return {
-    authToken: state.authToken,
     authStatus: state.authStatus
   }
 }
