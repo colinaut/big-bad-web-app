@@ -4,14 +4,18 @@ export {
     auth,
     logout,
     fetchMyUserData,
-    fetchMyEvents,
-    addFavEvent,
-    deleteFavEvent,
-    bookMeIntoGame,
-    unbookMeFromGame,
 } from './auth';
 
 export {
     fetchEvents,
     fetchEvent,
 } from './events';
+
+export {
+    fetchMyEvents,
+    addFavEvent,
+    deleteFavEvent,
+    bookMeIntoGame,
+    unbookMeFromGame,
+    fetchMyAvailableGameSlots,
+} from './booking'

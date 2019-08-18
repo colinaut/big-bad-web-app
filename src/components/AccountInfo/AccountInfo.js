@@ -1,9 +1,12 @@
 import { connect } from 'react-redux';
 import React, {Fragment} from 'react'
-import styles from './AccountInfo.module.css';
-import Button from '../Button'
+
 import * as actions from '../../store/actions';
+import Button from '../Button'
 import MyBookings from '../MyBookings';
+import TestingActionButtons from '../TestingActionButtons/TestingActionButtons';
+
+import styles from './AccountInfo.module.css';
 
 const AccountInfo = props => {
 
@@ -20,10 +23,8 @@ const AccountInfo = props => {
           <MyBookings />
         </div>
         <div className={styles.LogOutWrapper}>
-        <Button clicked={logoutHandler} btnType='Gray'>Logout</Button>
-        <Button clicked={()=> props.fetchMyUserData()} btnType='Gray'>Fetch UserData</Button>
-        <Button clicked={()=> props.fetchMyEvents()} btnType='Gray'>Fetch My Events</Button>
-        <Button clicked={()=> props.fetchEvents()} btnType='Gray'>Fetch All Events</Button>
+          <Button clicked={logoutHandler} btnType='Gray'>Logout</Button>
+          <TestingActionButtons/>
         </div>
       </div>
     </Fragment>
@@ -40,9 +41,6 @@ const mapStateToProps = ({auth}) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(actions.logout()),
-    fetchEvents: () => dispatch(actions.fetchEvents()),
-    fetchMyEvents: () => dispatch(actions.fetchMyEvents()),
-    fetchMyUserData: () => dispatch(actions.fetchMyUserData())
   }
 }
 AccountInfo.defaultProps = {

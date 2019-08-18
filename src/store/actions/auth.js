@@ -8,7 +8,7 @@ import * as actions from '../../store/actions';
 // function to return Axios auth header
 export const authToken = (getState) => {
     const auth = getState().auth
-    return { headers: { Authorization: (auth.authToken) } }
+    return auth.authToken ? { headers: { Authorization: (auth.authToken) } } : null
 }
 
 export const authStart = () => {
@@ -43,9 +43,14 @@ export const auth = (username, password) => {
             const authToken = response.headers.authorization
             localStorage.setItem('authToken',authToken)
             dispatch(authSuccess(authToken))
-            dispatch(fetchMyUserData())
-            dispatch(fetchMyEvents())
-            dispatch(actions.fetchEvents()) //Grab events with complete logged in available data
+            // Get User Data including fav events
+            dispatch(actions.fetchMyUserData())
+            // Get Users Available Game Slots
+            dispatch(actions.fetchMyAvailableGameSlots())
+            // Get User's Events
+            dispatch(actions.fetchMyEvents())
+            //Grab events with complete logged in available data
+            dispatch(actions.fetchEvents()) 
         })
         .catch(err => {console.log(err);dispatch(authFail())})
     }
@@ -82,114 +87,17 @@ export const fetchMyUserData = () => {
                 const userData = {displayName: allData.displayName, userNicename: allData.userNicename, id:allData.id}
                 const favEvents = allData.bbcUserFavorites.map(fav => fav.eventId)
 
-                dispatch(fetchMyUserDataSuccess({userData,favEvents}))
+                dispatch({
+                    type: actionTypes.GET_MY_USER_DATA,
+                    userData
+                })
+                dispatch({
+                    type: actionTypes.GET_MY_FAV_EVENTS,
+                    favEvents
+                })
             })
             .catch(error => {
                 throw(error);
             });
-    }
-}
-
-export const fetchMyUserDataSuccess = ({userData,favEvents}) => {
-    return {
-        type: actionTypes.GET_MY_USER_DATA,
-        userData,
-        favEvents
-    }
-}
-export const fetchMyUserDataSuccess2 = ({userData,allData}) => {
-    return {
-        type: actionTypes.GET_MY_USER_DATA,
-        userData,
-        allData
-    }
-}
-
-export const fetchMyEvents = () => {
-    return (dispatch, getState) => {
-        return axios.get(APIurl.getUrl(APIurl.EVENTS_ME), authToken(getState))
-            .then(response => {
-                dispatch(fetchMyEventsSuccess(response.data))
-            })
-            .catch(error => {
-                throw(error);
-            });
-    }
-}
-
-export const fetchMyEventsSuccess = (myEvents) => {
-    return {
-        type: actionTypes.GET_MY_EVENTS,
-        myEvents
-    }
-}
-
-// Favorite Events List
-
-export const addFavEvent = eventId => {
-    return (dispatch, getState) => {
-        const postData = { eventId: eventId }
-        return axios.post(APIurl.getUrl(APIurl.EVENTS_ME_FAV_CREATE), postData, authToken(getState))
-            .then(response => {
-                dispatch(addFavEventSuccess(eventId));
-            })
-            .catch(error => {
-                throw(error);
-            });
-    }
-}
-
-export const deleteFavEvent = eventId => {
-    return (dispatch, getState) => {
-        const postData = { eventId: eventId }
-        return axios.delete(APIurl.getUrl(APIurl.EVENTS_ME_FAV_DELETE), postData, authToken(getState))
-            .then(response => {
-                dispatch(deleteFavEventSuccess(eventId));
-            })
-            .catch(error => {
-                throw(error);
-            });
-    }
-}
-
-export const addFavEventSuccess = eventId => {
-    return {
-        type: actionTypes.ADD_FAV_EVENT,
-        eventId
-    }
-}
-
-export const deleteFavEventSuccess = eventId => {
-    return {
-        type: actionTypes.REMOVE_FAV_EVENT,
-        eventId
-      }
-}
-
-//Booking
-
-export const bookMeIntoGame = eventId => {
-    return (dispatch, getState) => {
-        const postData = { gameId: eventId }
-        return axios.post(APIurl.getUrl(APIurl.BOOKINGS_BOOK_ME_INTO_GAME), postData, authToken(getState))
-            .then(response => {
-                dispatch(bookMeIntoGameSuccess(eventId));
-            })
-            .catch(error => {
-                throw(error);
-            });
-    }
-}
-
-export const bookMeIntoGameSuccess = eventId => {
-    return {
-        type: actionTypes.BOOK_ME_INTO_GAME,
-        eventId
-    }
-}
-
-export const unbookMeFromGame = eventId => {
-    return (dispatch,getState) => {
-        
     }
 }

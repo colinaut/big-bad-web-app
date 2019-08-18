@@ -7,7 +7,8 @@ import thunk from 'redux-thunk'
 const rootReducer = combineReducers({
     events: reducers.eventsReducer,
     blog: reducers.blogReducer,
-    auth: reducers.authReducer
+    auth: reducers.authReducer,
+    booking: reducers.bookingReducer,
 })
 
 const persistConfig = {
@@ -20,7 +21,8 @@ const persistConfig = {
 const initialState = {
     events: {},
     blog: {},
-    auth: {}
+    auth: {},
+    booking: {},
 }
 
 // Add BOTH store enhancers when making store creator

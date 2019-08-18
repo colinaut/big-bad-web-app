@@ -1,11 +1,22 @@
 .EventBooking {
     margin: 1rem 0 .5rem;
     font-size: .9rem;
+    border-top: 1px solid var(--dark-red);
+    padding-top: .6rem;
 }
 .Heading {
     font-size: 1rem;
     margin: 0 0 .5rem;
+    color: var(--dark-red)
 }
 .Booked {
     font-weight: 700
+}
+.AvailableSlots {
+    font-size: 1rem;
+    margin-left: .5rem;
+}
+.YouAreBooked, .GameSlots {
+    font-style: italic;
+    font-weight: 400;
 }

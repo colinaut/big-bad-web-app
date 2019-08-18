@@ -80,11 +80,11 @@ const Event = props => {
   } else return null
 }
 
-const mapStateToProps = ({auth}) => {
+const mapStateToProps = ({auth,booking}) => {
   return {
-      favEvents: auth.favEvents,
+      favEvents: booking.favEvents,
       authStatus: auth.authStatus,
-      myEvents: auth.myEvents,
+      myEvents: booking.myEvents,
   }
 }
 

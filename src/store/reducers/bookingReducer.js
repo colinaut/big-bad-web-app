@@ -1,14 +1,8 @@
 import * as actionTypes from '../actions/actionTypes';
 
-export const authReducer = (state = {}, action) => {
+export const bookingReducer = (state = {}, action) => {
 
     switch (action.type) {
-        case actionTypes.AUTH_SUCCESS:
-            return {...state, authToken: action.authToken, authStatus: true}
-        case actionTypes.AUTH_LOGOUT:
-            return {...state, authToken: "", authStatus: false}
-        case actionTypes.GET_MY_USER_DATA:
-            return {...state, userData: action.userData, favEvents:action.favEvents}
         case actionTypes.GET_MY_EVENTS:
             return {...state, myEvents: action.myEvents}
         case actionTypes.ADD_FAV_EVENT:
@@ -19,8 +13,10 @@ export const authReducer = (state = {}, action) => {
             return {...state, myEvents:[...state.myEvents, action.eventId]}
         case actionTypes.GET_MY_AVAILABLE_GAME_SLOTS:
             return {...state, myAvailableGameSlots: action.myAvailableGameSlots}
+        case actionTypes.GET_MY_FAV_EVENTS:
+            return {...state, favEvents:action.favEvents}
         default: return state
     }
 }
 
-export default authReducer
+export default bookingReducer

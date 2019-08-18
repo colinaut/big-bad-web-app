@@ -9,4 +9,13 @@
 .List {
     margin: 0;
     padding: 0;
+    width: 95%;
+}
+.GameSlots {
+    width: 95%;
+    margin-top: 1rem;
+    border-top: 1px solid var(--teal);
+    padding-top: .5rem;
+    color: #dddddd;
+    font-weight: 700
 }

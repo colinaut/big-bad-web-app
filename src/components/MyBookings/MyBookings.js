@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import MyBookingsListItem from '../MyBookingsListItem'
 
 const MyBookings = props => {
-  const {myEvents} = props;
+  const {myEvents, myAvailableGameSlots} = props;
 
-  //TODO: style the No bookings yet better
+  const gameSlotText = (myAvailableGameSlots === 1) ? `You have ${myAvailableGameSlots} Game Slot Available` : `You have ${myAvailableGameSlots} Game Slots Available`
+
 
   return (
     <div className={styles.MyBookings}>
@@ -16,13 +17,17 @@ const MyBookings = props => {
           {myEvents.map( eventId => <MyBookingsListItem key={eventId} eventId={eventId}/>)}
         </ul>
       : <p>No events booked yet!</p> }
+      <div className={styles.GameSlots}>
+        {gameSlotText}
+      </div>
     </div>
   )
 }
 
-const mapStateToProps = ({auth}) => {
+const mapStateToProps = ({booking}) => {
   return {
-      myEvents: auth.myEvents
+      myEvents: booking.myEvents,
+      myAvailableGameSlots: booking.myAvailableGameSlots
   }
 }
 

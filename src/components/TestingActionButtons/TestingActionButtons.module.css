@@ -1,0 +1,12 @@
+.TestingActionButtons {
+    text-align: center;
+    border: 1px solid #333;
+    padding: .4rem .5rem .2rem;
+    border-radius: 4px;
+    background: #bbb;
+}
+.Header {
+    margin: 0 0 .2rem;
+    color: var(--navy-blue);
+    font-size: 1rem
+}

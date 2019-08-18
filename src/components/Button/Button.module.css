@@ -1,8 +1,8 @@
 .Button {
-    background-color: var(--teal);
+    background-color: var(--mid-teal);
     border: 1px solid var(--blue-black);
     border-radius: 4px;
-    color: var(--blue-black);
+    color: var(--off-white);
     outline: none;
     cursor: pointer;
     font: inherit;
@@ -10,12 +10,11 @@
     font-weight: bold;
     display: inline-block;
     transition: all .5s;
-    margin: .8rem 0;
+    margin: .5rem 0;
 }
 
 .Button:hover {
-    background-color: var(--light-teal);
-    color: #000;
+    background-color: var(--dark-teal);
 }
 
 .Button:disabled {
@@ -23,12 +22,13 @@
     cursor: not-allowed;
 }
 
-.Success {
-    color: #5C9210;
-}
-
 .Danger {
-    color: #944317;
+    background: var(--bright-red);
+    color: var(--off-white);
+}
+.Danger:hover {
+    background: var(--red);
+    color: var(--off-white);
 }
 .White {
     color: #ffffff;

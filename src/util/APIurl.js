@@ -1,5 +1,7 @@
 const isProdution = false; //set to true to use bigbadcon.com
 
+// API Docs are here: https://www.logictwine.com:8091/api/swagger-ui.html
+
 export const POSTS = 'POSTS';
 export const EVENTS_ALL = 'EVENTS_ALL';
 export const EVENTS_ALL_PUBLIC = 'EVENTS_ALL_PUBLIC';
