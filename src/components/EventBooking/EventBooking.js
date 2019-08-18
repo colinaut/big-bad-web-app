@@ -12,18 +12,39 @@ const EventBooking = props => {
 
   const gameSlotText = (myAvailableGameSlots === 1) ? `You have ${myAvailableGameSlots} Game Slot Available` : `You have ${myAvailableGameSlots} Game Slots Available`
 
+  const btnStyle = {
+    margin: '0'
+  }
+  const bookingSwitch = () => {
+    if (myEvents.includes(id)) {
+      return (
+        <div className={styles.Booked}>
+          <p className={styles.YouAreBooked}>You are booked into this event!</p>
+          <Button style={btnStyle} clicked={()=> props.unbookMeFromGame(id)} btnType='Danger'>Cancel Booking</Button>
+        </div>
+      )
+    } else if (myAvailableGameSlots < 1) {
+      return (
+        <div className={styles.OverBooked}>
+          <p className={styles.YouAreOverBooked}>You have no bookings left!</p>
+        </div>
+      )
+    } else {
+      return (
+        <div className={styles.NotBooked}>
+          <p className={styles.GameSlots}>{gameSlotText}</p>
+          <Button style={btnStyle} clicked={()=> props.bookMeIntoGame(id)}>Book Event</Button>
+        </div> 
+      )
+    }
+  }
+
   return props.bookings ? (
     <div className={styles.EventBooking}>
       <h3 className={styles.Heading}>Event Bookings:
         <span className={styles.AvailableSlots}>(Available Slots: <strong className={styles.AvailableSlotsNumber}>{players - bookings.length + 1} of {players}</strong>)</span>
       </h3>
-      {(myEvents.includes(id)) ? 
-        <div className={styles.Booked}><p className={styles.YouAreBooked}>You are booked into this event!</p><Button clicked={()=> props.unbookMeFromGame(id)} btnType='Danger'>Cancel Booking</Button></div> 
-      : <div className={styles.NotBooked}>
-          <p className={styles.GameSlots}>{gameSlotText}</p>
-          <Button clicked={()=> props.bookMeIntoGame(id)}>Book Event</Button>
-        </div> 
-      }
+      {bookingSwitch()}
     </div>
   ) : null
 }
