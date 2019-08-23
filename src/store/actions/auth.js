@@ -93,7 +93,7 @@ export const fetchMyUserData = () => {
                     userData
                 })
                 dispatch({
-                    type: actionTypes.GET_MY_FAV_EVENTS,
+                    type: actionTypes.SET_MY_FAV_EVENTS,
                     favEvents
                 })
             })

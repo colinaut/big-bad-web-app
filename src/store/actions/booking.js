@@ -67,7 +67,7 @@ export const fetchMyEvents = () => {
 
 export const fetchMyEventsSuccess = (myEvents) => {
     return {
-        type: actionTypes.GET_MY_EVENTS,
+        type: actionTypes.SET_MY_EVENTS,
         myEvents
     }
 }
@@ -76,26 +76,56 @@ export const bookMeIntoGame = eventId => {
     return (dispatch, getState) => {
         const postData = { gameId: eventId }
         const config = { headers: authToken(getState) }
+        // Preventatively remove from available game slots. Doing this to make sure users can't double book by clicking fast
+        const myAvailableGameSlots = getState().booking.myAvailableGameSlots;
+        dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots-1));
+
         return axios.post(APIurl.getUrl(APIurl.BOOKINGS_BOOK_ME_INTO_GAME), postData, config)
             .then(response => {
+                console.log(response)
                 dispatch(bookMeIntoGameSuccess(eventId));
             })
             .catch(error => {
+                // If fails then revert Available Game Slots
+                dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots));
                 throw(error);
             });
     }
 }
 
-export const bookMeIntoGameSuccess = eventId => {
+const bookMeIntoGameSuccess = eventId => {
     return {
         type: actionTypes.BOOK_ME_INTO_GAME,
         eventId
     }
 }
 
-export const unbookMeFromGame = eventId => {
+export const removeMeFromGame = eventId => {
     return (dispatch,getState) => {
-        
+        const postData = { gameId: eventId }
+
+        return axios({
+            method: 'DELETE',
+            url: APIurl.getUrl(APIurl.BOOKINGS_REMOVE_ME_FROM_GAME),
+            headers: authToken(getState),
+            data: postData
+        })
+        .then(response => {
+            console.log(response)
+            dispatch(removeMeFromGameSuccess(eventId));
+            const myAvailableGameSlots = getState().booking.myAvailableGameSlots;
+            dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots+1));
+        })
+        .catch(error => {
+            throw(error);
+        });
+    }
+}
+
+const removeMeFromGameSuccess = eventId => {
+    return {
+        type: actionTypes.REMOVE_ME_FROM_GAME,
+        eventId
     }
 }
 
@@ -104,13 +134,17 @@ export const fetchMyAvailableGameSlots = () => {
         const config = { headers: authToken(getState) }
         return axios.get(APIurl.getUrl(APIurl.BOOKINGS_MY_AVAILABLE_GAME_SLOTS), config)
             .then(response => {
-                dispatch({
-                    type: actionTypes.GET_MY_AVAILABLE_GAME_SLOTS,
-                    myAvailableGameSlots: response.data
-                })
+                dispatch(fetchMyAvailableGameSlotsSuccess(response.data))
             })
             .catch(error => {
                 throw(error);
             });
+    }
+}
+
+const fetchMyAvailableGameSlotsSuccess = myAvailableGameSlots => {
+    return {
+        type: actionTypes.SET_MY_AVAILABLE_GAME_SLOTS,
+        myAvailableGameSlots
     }
 }

@@ -20,7 +20,7 @@ const EventBooking = props => {
       return (
         <div className={styles.Booked}>
           <p className={styles.YouAreBooked}>You are booked into this event!</p>
-          <Button style={btnStyle} clicked={()=> props.unbookMeFromGame(id)} btnType='Danger'>Cancel Booking</Button>
+          <Button style={btnStyle} clicked={()=> props.removeMeFromGame(id)} btnType='Danger'>Cancel Booking</Button>
         </div>
       )
     } else if (myAvailableGameSlots < 1) {
@@ -61,7 +61,7 @@ const mapStateToProps = ({events, booking}, ownProps) => {
 const mapDispatchToProps = dispatch => {
   return {
     bookMeIntoGame: (id)=> dispatch(actions.bookMeIntoGame(id)),
-    unbookMeFromGame: (id) => dispatch(actions.unbookMeFromGame(id))
+    removeMeFromGame: (id) => dispatch(actions.removeMeFromGame(id))
   }
 }
 

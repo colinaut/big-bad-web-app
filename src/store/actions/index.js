@@ -16,6 +16,6 @@ export {
     addFavEvent,
     deleteFavEvent,
     bookMeIntoGame,
-    unbookMeFromGame,
+    removeMeFromGame,
     fetchMyAvailableGameSlots,
 } from './booking'

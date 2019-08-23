@@ -12,11 +12,12 @@ export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const GET_MY_USER_DATA = 'GET_MY_USER_DATA';
 
 // Fav Events
-export const GET_MY_FAV_EVENTS = 'GET_MY_FAV_EVENTS';
+export const SET_MY_FAV_EVENTS = 'GET_MY_FAV_EVENTS';
 export const ADD_FAV_EVENT = 'ADD_FAV_EVENT';
 export const REMOVE_FAV_EVENT = 'REMOVE_FAV_EVENT';
 
 // My Events and Booking
-export const GET_MY_EVENTS = 'GET_MY_EVENTS';
+export const SET_MY_EVENTS = 'GET_MY_EVENTS';
 export const BOOK_ME_INTO_GAME = 'BOOK_ME_INTO_GAME';
-export const GET_MY_AVAILABLE_GAME_SLOTS = 'GET_MY_AVAILABLE_GAME_SLOTS';
+export const REMOVE_ME_FROM_GAME = 'REMOVE_ME_FROM_GAME';
+export const SET_MY_AVAILABLE_GAME_SLOTS = 'SET_MY_AVAILABLE_GAME_SLOTS';
