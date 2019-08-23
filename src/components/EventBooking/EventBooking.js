@@ -8,7 +8,7 @@ const EventBooking = props => {
 
   const {id,bookings,metadata,myEvents,myAvailableGameSlots} = props
 
-  const players = metadata.find(data => data.metaKey === 'Players').metaValue
+  const players = metadata.find(data => data.metaKey === 'Players') ? metadata.find(data => data.metaKey === 'Players').metaValue : false;
 
   const gameSlotText = (myAvailableGameSlots === 1) ? `You have ${myAvailableGameSlots} Game Slot Available` : `You have ${myAvailableGameSlots} Game Slots Available`
 

@@ -41,20 +41,15 @@
 .FilterButton.On {
     color: #b90e0e;
 }
-.FilterButton.Favs {
+
+.PanelIcon {
+    height: 14px;
+    width: auto;
+    margin-right: .3rem;
     position: relative;
-    padding-left: 20px;
+    top: 2px;
 }
 
-.FilterButton.Favs::before {
-    content: " ";
-    width: 16px;
-    height: 16px;
-    margin-right: .3rem;
-    display: block;
-    position: absolute;
-    top: 1px;
-    left:0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'%3E%3Cpath d='M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
+.PanelIcon.favs path {
+    stroke: #000;
 }

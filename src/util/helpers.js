@@ -1,7 +1,7 @@
 import moment from 'moment';
 
-export function transformObjectToArray(object) { //TODO test if is object
-    return object ? Object.keys(object).map((key)=>{ return {...object[key], keyId: key} }) : false
+export function transformObjectToArray(object,id = 'id') {
+  return object ? Object.keys(object).map((key)=>{ return {...object[key], [id]: key} }) : false
 }
 
 export const transformArrayToObject = (array, keyField) =>

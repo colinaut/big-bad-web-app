@@ -6,12 +6,14 @@ import EventsFilter from '../EventsFilter';
 import uuid from 'react-uuid';
 import {transformObjectToArray} from '../../util/helpers';
 import {convertDate} from '../../util/helpers';
+import { ReactComponent as D6 } from '../../assets/die-6.svg'
+import { ReactComponent as Star } from '../../assets/star.svg';
 
 const EventList = props => {
 
   const {categories, dates} = props;
 
-  const [currentFilters, setCurrentFilters] = useState({categories: "all",dates:"all", favs:false});
+  const [currentFilters, setCurrentFilters] = useState({categories: 'all',dates: 'all', availability:false, favs:false});
 
   // Setting up all the Filter buttons
   const [filterButtons, setFilterButtons] = useState({
@@ -27,9 +29,23 @@ const EventList = props => {
         { slug:"all", name:"All", click:()=>filterList('dates','all'), active: true }, 
         ...dates.map(d => { return {slug:d, name: convertDate(d,'ddd'), click: ()=>filterList("dates",d),active:false}})] 
     },
-    favs: { //TODO only show faves to logged in users
+    availability: {
       label: false,
       authOnly: true,
+      icon: D6,
+      buttons: [
+        {
+          slug: "open",
+          name:"Open",
+          click:() => filterAvailablity(),
+          active: false
+        }
+      ]
+    },
+    favs: { 
+      label: false,
+      authOnly: true,
+      icon: Star,
       buttons: [
         {
           slug: "favs",
@@ -74,7 +90,16 @@ const EventList = props => {
     setCurrentFilters(prevState => { return {...prevState, favs:!prevState.favs}});
 
     setFilterButtons(prevState => { 
-      return {...prevState, favs:{...prevState.favs, buttons:[{slug: "favs", name:"Favs", click:() => filterFavs(), active: !prevState.favs.buttons.active}]}}
+      return {...prevState, favs:{...prevState.favs, buttons:[{slug: "favs", name:"Favs", click:() => filterFavs(), active: !prevState.favs.buttons[0].active}]}}
+    });
+    
+  }
+
+  const filterAvailablity = () => {
+    setCurrentFilters(prevState => { return {...prevState, availability:!prevState.availability}});
+
+    setFilterButtons(prevState => { 
+      return {...prevState, availability:{...prevState.availability, buttons:[{slug: "open", name:"Open", click:() => filterAvailablity(), active: !prevState.availability.buttons[0].active}]}}
     });
     
   }

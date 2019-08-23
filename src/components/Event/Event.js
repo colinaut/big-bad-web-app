@@ -31,7 +31,8 @@ const Event = props => {
     endTime,
     deleteFavEvent,
     addFavEvent,
-    fetchEvent
+    fetchEvent,
+    bookings,
   } = props
 
   const [detailsToggle, toggleDetails] = useToggle(false);
@@ -42,7 +43,6 @@ const Event = props => {
 
   const favStarStatus = favEvents.includes(id)
   const favStarStyle = (favEvents.includes(id)) ? [styles.FavStar, styles.FavStarActive].join(' ') : styles.FavStar;
-
 
   const toggleFavStar = () => {
       if (favStarStatus) {
@@ -58,15 +58,19 @@ const Event = props => {
     })
   }
 
+  const availabileSlots = metaFields.Players - bookings.filter(booking => booking.bookingStatus === 1 && booking.bookingComment === null).length
+  
   const categoriesSlugArray = categories.map((cat) => { return cat.slug })
 
   const toggleDetailsHandler = () => {
     if (authStatus && !detailsToggle) fetchEvent(id) //Fetch the Event info again on opening the details as long as user is logged in.
     toggleDetails()
+    console.log(filters.availability,availabileSlots)
   }
 
   const displayEvent = () => {
-    if (filters.favs && !favStarStatus) return false;
+    if (authStatus && filters.favs && !favStarStatus) return false;
+    if (authStatus && filters.availability && availabileSlots < 1) return false;
     if (filters.dates !== "all" && filters.dates !== startDate) return false;
     if (filters.categories !== "all" && !categoriesSlugArray.includes(filters.categories)) return false;
     return true;
@@ -100,11 +104,12 @@ const Event = props => {
   } else return null
 }
 
-const mapStateToProps = ({auth,booking}) => {
+const mapStateToProps = ({auth,booking,events},ownProps) => {
   return {
       favEvents: booking.favEvents,
       authStatus: auth.authStatus,
       myEvents: booking.myEvents,
+      bookings: events.eventsById[ownProps.id].bookings,
   }
 }
 
