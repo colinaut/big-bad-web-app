@@ -15,7 +15,24 @@ import getMarkup from '../../util/getMarkup';
 
 const Event = props => {
 
-  const {favEvents,authStatus,myEvents,id} = props
+  const {
+    favEvents,
+    authStatus,
+    myEvents,
+    id,
+    metadata,
+    categories,
+    eventOwner,
+    name,
+    description,
+    filters,
+    startDate,
+    startTime,
+    endTime,
+    deleteFavEvent,
+    addFavEvent,
+    fetchEvent
+  } = props
 
   const [detailsToggle, toggleDetails] = useToggle(false);
 
@@ -23,54 +40,57 @@ const Event = props => {
   const eventSummaryStyle = (myEvents && myEvents.includes(id)) ? [styles.Eventsummary, styles.MyEvent].join(' ') : styles.Eventsummary;
   const detailsStyle = (detailsToggle) ? [styles.Details, styles.DetailsActive].join(' ') : styles.Details;
 
-  const favStarStatus = favEvents.includes(props.id)
-  const favStarStyle = (props.favEvents.includes(props.id)) ? [styles.FavStar, styles.FavStarActive].join(' ') : styles.FavStar;
+  const favStarStatus = favEvents.includes(id)
+  const favStarStyle = (favEvents.includes(id)) ? [styles.FavStar, styles.FavStarActive].join(' ') : styles.FavStar;
 
 
   const toggleFavStar = () => {
       if (favStarStatus) {
-        props.deleteFavEvent(props.id);
-      } else props.addFavEvent(props.id);
+        deleteFavEvent(id);
+      } else addFavEvent(id);
   }
 
   let metaFields = {}
 
-  if (props.metadata) {
-    props.metadata.map((meta)=> {
+  if (metadata) {
+    metadata.map((meta)=> {
       return metaFields = {...metaFields, [meta.metaKey]:meta.metaValue}
     })
   }
 
-  const categoriesSlugArray = props.categories.map((cat) => { return cat.slug })
+  const categoriesSlugArray = categories.map((cat) => { return cat.slug })
 
-  const displayEvent = () => {
-    if (props.filters.favs && !favStarStatus) return false;
-    if (props.filters.dates !== "all" && props.filters.dates !== props.startDate) return false;
-    if (props.filters.categories !== "all" && !categoriesSlugArray.includes(props.filters.categories)) return false;
-    return true;
+  const toggleDetailsHandler = () => {
+    if (authStatus && !detailsToggle) fetchEvent(id) //Fetch the Event info again on opening the details as long as user is logged in.
+    toggleDetails()
   }
 
-  //TODO make details Toggle have obvious close button
+  const displayEvent = () => {
+    if (filters.favs && !favStarStatus) return false;
+    if (filters.dates !== "all" && filters.dates !== startDate) return false;
+    if (filters.categories !== "all" && !categoriesSlugArray.includes(filters.categories)) return false;
+    return true;
+  }
 
   if (displayEvent()) {
     return (
       <div className={eventStyle}>
         <div className={eventSummaryStyle}>
-          <div className={styles.TitleColumn} onClick={toggleDetails}>
-            <div className={styles.Title} dangerouslySetInnerHTML={getMarkup(props.name)} />
+          <div className={styles.TitleColumn} onClick={toggleDetailsHandler}>
+            <div className={styles.Title} dangerouslySetInnerHTML={getMarkup(name)} />
             <div className={styles.System}>{metaFields.System}</div>
           </div>
-          <div className={styles.TimeColumn} onClick={toggleDetails}>
-            <div className={styles.Date}>{convertDate(props.startDate)}</div>
-            <div className={styles.Time}>{convertTime(props.startTime)} - {convertTime(props.endTime)}</div>
+          <div className={styles.TimeColumn} onClick={toggleDetailsHandler}>
+            <div className={styles.Date}>{convertDate(startDate)}</div>
+            <div className={styles.Time}>{convertTime(startTime)} - {convertTime(endTime)}</div>
           </div>
         </div>
         { authStatus ? <div className={styles.FavStarWrapper}><Star className={favStarStyle} onClick={toggleFavStar} /></div> : null}
         {detailsToggle ? 
           <Fragment>
             <div className={detailsStyle} >
-              <EventDetails eventOwner={props.eventOwner} description={props.description} meta={metaFields} categories={props.categories}/> 
-              { authStatus ? <EventBooking id={props.id} /> : null }
+              <EventDetails eventOwner={eventOwner} description={description} meta={metaFields} categories={categories}/> 
+              { authStatus ? <EventBooking id={id} /> : null }
             </div> 
             <CloseAccordianBtn close={toggleDetails} color='Red' />
           </Fragment>

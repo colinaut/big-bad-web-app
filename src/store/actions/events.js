@@ -80,15 +80,15 @@ export const fetchEventsSince = (payload) => { // TODO: get this working
 
 export const fetchEvent = eventId => {
     return (dispatch, getState) => {
-     
+        const config = { headers: authToken(getState) }
         const params = { id: eventId }
-        return axios.post(APIurl.getUrl(APIurl.EVENTS_FIND_EVENT), params, authToken(getState))
+        return axios.post(APIurl.getUrl(APIurl.EVENTS_FIND_EVENT), params, config)
             .then(response => {
                 console.log(response.data)
                 //TODO: Reconfigure now that it works!!!
 
                 //const sortedEvents = sortEvents(response.data)
-                //dispatch(fetchEventsSuccess(sortedEvents))
+                //dispatch(fetchEventSuccess(sortedEvents))
             })
             .catch(error => {
                 throw(error);

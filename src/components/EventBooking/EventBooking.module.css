@@ -20,3 +20,14 @@
     font-style: italic;
     font-weight: 400;
 }
+.PlayersListHeader {
+    margin: .8rem 0 0;
+    font-size: 1rem;
+}
+.PlayersList {
+    margin: .5rem 0;
+    padding: 0 0 0 1.4rem;
+}
+.PlayersListItem {
+
+}

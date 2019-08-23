@@ -12,9 +12,12 @@ const EventBooking = props => {
 
   const gameSlotText = (myAvailableGameSlots === 1) ? `You have ${myAvailableGameSlots} Game Slot Available` : `You have ${myAvailableGameSlots} Game Slots Available`
 
+  const playerList = bookings.filter(booking => booking.bookingComment !== 'GM').map(booking => { return {bookingId: booking.bookingId, displayName: booking.user.displayName}})
+
   const btnStyle = {
     margin: '0'
   }
+
   const bookingSwitch = () => {
     if (myEvents.includes(id)) {
       return (
@@ -44,6 +47,12 @@ const EventBooking = props => {
       <h3 className={styles.Heading}>Event Bookings:
         <span className={styles.AvailableSlots}>(Available Slots: <strong className={styles.AvailableSlotsNumber}>{players - bookings.length + 1} of {players}</strong>)</span>
       </h3>
+      {playerList ? 
+      <div className={styles.PlayersListWrapper}>
+        <ul className={styles.PlayersList}>
+          {playerList.map(player => <li className={styles.PlayersListItem} key={player.bookingId}>{player.displayName}</li>)}
+        </ul> 
+      </div>: null}
       {bookingSwitch()}
     </div>
   ) : null
