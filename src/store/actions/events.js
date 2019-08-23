@@ -25,10 +25,10 @@ const sortEvents = events => {
 
 export const fetchEvents = () => {
     return (dispatch, getState) => {
-        const state = getState(); 
-        const url = state.auth.authToken ? APIurl.getUrl(APIurl.EVENTS_ALL) : APIurl.getUrl(APIurl.EVENTS_ALL_PUBLIC);
-
-        return axios.get(url, authToken(getState))
+        const authHeader = authToken(getState)
+        const url = authHeader ? APIurl.getUrl(APIurl.EVENTS_ALL) : APIurl.getUrl(APIurl.EVENTS_ALL_PUBLIC);
+        const config = { headers: authHeader }
+        return axios.get(url, config)
             .then(response => {
                 const events = response.data;
                 const sortedEvents = sortEvents(events);
