@@ -78,6 +78,8 @@ const EventList = props => {
     });
     
   }
+
+  //TODO: create filter for open games
   
   return (
     <div className={styles.EventlistWrapper}>
@@ -96,9 +98,9 @@ const EventList = props => {
             endTime={event.eventEndTime}
             description={event.postContent}
             categories={event.categories}
-            eventOwner={event.eventOwner}
             metadata={event.metadata}
             filters={currentFilters}
+            eventRoom={event.eventRoom}
             />
         ))}
       </div>

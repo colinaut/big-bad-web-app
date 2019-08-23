@@ -22,7 +22,7 @@ const Event = props => {
     id,
     metadata,
     categories,
-    eventOwner,
+    eventRoom,
     name,
     description,
     filters,
@@ -89,7 +89,7 @@ const Event = props => {
         {detailsToggle ? 
           <Fragment>
             <div className={detailsStyle} >
-              <EventDetails eventOwner={eventOwner} description={description} meta={metaFields} categories={categories}/> 
+              <EventDetails eventRoom={eventRoom} description={description} meta={metaFields} categories={categories}/> 
               { authStatus ? <EventBooking id={id} /> : null }
             </div> 
             <CloseAccordianBtn close={toggleDetails} color='Red' />

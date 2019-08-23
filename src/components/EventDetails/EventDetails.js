@@ -1,26 +1,31 @@
-
 import React from 'react'
 import styles from './EventDetails.module.css';
 import getMarkup from '../../util/getMarkup';
 
 const EventDetails = props => {
+
+  const {
+    meta,
+    categories,
+    eventRoom,
+    description
+  } = props;
+
   return (
     <div className={styles.Eventdetails} >
-      <div className={styles.Description} dangerouslySetInnerHTML={getMarkup(props.description)} />
+      <div className={styles.Description} dangerouslySetInnerHTML={getMarkup(description)} />
       <div className={styles.Meta}>
-        {props.eventOwner ? <span><strong>GM:</strong> {props.eventOwner.displayName}</span> : null}
-        {(props.meta.Min_Players && props.meta.Min_Players > 1) ? <span><strong>Players:</strong> {props.meta.Min_Players}-{props.meta.Players}</span> : null}
-        <span><strong>Length:</strong> {props.meta.Length} hrs</span>
-        {(props.categories && props.categories.length > 0) ? <span><strong>Categories:</strong> <Categories categories={props.categories}/></span> : null}
+        {(meta.Min_Players && meta.Min_Players > 1) ? <span><strong>Players:</strong> {meta.Min_Players}-{meta.Players}</span> : null}
+        <span><strong>Length:</strong> {meta.Length} hrs</span>
+        {(categories && categories.length > 0) ? <span><strong>Categories:</strong> <Categories categories={categories}/></span> : null}
       </div>
       <div className={styles.Maturity}>
-        {props.meta.Maturity ? <span><strong>Maturity:</strong> {props.meta.Maturity} </span> : null}
-        {props.meta.gm_age ? <span><strong>GM Age:</strong> {props.meta.gm_age} </span> : null}
-        {props.meta.player_age ? <span><strong>Player Age:</strong> {props.meta.player_age} </span> : null}
+        {meta.Maturity ? <span><strong>Maturity:</strong> {meta.Maturity} </span> : null}
+        {meta.gm_age ? <span><strong>GM Age:</strong> {meta.gm_age} </span> : null}
+        {meta.player_age ? <span><strong>Player Age:</strong> {meta.player_age} </span> : null}
       </div>
-      <div className={styles.SafetyTools}>
-        {props.meta.safety_tools ? <span><strong>Safety Tools:</strong> {props.meta.safety_tools} </span> : null}
-      </div>
+      {meta.safety_tools ? <div className={styles.SafetyTools}><strong>Safety Tools:</strong> {meta.safety_tools} </div> : null}
+      {eventRoom ? <div className={styles.EventRoom}><strong>Event Room:</strong> {eventRoom}</div> : null}
     </div>
   )
 }

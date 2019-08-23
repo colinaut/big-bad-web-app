@@ -1,4 +1,3 @@
-
 import React from 'react'
 import styles from './EventsFilter.module.css';
 import { connect } from 'react-redux';
