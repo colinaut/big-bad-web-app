@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import React, {useEffect} from 'react';
+import unixTime from 'unix-time';
 
 import * as actions from '../../store/actions';
 import EventList from '../EventList';
@@ -14,12 +15,21 @@ const Events = props => {
     sortedEventsArray,
     categories,
     dates,
-    fetchEvents
+    fetchEvents,
+    epochtime,
   } = props;
 
   useEffect(()=>{
     if (!sortedEventsArray || (sortedEventsArray && sortedEventsArray.length < 1)) {fetchEvents()}
-  },[sortedEventsArray,fetchEvents,])
+  },[sortedEventsArray,fetchEvents])
+
+  const currentTime = unixTime(new Date())
+
+  useEffect(()=>{
+    if (epochtime && epochtime + 3600 < currentTime ) {
+      fetchEvents()
+    }
+  },[epochtime, currentTime, fetchEvents])
 
   return (
     <div className={styles.Events}>
@@ -34,7 +44,7 @@ const mapStateToProps = ({auth,events}) => {
       categories: events.categories,
       dates: events.dates,
       sortedEventsArray: events.sortedEventsArray,
-      epochtime: events.epochtime,
+      epochtime: events.epochtime, //TODO: Get epochtime working so that it grabs new event data if it's been a while. Or sort this out via persist
       authStatus: auth.authStatus
   }
 }
