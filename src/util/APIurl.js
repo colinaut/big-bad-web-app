@@ -3,6 +3,7 @@ const isProdution = false; //set to true to use bigbadcon.com
 // API Docs are here: https://www.logictwine.com:8091/api/swagger-ui.html
 
 export const POSTS = 'POSTS';
+export const PAGES = 'PAGES';
 export const EVENTS_ALL = 'EVENTS_ALL';
 export const EVENTS_ALL_PUBLIC = 'EVENTS_ALL_PUBLIC';
 export const EVENTS_CATEGORY = 'EVENTS_CATEGORY';
@@ -27,6 +28,8 @@ export const getUrl = (type,options) => {
     switch(type){
         case POSTS:
             return 'https://www.bigbadcon.com/wp-json/wp/v2/posts'; //only set up to connect to BBC for blog posts at the moment
+        case PAGES:
+            return 'https://www.bigbadcon.com/wp-json/wp/v2/pages'; //only set up to connect to BBC for blog posts at the moment
         case EVENTS_ALL:
             return baseAPIurl + 'events/all';
         case EVENTS_ALL_PUBLIC:

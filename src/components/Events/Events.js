@@ -19,7 +19,6 @@ const Events = props => {
 
   useEffect(()=>{
     if (!sortedEventsArray || (sortedEventsArray && sortedEventsArray.length < 1)) {fetchEvents()}
-    
   },[sortedEventsArray,fetchEvents,])
 
   return (

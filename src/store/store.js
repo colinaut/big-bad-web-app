@@ -7,6 +7,7 @@ import thunk from 'redux-thunk'
 const rootReducer = combineReducers({
     events: reducers.eventsReducer,
     blog: reducers.blogReducer,
+    pages: reducers.pagesReducer,
     auth: reducers.authReducer,
     booking: reducers.bookingReducer,
 })
@@ -21,6 +22,7 @@ const persistConfig = {
 const initialState = {
     events: {},
     blog: {},
+    pages: {},
     auth: {},
     booking: {},
 }

@@ -1,9 +1,7 @@
-
 import { connect } from 'react-redux';
 import React, {useEffect} from 'react'
 
 import * as actions from '../../store/actions';
-import Card from '../Card';
 import LoadingSpinner from '../LoadingSpinner';
 import PageTitle from '../PageTitle';
 import Post from '../Post';
@@ -30,15 +28,14 @@ const DisplayPosts = ({posts}) => {
   return (posts && posts.length) ? (
     <div className={styles.PostsList}>
       {posts.map((post) => (
-        <Card key={post.id}>
-          <Post 
-            id={post.id}
-            titleHTML={post.title.rendered}
-            excerptHTML={post.excerpt.rendered}
-            contentHTML={post.content.rendered} 
-            date={post.date}
-            />
-        </Card>
+        <Post 
+          key={post.id}
+          id={post.id}
+          titleHTML={post.title.rendered}
+          excerptHTML={post.excerpt.rendered}
+          contentHTML={post.content.rendered} 
+          date={post.date}
+          />
       ))}
     </div>
   ) : (

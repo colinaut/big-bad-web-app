@@ -1,5 +1,10 @@
 // Action types
+
+//Blog
 export const GET_BLOG = 'GET_BLOG';
+
+//Pages
+export const GET_PAGE = 'GET_PAGE';
 
 // Events
 export const GET_EVENTS_ALL = 'GET_EVENTS_ALL'; //Used for both public and logged in data

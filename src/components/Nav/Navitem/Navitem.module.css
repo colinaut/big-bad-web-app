@@ -6,7 +6,7 @@
 .Navitem a {
     color: var(--off-white);
     text-decoration: none;
-    margin: .6rem 0 0 .6rem;
+    margin: .6rem 0 0 .2rem;
     padding: .5rem .5rem;
     font-family: 'Archivo Narrow', sans-serif;
     text-transform: uppercase;

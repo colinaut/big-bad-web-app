@@ -3,14 +3,13 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Layout from '../Layout';
 import Navbar from '../Navbar';
-import Blog from '../Blog';
-import Home from '../Home'
+import CommunityStandards from '../CommunityStandards';
 import Events from '../Events';
 import Pagewrapper from '../Pagewrapper'
 
 const sections = [
-  {name: "events", title:"Events", path: "/events", component: <Events/>},
-  {name: "blog", title:"Blog", path: "/blog", component: <Blog/> }
+  {name: "events", title:"Events", path: "/", component: <Events/>},
+  {name: "community-standards", title:"Community Standards", path: "/community", component: <CommunityStandards/> }
 ]
 
 const routes = sections.map((section) => {
@@ -25,7 +24,6 @@ const App = props => {
       <Navbar sections={sections} />
       <Pagewrapper>
         <Switch>
-          <Route path='/' exact><Home/></Route>
           {routes}
         </Switch>
       </Pagewrapper> 

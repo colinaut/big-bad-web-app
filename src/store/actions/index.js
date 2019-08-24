@@ -19,3 +19,7 @@ export {
     removeMeFromGame,
     fetchMyAvailableGameSlots,
 } from './booking'
+
+export {
+    fetchPage,
+} from './pages'

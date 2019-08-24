@@ -19,7 +19,7 @@ const Event = props => {
     id,
     filters,
     event,
-    favEvents,
+    favEvents = [],
     authStatus,
     myEvents,
     deleteFavEvent,
@@ -111,10 +111,6 @@ const mapDispatchToProps = dispatch => {
     deleteFavEvent: (id) => dispatch(actions.deleteFavEvent(id)),
     fetchEvent: (id) => dispatch(actions.fetchEvent(id))
   }
-}
-
-Event.defaultProps = {
-  favEvents: []
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Event)
