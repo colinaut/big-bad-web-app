@@ -4,7 +4,7 @@ import React, {Fragment} from 'react'
 import * as actions from '../../store/actions';
 import Button from '../Button'
 import MyBookings from '../MyBookings';
-import TestingActionButtons from '../TestingActionButtons/TestingActionButtons';
+//import TestingActionButtons from '../TestingActionButtons/TestingActionButtons';
 
 import styles from './AccountInfo.module.css';
 
@@ -24,7 +24,6 @@ const AccountInfo = props => {
         </div>
         <div className={styles.LogOutWrapper}>
           <Button clicked={logoutHandler} btnType='Gray'>Logout</Button>
-          <TestingActionButtons/>
         </div>
       </div>
     </Fragment>
