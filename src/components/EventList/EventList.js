@@ -11,14 +11,18 @@ import { ReactComponent as Star } from '../../assets/star.svg';
 
 const EventList = props => {
 
-  const {categories, dates} = props;
+  const {
+    categories = [], 
+    dates = [],
+    sortedEventsArray = []
+  } = props;
 
   const [currentFilters, setCurrentFilters] = useState({categories: 'all',dates: 'all', availability:false, favs:false});
 
   // Setting up all the Filter buttons
   const [filterButtons, setFilterButtons] = useState({
     categories: {
-      label: "Categories",
+      label: "Category",
       buttons: [
         { slug:"all", name:"All", click:()=>filterList('categories','all'), active: true }, 
         ...categories.map(c => { return {slug:c.slug, name: c.name, click: ()=>filterList("categories",c.slug),active:false}})]
@@ -32,12 +36,12 @@ const EventList = props => {
     availability: {
       label: false,
       authOnly: true,
-      icon: D6,
       buttons: [
         {
           slug: "open",
           name:"Open",
-          click:() => filterAvailablity(),
+          icon: D6,
+          click:() => filterToggle('availability'),
           active: false
         }
       ]
@@ -45,19 +49,19 @@ const EventList = props => {
     favs: { 
       label: false,
       authOnly: true,
-      icon: Star,
       buttons: [
         {
           slug: "favs",
           name:"Favs",
-          click:() => filterFavs(),
+          icon: Star,
+          click:() => filterToggle('favs'),
           active: false
         }
       ]
     }
   });
 
-  useEffect(()=>{  //TODO: change filter buttons when categories change
+  useEffect(()=>{  //change categories filter buttons when categories change
     const categoryButtons = [
       { slug:"all", name:"All", click:()=>filterList('categories','all'), active: true }, 
       ...categories.map(c => { return {slug:c.slug, name: c.name, click: ()=>filterList("categories",c.slug),active:false}})] 
@@ -67,7 +71,7 @@ const EventList = props => {
     })
   },[categories])
 
-  useEffect(()=>{  //TODO: change filter buttons when categories change
+  useEffect(()=>{  //change date filter buttons when categories change
     const dateButtons = [
       { slug:"all", name:"All", click:()=>filterList('dates','all'), active: true }, 
       ...dates.map(d => { return {slug:d, name: convertDate(d,'ddd'), click: ()=>filterList("dates",d),active:false}})] 
@@ -86,56 +90,29 @@ const EventList = props => {
     });
   }
 
-  const filterFavs = () => {
-    setCurrentFilters(prevState => { return {...prevState, favs:!prevState.favs}});
+  const filterToggle = (type) => {
+    setCurrentFilters(prevState => { return {...prevState, [type]:!prevState[type]}});
 
     setFilterButtons(prevState => { 
-      return {...prevState, favs:{...prevState.favs, buttons:[{slug: "favs", name:"Favs", click:() => filterFavs(), active: !prevState.favs.buttons[0].active}]}}
+      const resetButtons = prevState[type].buttons.map(button => { return {...button, active: !button.active} })
+      return {...prevState, [type]:{...prevState[type], buttons:resetButtons }}
     });
-    
   }
-
-  const filterAvailablity = () => {
-    setCurrentFilters(prevState => { return {...prevState, availability:!prevState.availability}});
-
-    setFilterButtons(prevState => { 
-      return {...prevState, availability:{...prevState.availability, buttons:[{slug: "open", name:"Open", click:() => filterAvailablity(), active: !prevState.availability.buttons[0].active}]}}
-    });
-    
-  }
-
-  //TODO: create filter for open games
   
   return (
     <div className={styles.EventlistWrapper}>
       <EventsFilter buttonPanel={transformObjectToArray(filterButtons)}/>
-
       <div className={styles.Eventlist}>
-        {props.events.map((event) => (
-          
+        {sortedEventsArray.map(id => (
           <Event 
-            key={event.eventId + uuid()}
-            id={event.eventId}
-            name={event.eventName} 
-            startDate={event.eventStartDate}
-            endDate={event.eventEndDate}
-            startTime={event.eventStartTime}
-            endTime={event.eventEndTime}
-            description={event.postContent}
-            categories={event.categories}
-            metadata={event.metadata}
+            key={id + uuid()}
+            id={id}
             filters={currentFilters}
-            eventRoom={event.eventRoom}
             />
         ))}
       </div>
     </div>
   )
-}
-
-EventList.defaultProps = {
-  categories: [],
-  dates: []
 }
 
 export default EventList

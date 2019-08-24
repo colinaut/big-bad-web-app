@@ -31,14 +31,14 @@ export const fetchEvents = () => {
         return axios.get(url, config)
             .then(response => {
                 const events = response.data;
-                const sortedEvents = sortEvents(events);
+                const sortedEventsArray = sortEvents(events).map(event => event.eventId);
                 const eventsById = transformArrayToObject(events,'eventId');
                 const listofCategories = [].concat(...events.filter((event)=> event.categories.length > 0).map((event) => event.categories))
                 const uniqueCategories = [...new Set(listofCategories.map(x => x.slug)) ].map(slug => {return {slug:slug, name:listofCategories.find( x => x.slug === slug).name}})
                 const uniqueDates = [...new Set(events.map(x => x.eventStartDate)) ]
                 
                 dispatch(fetchEventsSuccess({
-                    events:sortedEvents,
+                    sortedEventsArray: sortedEventsArray,
                     eventsById:eventsById,
                     categories: uniqueCategories,
                     dates: uniqueDates,
@@ -51,10 +51,11 @@ export const fetchEvents = () => {
     }
 }
 
-const fetchEventsSuccess = ({events,eventsById,categories,dates,epochtime}) => {
+const fetchEventsSuccess = ({events,sortedEventsArray,eventsById,categories,dates,epochtime}) => {
     return {
         type: actionTypes.GET_EVENTS_ALL,
         events,
+        sortedEventsArray,
         eventsById,
         categories,
         dates,
@@ -85,13 +86,18 @@ export const fetchEvent = eventId => {
         return axios.post(APIurl.getUrl(APIurl.EVENTS_FIND_EVENT), params, config)
             .then(response => {
                 console.log(response.data)
-                //TODO: Reconfigure now that it works!!!
-
-                //const sortedEvents = sortEvents(response.data)
-                //dispatch(fetchEventSuccess(sortedEvents))
+                dispatch(fetchEventSuccess(response.data))
             })
             .catch(error => {
                 throw(error);
             });
+    }
+}
+
+const fetchEventSuccess = (event) => {
+    return {
+        type: actionTypes.GET_SINGLE_EVENT,
+        id: event.eventId,
+        event
     }
 }

@@ -23,16 +23,28 @@ const ButtonPanel = (props) => {
       {panel.label ? <h4 className={styles.PanelLabel}>{panel.label}</h4> : null}
       {panel.icon ? <panel.icon className={`${styles.PanelIcon} ${styles[panel.id]}`}/> : null}
       {panel.buttons.map((button)=>{
-        return <FilterButton key={button.name} click={button.click} name={button.name} active={button.active} />
+        return <FilterButton key={button.slug} button={button} />
       })}
     </div>
   )
 }
 
-const FilterButton = (props) => {
-  const {name, active, click} = props;
+const FilterButton = ({button}) => {
+  const {
+    name,
+    active,
+    click,
+    icon
+  } = button;
 
-  return <button className={`${styles.FilterButton} ${active ? styles.On : styles.Off} ${styles[name]}`} onClick={click}>{name}</button>
+  const BtnIcon = icon
+
+  return (
+    <button className={`${styles.FilterButton} ${active ? styles.On : styles.Off} ${styles[name]}`} onClick={click}>
+      {icon ? <BtnIcon className={styles.BtnIcon} /> : null}
+      <span className={styles.Name}>{name}</span>
+    </button>
+  )
 }
 
 const mapStateToProps = ({auth}) => {

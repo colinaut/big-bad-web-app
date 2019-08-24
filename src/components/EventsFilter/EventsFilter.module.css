@@ -35,14 +35,19 @@
 .FilterButton:last-child::after {
     content: "";
 }
-.FilterButton:focus {
-    outline: 0;
-}
+
 .FilterButton.On {
-    color: #b90e0e;
+    color: var(--red);
 }
 
-.PanelIcon {
+.Name {
+    padding-bottom: 1px;
+}
+.FilterButton.On .Name {
+    border-bottom: 1px solid var(--putty);
+}
+
+.PanelIcon, .BtnIcon {
     height: 14px;
     width: auto;
     margin-right: .3rem;
@@ -50,6 +55,7 @@
     top: 2px;
 }
 
-.PanelIcon.favs path {
-    stroke: #000;
+.FilterButton.On .BtnIcon path {
+    fill: var(--red);
 }
+

@@ -8,7 +8,7 @@ const MyBookingsListItem = props => {
 
   const owner = (event.eventOwner && event.eventOwner.id === authId) ? <span className={styles.Owner}>(Your Event)</span> : null
 
-  //TODO: Get delete booking working
+  //TODO: Get delete booking working and add game room
   
   return (
     <li className={styles.MyBookingsListItem}>

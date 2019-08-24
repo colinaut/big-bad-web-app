@@ -10,7 +10,13 @@ import styles from './Events.module.css';
 
 const Events = props => {
 
-  const {events,fetchEvents,} = props;
+  const {
+    sortedEventsArray,
+    categories,
+    dates,
+    events,
+    fetchEvents
+  } = props;
 
   useEffect(()=>{
     if (!events || (events && events.length < 1)) {fetchEvents()}
@@ -20,7 +26,7 @@ const Events = props => {
   return (
     <div className={styles.Events}>
       <PageTitle>Events</PageTitle>
-      {props.events ? <EventList dates={props.dates} categories={props.categories} events={props.events} /> : <LoadingSpinner/>}
+      {sortedEventsArray ? <EventList dates={dates} categories={categories} sortedEventsArray={sortedEventsArray} events={props.events} /> : <LoadingSpinner/>}
     </div>
   )
 }
@@ -29,8 +35,7 @@ const mapStateToProps = ({auth,events}) => {
   return {
       categories: events.categories,
       dates: events.dates,
-      events: events.events,
-      epochtime: events.epochtime,
+      sortedEventsArray: events.sortedEventsArray,
       authStatus: auth.authStatus
   }
 }
