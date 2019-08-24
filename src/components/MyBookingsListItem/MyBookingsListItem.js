@@ -14,6 +14,7 @@ const MyBookingsListItem = props => {
     <li className={styles.MyBookingsListItem}>
       <span className={styles.EventName} dangerouslySetInnerHTML={getMarkup(event.eventName)}/>
       { owner }
+      {event.eventRoom ? <span className={styles.Room}>{event.eventRoom}</span> : null}
     </li>
   )
 }

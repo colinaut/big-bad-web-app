@@ -1,7 +1,8 @@
 import axios from 'axios'
 import * as actionTypes from './actionTypes';
 import * as APIurl from '../../util/APIurl';  
-import {authToken} from './auth'
+import {authToken} from './auth';
+import * as actions from '../../store/actions';
 
 // Favorite Events List
 
@@ -82,8 +83,8 @@ export const bookMeIntoGame = eventId => {
 
         return axios.post(APIurl.getUrl(APIurl.BOOKINGS_BOOK_ME_INTO_GAME), postData, config)
             .then(response => {
-                console.log(response)
                 dispatch(bookMeIntoGameSuccess(eventId));
+                dispatch(actions.fetchEvent(eventId));
             })
             .catch(error => {
                 // If fails then revert Available Game Slots
@@ -115,6 +116,7 @@ export const removeMeFromGame = eventId => {
             dispatch(removeMeFromGameSuccess(eventId));
             const myAvailableGameSlots = getState().booking.myAvailableGameSlots;
             dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots+1));
+            dispatch(actions.fetchEvent(eventId));
         })
         .catch(error => {
             throw(error);
