@@ -85,7 +85,6 @@ export const fetchEvent = eventId => {
         const params = { id: eventId }
         return axios.post(APIurl.getUrl(APIurl.EVENTS_FIND_EVENT), params, config)
             .then(response => {
-                console.log(response.data)
                 dispatch(fetchEventSuccess(response.data))
             })
             .catch(error => {

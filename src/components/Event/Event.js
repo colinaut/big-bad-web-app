@@ -56,7 +56,7 @@ const Event = props => {
   const categoriesSlugArray = event.categories.map((cat) => { return cat.slug })
 
   const toggleDetailsHandler = () => {
-    //if (authStatus && !detailsToggle) fetchEvent(id) //Fetch the Event info again on opening the details as long as user is logged in.
+    if (authStatus && !detailsToggle) fetchEvent(id) //Fetch the Event info again on opening the details as long as user is logged in.
     toggleDetails()
   }
 
@@ -85,7 +85,6 @@ const Event = props => {
         {detailsToggle ? 
           <Fragment>
             <div className={detailsStyle} >
-              <button onClick={()=> fetchEvent(id)}>reload</button>
               <EventDetails eventRoom={event.eventRoom} description={event.postContent} meta={metaFields} categories={event.categories}/> 
               { authStatus ? <EventBooking id={id} /> : null }
             </div> 

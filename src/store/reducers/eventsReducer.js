@@ -13,11 +13,7 @@ export const eventsReducer = (state = {}, action) => {
             }
         case actionTypes.GET_SINGLE_EVENT:
             return {...state, 
-                eventsById: {...state.eventsById, [action.id]: action.event},
-                events: state.events.map(event => {
-                    if (event.eventId === action.id) { return action.event }
-                    return event;
-                })
+                eventsById: {...state.eventsById, [action.id]: action.event}
             }
         default: return state
     }
