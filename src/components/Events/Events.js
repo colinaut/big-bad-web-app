@@ -44,7 +44,7 @@ const mapStateToProps = ({auth,events}) => {
       categories: events.categories,
       dates: events.dates,
       sortedEventsArray: events.sortedEventsArray,
-      epochtime: events.epochtime, //TODO: Get epochtime working so that it grabs new event data if it's been a while. Or sort this out via persist
+      epochtime: events.epochtime, 
       authStatus: auth.authStatus
   }
 }
