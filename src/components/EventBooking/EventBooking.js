@@ -6,7 +6,13 @@ import Button from '../Button'
 
 const EventBooking = props => {
 
-  const {id,bookings,metadata,myEvents,myAvailableGameSlots} = props
+  const {
+    id,
+    bookings = [],
+    metadata,
+    myEvents,
+    myAvailableGameSlots
+  } = props
 
   const players = metadata.find(data => data.metaKey === 'Players') ? metadata.find(data => data.metaKey === 'Players').metaValue : false;
 

@@ -51,7 +51,7 @@ const mapStateToProps = ({auth,events}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchEvents: () => dispatch(actions.fetchEvents())
+    fetchEvents: () => dispatch(actions.fetchEvents()),
   }
 }
 

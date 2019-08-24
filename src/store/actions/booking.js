@@ -15,6 +15,7 @@ export const addFavEvent = eventId => {
                 dispatch(addFavEventSuccess(eventId));
             })
             .catch(error => {
+                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
                 throw(error);
             });
     }
@@ -32,6 +33,7 @@ export const deleteFavEvent = eventId => {
                 dispatch(deleteFavEventSuccess(eventId));
             })
             .catch(error => {
+                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
                 throw(error);
             });
     }
@@ -61,6 +63,7 @@ export const fetchMyEvents = () => {
                 dispatch(fetchMyEventsSuccess(response.data))
             })
             .catch(error => {
+                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
                 throw(error);
             });
     }
@@ -89,6 +92,7 @@ export const bookMeIntoGame = eventId => {
             .catch(error => {
                 // If fails then revert Available Game Slots
                 dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots));
+                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
                 throw(error);
             });
     }
@@ -119,6 +123,7 @@ export const removeMeFromGame = eventId => {
             dispatch(actions.fetchEvent(eventId));
         })
         .catch(error => {
+            if (error.message.match(/403/g)) { dispatch(actions.logout()) }
             throw(error);
         });
     }
@@ -131,7 +136,7 @@ const removeMeFromGameSuccess = eventId => {
     }
 }
 
-export const fetchMyAvailableGameSlots = () => {
+export const fetchMyAvailableGameSlots = () => { //TODO: make sure it grabs this more often like events as we up game slots.
     return (dispatch,getState) => {
         const config = { headers: authToken(getState) }
         return axios.get(APIurl.getUrl(APIurl.BOOKINGS_MY_AVAILABLE_GAME_SLOTS), config)
@@ -139,6 +144,7 @@ export const fetchMyAvailableGameSlots = () => {
                 dispatch(fetchMyAvailableGameSlotsSuccess(response.data))
             })
             .catch(error => {
+                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
                 throw(error);
             });
     }

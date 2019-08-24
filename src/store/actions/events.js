@@ -3,7 +3,8 @@ import * as actionTypes from './actionTypes';
 import * as APIurl from '../../util/APIurl';  
 import unixTime from 'unix-time';
 import {transformArrayToObject} from '../../util/helpers'
-import {authToken} from './auth'
+import {authToken} from './auth';
+import * as actions from '../../store/actions';
 
 // Async Action
 
@@ -46,6 +47,7 @@ export const fetchEvents = () => {
                 }))
             })
             .catch(error => {
+                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
                 throw(error);
             });
     }
@@ -63,7 +65,7 @@ const fetchEventsSuccess = ({events,sortedEventsArray,eventsById,categories,date
       }
 }
 
-export const fetchEventsSince = (payload) => { // TODO: get this working
+export const fetchEventsSince = (payload) => { // TODO: get this working instead of grabbing everything every hour
     const {epochtime} = payload
     return (dispatch, getState) => {
 
@@ -88,6 +90,7 @@ export const fetchEvent = eventId => {
                 dispatch(fetchEventSuccess(response.data))
             })
             .catch(error => {
+                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
                 throw(error);
             });
     }
