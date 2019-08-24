@@ -14,14 +14,13 @@ const Events = props => {
     sortedEventsArray,
     categories,
     dates,
-    events,
     fetchEvents
   } = props;
 
   useEffect(()=>{
-    if (!events || (events && events.length < 1)) {fetchEvents()}
+    if (!sortedEventsArray || (sortedEventsArray && sortedEventsArray.length < 1)) {fetchEvents()}
     
-  },[events,fetchEvents,])
+  },[sortedEventsArray,fetchEvents,])
 
   return (
     <div className={styles.Events}>
@@ -36,6 +35,7 @@ const mapStateToProps = ({auth,events}) => {
       categories: events.categories,
       dates: events.dates,
       sortedEventsArray: events.sortedEventsArray,
+      epochtime: events.epochtime,
       authStatus: auth.authStatus
   }
 }
