@@ -4,6 +4,7 @@ import React, {useEffect} from 'react'
 import * as actions from '../../store/actions';
 import getMarkup from '../../util/getMarkup';
 import PageTitle from '../PageTitle';
+import LoadingSpinner from '../LoadingSpinner';
 
 import styles from './CommunityStandards.module.css';
 
@@ -21,7 +22,7 @@ const CommunityStandards = props => {
   return (
     <div className={styles.CommunityStandards}>
       <PageTitle>Community Standards</PageTitle>
-      <div className={styles.Content} dangerouslySetInnerHTML={getMarkup(page.content.rendered)}></div>
+      {page ? <div className={styles.Content} dangerouslySetInnerHTML={getMarkup(page.content.rendered)}></div> : <LoadingSpinner/>}
     </div>
   )
 }
