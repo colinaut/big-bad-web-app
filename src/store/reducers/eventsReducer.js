@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import update from 'immutability-helper';
 
 export const eventsReducer = (state = {}, action) => {
 
@@ -14,6 +15,11 @@ export const eventsReducer = (state = {}, action) => {
         case actionTypes.GET_SINGLE_EVENT:
             return {...state, 
                 eventsById: {...state.eventsById, [action.id]: action.event}
+            }
+        case actionTypes.GET_EVENTS_SINCE:
+            return {...state,
+                eventsById: update(state.eventsById, {$merge: action.eventsById}),
+                epochtime: action.epochtime,
             }
         default: return state
     }

@@ -19,8 +19,16 @@ const TestingActionButtons = props => {
       <Button style={buttonInlineStyle} clicked={()=> props.fetchMyEvents()} btnType='Gray'>Fetch My Events</Button>
       <Button style={buttonInlineStyle} clicked={()=> props.fetchEvents()} btnType='Gray'>Fetch All Events</Button>
       <Button style={buttonInlineStyle} clicked={()=> props.fetchMyAvailableGameSlots()} btnType='Gray'>Fetch Game Slots</Button>
+      <Button style={buttonInlineStyle} clicked={()=> props.fetchEventsSince({epochtime:props.epochtime})} btnType='Gray'>Fetch New Event Changes</Button>
     </div>
   )
+}
+
+const mapStateToProps = ({auth,events}) => {
+  return {
+      epochtime: events.epochtime, 
+      authStatus: auth.authStatus
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -28,8 +36,9 @@ const mapDispatchToProps = (dispatch) => {
     fetchEvents: () => dispatch(actions.fetchEvents()),
     fetchMyEvents: () => dispatch(actions.fetchMyEvents()),
     fetchMyUserData: () => dispatch(actions.fetchMyUserData()),
-    fetchMyAvailableGameSlots: () => dispatch(actions.fetchMyAvailableGameSlots())
+    fetchMyAvailableGameSlots: () => dispatch(actions.fetchMyAvailableGameSlots()),
+    fetchEventsSince: (payload) => dispatch(actions.fetchEventsSince(payload)),
   }
 }
 
-export default connect(null,mapDispatchToProps)(TestingActionButtons)
+export default connect(mapStateToProps,mapDispatchToProps)(TestingActionButtons)

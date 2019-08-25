@@ -53,10 +53,9 @@ export const fetchEvents = () => {
     }
 }
 
-const fetchEventsSuccess = ({events,sortedEventsArray,eventsById,categories,dates,epochtime}) => {
+const fetchEventsSuccess = ({sortedEventsArray,eventsById,categories,dates,epochtime}) => {
     return {
         type: actionTypes.GET_EVENTS_ALL,
-        events,
         sortedEventsArray,
         eventsById,
         categories,
@@ -65,20 +64,31 @@ const fetchEventsSuccess = ({events,sortedEventsArray,eventsById,categories,date
       }
 }
 
-export const fetchEventsSince = (payload) => { // TODO: get this working instead of grabbing everything every hour
+export const fetchEventsSince = (payload) => { // TODO: get this working with public too
     const {epochtime} = payload
     return (dispatch, getState) => {
-
-        return axios.get(APIurl.getUrl(APIurl.EVENTS_SINCE,{epochtime:epochtime}), authToken(getState))
+        const authHeader = authToken(getState)
+        const config = { headers: authHeader }
+        const url = authHeader ? APIurl.getUrl(APIurl.EVENTS_SINCE,{epochtime:epochtime}) : APIurl.getUrl(APIurl.EVENTS_SINCE_PUBLIC,{epochtime:epochtime});
+        return axios.get(url, config)
             .then(response => {
-                console.log(response.data)
-                //const sortedEvents = sortEvents(response.data)
-                //dispatch(fetchEventsSuccess(sortedEvents))
+                const eventsById = transformArrayToObject(response.data,'eventId');
+                console.log(epochtime,eventsById)
+                dispatch(fetchEventsSinceSuccess({eventsById:eventsById,epochtime:unixTime(new Date())}))
+                //TODO: right now this is jsut grabbing data and merging with eventsById. Will need to test to see if title/date/time changed and if so resort the sortedArray
             })
             .catch(error => {
                 throw(error);
             });
     }
+}
+
+const fetchEventsSinceSuccess = ({eventsById,epochtime}) => {
+    return {
+        type: actionTypes.GET_EVENTS_SINCE,
+        eventsById,
+        epochtime
+      }
 }
 
 export const fetchEvent = eventId => {

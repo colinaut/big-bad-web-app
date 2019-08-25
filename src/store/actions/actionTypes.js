@@ -9,6 +9,7 @@ export const GET_PAGE = 'GET_PAGE';
 // Events
 export const GET_EVENTS_ALL = 'GET_EVENTS_ALL'; //Used for both public and logged in data
 export const GET_SINGLE_EVENT = 'GET_SINGLE_EVENT';
+export const GET_EVENTS_SINCE = 'GET_EVENTS_SINCE';
 
 // Auth
 export const AUTH_START = 'AUTH_START';

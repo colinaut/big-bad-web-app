@@ -9,6 +9,7 @@ export {
 export {
     fetchEvents,
     fetchEvent,
+    fetchEventsSince,
 } from './events';
 
 export {

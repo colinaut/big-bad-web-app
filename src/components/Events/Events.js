@@ -34,6 +34,7 @@ const Events = props => {
   return (
     <div className={styles.Events}>
       <PageTitle>Events</PageTitle>
+      <button onClick={()=> props.fetchEventsSince({epochtime:epochtime })}>grab new stuff</button>
       {sortedEventsArray ? <EventList dates={dates} categories={categories} sortedEventsArray={sortedEventsArray} events={props.events} /> : <LoadingSpinner/>}
     </div>
   )
@@ -52,6 +53,7 @@ const mapStateToProps = ({auth,events}) => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchEvents: () => dispatch(actions.fetchEvents()),
+    fetchEventsSince: (payload) => dispatch(actions.fetchEventsSince(payload)),
   }
 }
 
