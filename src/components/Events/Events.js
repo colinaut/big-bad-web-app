@@ -34,7 +34,7 @@ const Events = props => {
   return (
     <div className={styles.Events}>
       <PageTitle>Events</PageTitle>
-      <button onClick={()=> props.fetchEventsSince({epochtime:epochtime })}>grab new stuff</button>
+      <p className={styles.Test}>Temp Admin Testing Button: <button onClick={()=> props.fetchEventsSince({epochtime:epochtime })}>grab new stuff</button></p>
       {sortedEventsArray ? <EventList dates={dates} categories={categories} sortedEventsArray={sortedEventsArray} events={props.events} /> : <LoadingSpinner/>}
     </div>
   )
