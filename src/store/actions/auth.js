@@ -65,9 +65,10 @@ export const checkLocalStorageAuth = () => { //TODO: do I need this?
     }
 }
 
-export const logout = () => { //TODO remove all non-public data from Redux
+export const logout = () => { 
     return dispatch => {
-        dispatch(authLogout())
+        dispatch(authLogout());
+        dispatch(actions.fetchEvents()) // TODO: Revise so it just purges booking data rather than grabs again?
     }
 }
 

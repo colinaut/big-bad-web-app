@@ -17,6 +17,8 @@ export const bookingReducer = (state = {}, action) => {
             return {...state, myAvailableGameSlots: action.myAvailableGameSlots}
         case actionTypes.SET_MY_FAV_EVENTS:
             return {...state, favEvents:action.favEvents}
+        case actionTypes.AUTH_LOGOUT:
+            return {}
         default: return state
     }
 }

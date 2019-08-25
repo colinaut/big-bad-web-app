@@ -6,7 +6,7 @@ export const authReducer = (state = {}, action) => {
         case actionTypes.AUTH_SUCCESS:
             return {...state, authToken: action.authToken, authStatus: true}
         case actionTypes.AUTH_LOGOUT:
-            return {...state, authToken: "", authStatus: false}
+            return {}
         case actionTypes.GET_MY_USER_DATA:
             return {...state, userData: action.userData, favEvents:action.favEvents}
         default: return state
