@@ -58,7 +58,7 @@ const EventBooking = props => {
       return (
         <Fragment>
           { metaDataObject.exempt ? <p className={styles.Exempt}>This game is exempt from your quota</p> : <p className={styles.GameSlots}>{gameSlotText}</p>}
-          <Button style={btnStyle} clicked={()=> props.bookMeIntoGame(id)}>Book Event</Button>
+          { props.isAdmin ? <Button style={btnStyle} clicked={()=> props.bookMeIntoGame(id)}>Book Event</Button> : null } {/* IMPORTANT TODO: Remove isAdmin before publishing for public */}
         </Fragment>
       )
     }
@@ -88,7 +88,8 @@ const mapStateToProps = ({events, booking, auth}, ownProps) => {
       metadata: events.eventsById[ownProps.id].metadata,
       myEvents: booking.myEvents,
       myAvailableGameSlots: booking.myAvailableGameSlots,
-      userId: auth.userData.id
+      userId: auth.userData.id,
+      isAdmin: auth.isAdmin
   }
 }
 
