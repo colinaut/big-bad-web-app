@@ -4,7 +4,7 @@ import styles from './EventList.module.css';
 import Event from '../Event';
 import EventsFilter from '../EventsFilter';
 import uuid from 'react-uuid';
-import {transformObjectToArray} from '../../util/helpers';
+import {transformObjectToArray, dynamicSort} from '../../util/helpers';
 import {convertDate} from '../../util/helpers';
 import { ReactComponent as D6 } from '../../assets/die-6.svg'
 import { ReactComponent as Star } from '../../assets/star.svg';
@@ -22,18 +22,21 @@ const EventList = props => {
   // Setting up all the Filter buttons
   const [filterButtons, setFilterButtons] = useState({
     categories: {
+      priority: 0,
       label: "Category",
       buttons: [
         { slug:"all", name:"All", click:()=>filterList('categories','all'), active: true }, 
         ...categories.map(c => { return {slug:c.slug, name: c.name, click: ()=>filterList("categories",c.slug),active:false}})]
     },
     dates: {
+      priority: 1,
       label: "Day",
       buttons: [
         { slug:"all", name:"All", click:()=>filterList('dates','all'), active: true }, 
         ...dates.map(d => { return {slug:d, name: convertDate(d,'ddd'), click: ()=>filterList("dates",d),active:false}})] 
     },
     availability: {
+      priority: 2,
       label: false,
       authOnly: true,
       buttons: [
@@ -47,6 +50,7 @@ const EventList = props => {
       ]
     },
     favs: { 
+      priority: 3,
       label: false,
       authOnly: true,
       buttons: [
@@ -101,7 +105,7 @@ const EventList = props => {
   
   return (
     <div className={styles.EventlistWrapper}>
-      <EventsFilter buttonPanel={transformObjectToArray(filterButtons)}/>
+      <EventsFilter buttonPanel={transformObjectToArray(filterButtons).sort(dynamicSort('priority'))}/>
       <div className={styles.Eventlist}>
         {sortedEventsArray.map(id => (
           <Event 

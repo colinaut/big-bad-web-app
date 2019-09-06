@@ -45,6 +45,7 @@
 }
 .FilterButton.On .Name {
     border-bottom: 1px solid var(--putty);
+    display: inline-block;
 }
 
 .PanelIcon, .BtnIcon {
