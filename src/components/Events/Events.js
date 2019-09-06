@@ -34,7 +34,7 @@ const Events = props => {
   return (
     <div className={styles.Events}>
       <PageTitle>Events</PageTitle>
-      <p className={styles.Test}>Temp Admin Testing Button: 
+      <p className={styles.Test}>Admin Testing: 
         <button onClick={()=> props.fetchEventsSince({epochtime:epochtime })}>grab new stuff</button> 
         <button onClick={()=> props.fetchEventsSince({epochtime:'1546321746'})}>grab all</button>
         <button onClick={()=> props.fetchMyAvailableGameSlots()}>fetch my available slots</button>

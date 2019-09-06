@@ -83,8 +83,9 @@ export const bookMeIntoGame = eventId => {
         // Preventatively remove from available game slots. Doing this to make sure users can't double book by clicking fast
         const myAvailableGameSlots = getState().booking.myAvailableGameSlots;
         const event = getState().events.eventsById[eventId];
+        const exempt = event.metadata.some(meta => meta.metaKey = 'exempt')
 
-        if (event.metadata.some(meta => !meta.exempt)) { dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots-1)) }
+        if (!exempt) { dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots-1)) }
 
         return axios.post(APIurl.getUrl(APIurl.BOOKINGS_BOOK_ME_INTO_GAME), postData, config)
             .then(response => {
@@ -93,7 +94,7 @@ export const bookMeIntoGame = eventId => {
             })
             .catch(error => {
                 // If fails then revert Available Game Slots as long as it's not exempt
-                if (event.metadata.some(meta => !meta.exempt)) { dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots))}
+                if (!exempt) { dispatch(fetchMyAvailableGameSlotsSuccess(getState().booking.myAvailableGameSlots)+1)}
                 if (error.message.match(/403/g)) { dispatch(actions.logout()) }
                 throw(error);
             });
@@ -111,6 +112,10 @@ export const removeMeFromGame = eventId => {
     return (dispatch,getState) => {
         const postData = { gameId: eventId }
 
+        const myAvailableGameSlots = getState().booking.myAvailableGameSlots;
+        const event = getState().events.eventsById[eventId];
+        const exempt = event.metadata.some(meta => meta.metaKey = 'exempt')
+
         return axios({
             method: 'DELETE',
             url: APIurl.getUrl(APIurl.BOOKINGS_REMOVE_ME_FROM_GAME),
@@ -120,8 +125,7 @@ export const removeMeFromGame = eventId => {
         .then(response => {
             console.log(response)
             dispatch(removeMeFromGameSuccess(eventId));
-            const myAvailableGameSlots = getState().booking.myAvailableGameSlots;
-            dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots+1));
+            if (!exempt) { dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots+1)) }
             dispatch(actions.fetchEvent(eventId));
         })
         .catch(error => {

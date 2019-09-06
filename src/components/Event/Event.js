@@ -21,16 +21,22 @@ const Event = props => {
     event,
     favEvents = [],
     authStatus,
-    myEvents,
+    myEvents = [],
     deleteFavEvent,
     addFavEvent,
     fetchEvent,
+    userId,
   } = props
+
+  const {bookings = []} = event;
+
+  const playerList = bookings.filter(booking => booking.bookingStatus === 1 && booking.bookingComment === null).map(booking => { return {bookingId: booking.bookingId, bookingComment: booking.bookingComment, displayName: booking.user.displayName, userId: booking.user.id}})
+  const isBookedIntoGame = playerList.some(player => player.userId === userId)
 
   const [detailsToggle, toggleDetails] = useToggle(false);
 
   const eventStyle = (detailsToggle) ? [styles.Event, styles.Active].join(' ') : styles.Event;
-  const eventSummaryStyle = (myEvents && myEvents.includes(id)) ? [styles.Eventsummary, styles.MyEvent].join(' ') : styles.Eventsummary;
+  const eventSummaryStyle = (isBookedIntoGame || myEvents.includes(id)) ? [styles.Eventsummary, styles.MyEvent].join(' ') : styles.Eventsummary;
   const detailsStyle = (detailsToggle) ? [styles.Details, styles.DetailsActive].join(' ') : styles.Details;
 
   const favStarStatus = favEvents.includes(id)
@@ -50,7 +56,7 @@ const Event = props => {
     })
   }
 
-  const numberOfPlayers = event.bookings ? event.bookings.filter(booking => booking.bookingStatus === 1 && booking.bookingComment === null).length : 0
+  const numberOfPlayers = bookings ? bookings.filter(booking => booking.bookingStatus === 1 && booking.bookingComment === null).length : 0
   const availabileSlots = metaFields.Players - numberOfPlayers
   
   const categoriesSlugArray = event.categories.map((cat) => { return cat.slug })
@@ -62,7 +68,7 @@ const Event = props => {
   }
 
   const displayEvent = () => {
-    if (event.eventStatus !== 1) return false;
+    //if (event.eventStatus !== 1) return false;
     if (authStatus && filters.favs && !favStarStatus) return false;
     if (authStatus && filters.availability && availabileSlots < 1) return false;
     if (filters.dates !== "all" && filters.dates !== event.eventStartDate) return false;
@@ -102,6 +108,7 @@ const mapStateToProps = ({auth,booking,events},ownProps) => {
       authStatus: auth.authStatus,
       myEvents: booking.myEvents,
       event: events.eventsById[ownProps.id],
+      userId: auth.userData ? auth.userData.id : false,
   }
 }
 
