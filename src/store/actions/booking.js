@@ -82,7 +82,9 @@ export const bookMeIntoGame = eventId => {
         const config = { headers: authToken(getState) }
         // Preventatively remove from available game slots. Doing this to make sure users can't double book by clicking fast
         const myAvailableGameSlots = getState().booking.myAvailableGameSlots;
-        dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots-1));
+        const event = getState().events.eventsById[eventId];
+
+        if (event.metadata.some(meta => !meta.exempt)) { dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots-1)) }
 
         return axios.post(APIurl.getUrl(APIurl.BOOKINGS_BOOK_ME_INTO_GAME), postData, config)
             .then(response => {
@@ -90,8 +92,8 @@ export const bookMeIntoGame = eventId => {
                 dispatch(actions.fetchEvent(eventId));
             })
             .catch(error => {
-                // If fails then revert Available Game Slots
-                dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots));
+                // If fails then revert Available Game Slots as long as it's not exempt
+                if (event.metadata.some(meta => !meta.exempt)) { dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots))}
                 if (error.message.match(/403/g)) { dispatch(actions.logout()) }
                 throw(error);
             });
