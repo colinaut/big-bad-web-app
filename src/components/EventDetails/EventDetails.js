@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './EventDetails.module.css';
 import getMarkup from '../../util/getMarkup';
+import decodeText from '../../util/decodeText';
 
 const EventDetails = props => {
 
@@ -13,7 +14,7 @@ const EventDetails = props => {
 
   return (
     <div className={styles.Eventdetails} >
-      <div className={styles.Description} dangerouslySetInnerHTML={getMarkup(description)} />
+      <div className={styles.Description} dangerouslySetInnerHTML={getMarkup(decodeText(description))} />
       <div className={styles.Meta}>
         {(meta.Min_Players && meta.Min_Players > 1) ? <span><strong>Players:</strong> {meta.Min_Players}-{meta.Players}</span> : null}
         <span><strong>Length:</strong> {meta.Length} hrs</span>

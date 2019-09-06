@@ -12,6 +12,7 @@ import CloseAccordianBtn from '../CloseAccordianBtn'
 import { ReactComponent as Star } from '../../assets/star.svg';
 import styles from './Event.module.css';
 import getMarkup from '../../util/getMarkup';
+import decodeText from '../../util/decodeText';
 
 const Event = props => {
 
@@ -25,18 +26,14 @@ const Event = props => {
     deleteFavEvent,
     addFavEvent,
     fetchEvent,
-    userId,
   } = props
 
   const {bookings = []} = event;
 
-  const playerList = bookings.filter(booking => booking.bookingStatus === 1 && booking.bookingComment === null).map(booking => { return {bookingId: booking.bookingId, bookingComment: booking.bookingComment, displayName: booking.user.displayName, userId: booking.user.id}})
-  const isBookedIntoGame = playerList.some(player => player.userId === userId)
-
   const [detailsToggle, toggleDetails] = useToggle(false);
 
   const eventStyle = (detailsToggle) ? [styles.Event, styles.Active].join(' ') : styles.Event;
-  const eventSummaryStyle = (isBookedIntoGame || myEvents.includes(id)) ? [styles.Eventsummary, styles.MyEvent].join(' ') : styles.Eventsummary;
+  const eventSummaryStyle = (myEvents.includes(id)) ? [styles.Eventsummary, styles.MyEvent].join(' ') : styles.Eventsummary;
   const detailsStyle = (detailsToggle) ? [styles.Details, styles.DetailsActive].join(' ') : styles.Details;
 
   const favStarStatus = favEvents.includes(id)
@@ -48,16 +45,8 @@ const Event = props => {
     } else addFavEvent(id);
   }
 
-  let metaFields = {}
-
-  if (event.metadata) {
-    event.metadata.map((meta)=> {
-      return metaFields = {...metaFields, [meta.metaKey]:meta.metaValue}
-    })
-  }
-
   const numberOfPlayers = bookings ? bookings.filter(booking => booking.bookingStatus === 1 && booking.bookingComment === null).length : 0
-  const availabileSlots = metaFields.Players - numberOfPlayers
+  const availabileSlots = event.metadata.Players - numberOfPlayers
   
   const categoriesSlugArray = event.categories.map((cat) => { return cat.slug })
 
@@ -80,8 +69,8 @@ const Event = props => {
     <div className={eventStyle}>
       <div className={eventSummaryStyle}>
         <div className={styles.TitleColumn} onClick={toggleDetailsHandler}>
-          <div className={styles.Title} dangerouslySetInnerHTML={getMarkup(event.eventName)} />
-          <div className={styles.System}>{metaFields.System}</div>
+          <div className={styles.Title} dangerouslySetInnerHTML={getMarkup(decodeText(event.eventName))} />
+          {event.metadata.System ? <div className={styles.System} dangerouslySetInnerHTML={getMarkup(decodeText(event.metadata.System))} /> : null}
         </div>
         <div className={styles.TimeColumn} onClick={toggleDetailsHandler}>
           <div className={styles.Date}>{convertDate(event.eventStartDate)}</div>
@@ -92,7 +81,7 @@ const Event = props => {
       {detailsToggle ? 
         <Fragment>
           <div className={detailsStyle} >
-            <EventDetails eventRoom={event.eventRoom} description={event.postContent} meta={metaFields} categories={event.categories}/> 
+            <EventDetails eventRoom={event.eventRoom} description={event.postContent} meta={event.metadata} categories={event.categories}/> 
             { authStatus ? <EventBooking id={id} /> : null }
           </div> 
           <CloseAccordianBtn close={toggleDetails} color='Red' />
@@ -108,7 +97,6 @@ const mapStateToProps = ({auth,booking,events},ownProps) => {
       authStatus: auth.authStatus,
       myEvents: booking.myEvents,
       event: events.eventsById[ownProps.id],
-      userId: auth.userData ? auth.userData.id : false,
   }
 }
 

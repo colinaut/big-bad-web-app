@@ -10,6 +10,12 @@ export const transformArrayToObject = (array, keyField) =>
      return obj
    }, {})
 
+export const transformArrayToSimpleObject = (array, keyField, valueField) =>
+   array.reduce((obj, item) => {
+     obj[item[keyField]] = item[valueField]
+     return obj
+   }, {})
+
 export const convertTime = (time, format = "h:mma") => {
     switch (time) {
       case "00:00:00":

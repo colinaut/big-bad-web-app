@@ -15,14 +15,6 @@ const EventBooking = props => {
     userId,
   } = props
 
-  let metaDataObject = {}
-
-  if (metadata) {
-    metadata.map((meta)=> {
-      return metaDataObject = {...metaDataObject, [meta.metaKey]:meta.metaValue}
-    })
-  }
-
   let gameSlotText
   
   if (myAvailableGameSlots === 1) { gameSlotText = `You have ${myAvailableGameSlots} Game Slot Available` } 
@@ -40,24 +32,24 @@ const EventBooking = props => {
   }
 
   const bookingSwitch = () => {
-    if (!metaDataObject.Players) {
+    if (!metadata.Players) {
       return <p className={styles.NoBookings}>There is no pre-booking for this event</p>
     } else if (isBookedIntoGame) {
       return (
         <Fragment>
-          { metaDataObject.exempt ? <p className={styles.Exempt}>This game is exempt from your quota</p> : <p className={styles.GameSlots}>{gameSlotText}</p>}
+          { metadata.exempt ? <p className={styles.Exempt}>This game is exempt from your quota</p> : <p className={styles.GameSlots}>{gameSlotText}</p>}
           <p className={styles.YouAreBooked}>You are booked into this event!</p>
           <Button style={btnStyle} clicked={()=> props.removeMeFromGame(id)} btnType='Danger'>Cancel Booking</Button>
         </Fragment>
       )
-    } else if (!metaDataObject.exempt && myAvailableGameSlots < 1) {
+    } else if (!metadata.exempt && myAvailableGameSlots < 1) {
       return <p className={styles.GameSlots}>{gameSlotText}</p>
-    } else if (metaDataObject.players - playerList.length <= 0) {
+    } else if (metadata.players - playerList.length <= 0) {
       return <p className={styles.Full}>This event is full.</p>
     } else {
       return (
         <Fragment>
-          { metaDataObject.exempt ? <p className={styles.Exempt}>This game is exempt from your quota</p> : <p className={styles.GameSlots}>{gameSlotText}</p>}
+          { metadata.exempt ? <p className={styles.Exempt}>This game is exempt from your quota</p> : <p className={styles.GameSlots}>{gameSlotText}</p>}
           { props.isAdmin ? <Button style={btnStyle} clicked={()=> props.bookMeIntoGame(id)}>Book Event</Button> : null } {/* IMPORTANT TODO: Remove isAdmin before publishing for public */}
         </Fragment>
       )
@@ -67,8 +59,8 @@ const EventBooking = props => {
   return props.bookings ? (
     <div className={styles.EventBooking}>
       {gm ? <h3 className={styles.GM}><strong>{gm.bookingComment}:</strong> {gm.user.displayName}</h3> : null}
-      {metaDataObject.players ? <h3 className={styles.Heading}>Event Bookings:
-        <span className={styles.AvailableSlots}>(Openings: <strong className={styles.AvailableSlotsNumber}>{metaDataObject.players - playerList.length} of {metaDataObject.players}</strong>)</span>
+      {metadata.players ? <h3 className={styles.Heading}>Event Bookings:
+        <span className={styles.AvailableSlots}>(Openings: <strong className={styles.AvailableSlotsNumber}>{metadata.players - playerList.length} of {metadata.players}</strong>)</span>
       </h3> : null}
       {playerList ? 
       <div className={styles.PlayersListWrapper}>
@@ -76,7 +68,7 @@ const EventBooking = props => {
           {playerList.map(player => <li className={styles.PlayersListItem} key={player.bookingId}>{player.displayName}</li>)}
         </ul> 
       </div>: null}
-      {metaDataObject.volunteer_shift ? <p className={styles.Volunteer}>You must be a volunteer to sign up for this.</p> : null}
+      {metadata.volunteer_shift ? <p className={styles.Volunteer}>You must be a volunteer to sign up for this.</p> : null}
       <div className={styles.BookingSwitch}>{bookingSwitch()}</div>
     </div>
   ) : null

@@ -2,7 +2,7 @@ import axios from 'axios'
 import * as actionTypes from './actionTypes';
 import * as APIurl from '../../util/APIurl';  
 import unixTime from 'unix-time';
-import {transformArrayToObject, dynamicSortMultiple} from '../../util/helpers'
+import {transformArrayToObject, transformArrayToSimpleObject, dynamicSortMultiple} from '../../util/helpers'
 import {authToken} from './auth';
 import * as actions from '../../store/actions';
 
@@ -35,7 +35,8 @@ export const fetchEvents = () => {
         return axios.get(url, config)
             .then(response => {
                 const events = response.data;
-                const activeEvents = events.filter(event => event.eventStatus === 1);
+                const eventsConvertMetadata = events.map(data => { return {...data, metadata: transformArrayToSimpleObject(data.metadata,'metaKey','metaValue')} })
+                const activeEvents = eventsConvertMetadata.filter(event => event.eventStatus === 1);
                 const sortedEventsArray = sortEvents(activeEvents).map(event => event.eventId);
                 const eventsById = transformArrayToObject(activeEvents,'eventId');
                 const listofCategories = [].concat(...activeEvents.filter((event)=> event.categories.length > 0).map((event) => event.categories))
@@ -78,8 +79,8 @@ export const fetchEventsSince = (payload) => { // TODO: get this working with pu
         const url = authHeader ? APIurl.getUrl(APIurl.EVENTS_SINCE,{epochtime:epochtime}) : APIurl.getUrl(APIurl.EVENTS_SINCE_PUBLIC,{epochtime:epochtime});
         return axios.get(url, config)
             .then(response => {
-                const eventsById = transformArrayToObject(response.data,'eventId');
-                console.log(epochtime,eventsById)
+                const eventsConvertMetadata = response.data.map(data => { return {...data, metadata: transformArrayToSimpleObject(data.metadata,'metaKey','metaValue')} })
+                const eventsById = transformArrayToObject(eventsConvertMetadata,'eventId');
                 dispatch(fetchEventsSinceSuccess({eventsById:eventsById,epochtime:unixTime(new Date())}))
                 //TODO: right now this is jsut grabbing data and merging with eventsById. Will need to test to see if title/date/time changed and if so resort the sortedArray
             })
@@ -103,7 +104,8 @@ export const fetchEvent = eventId => {
         const params = { id: eventId }
         return axios.post(APIurl.getUrl(APIurl.EVENTS_FIND_EVENT), params, config)
             .then(response => {
-                dispatch(fetchEventSuccess(response.data))
+                const eventsConvertMetadata = {...response.data, metadata: transformArrayToSimpleObject(response.data.metadata,'metaKey','metaValue')}
+                dispatch(fetchEventSuccess(eventsConvertMetadata))
             })
             .catch(error => {
                 if (error.message.match(/403/g)) { dispatch(actions.logout()) }
