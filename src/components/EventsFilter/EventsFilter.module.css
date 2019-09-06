@@ -42,6 +42,8 @@
 
 .Name {
     padding-bottom: 1px;
+    border-bottom: 1px solid transparent;
+    display: inline-block;
 }
 .FilterButton.On .Name {
     border-bottom: 1px solid var(--putty);

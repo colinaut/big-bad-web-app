@@ -6,6 +6,7 @@ const baseAPIurl = isProdution? "https://www.bigbadcon.com:8091/api/" : "https:/
 
 export const POSTS = 'POSTS';
 export const PAGES = 'PAGES';
+export const EVENTS_COUNT = 'EVENTS_COUNT';
 export const EVENTS_ALL = 'EVENTS_ALL';
 export const EVENTS_ALL_PUBLIC = 'EVENTS_ALL_PUBLIC';
 export const EVENTS_CATEGORY = 'EVENTS_CATEGORY';
@@ -32,6 +33,8 @@ export const getUrl = (type,options) => {
             return 'https://www.bigbadcon.com/wp-json/wp/v2/posts'; //only set up to connect to BBC for blog posts at the moment
         case PAGES:
             return 'https://www.bigbadcon.com/wp-json/wp/v2/pages'; //only set up to connect to BBC for blog posts at the moment
+        case EVENTS_COUNT:
+            return baseAPIurl + 'events/count';
         case EVENTS_ALL:
             return baseAPIurl + 'events/all';
         case EVENTS_ALL_PUBLIC:

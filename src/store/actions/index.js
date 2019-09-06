@@ -7,6 +7,7 @@ export {
 } from './auth';
 
 export {
+    fetchEventsCount,
     fetchEvents,
     fetchEvent,
     fetchEventsSince,

@@ -12,6 +12,21 @@ const sortEvents = events => {
     return [...events].sort(dynamicSortMultiple('eventStartDate','eventStartTime','eventName'))
 }
 
+export const fetchEventsCount = () => {
+    return (dispatch) => {
+        return axios.get(APIurl.getUrl(APIurl.EVENTS_COUNT))
+            .then(response => {
+                const eventsCount = response.data;
+                console.log(eventsCount)
+                
+            })
+            .catch(error => {
+                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
+                throw(error);
+            });
+    }
+}
+
 export const fetchEvents = () => {
     return (dispatch, getState) => {
         const authHeader = authToken(getState)
