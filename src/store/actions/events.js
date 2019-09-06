@@ -2,26 +2,14 @@ import axios from 'axios'
 import * as actionTypes from './actionTypes';
 import * as APIurl from '../../util/APIurl';  
 import unixTime from 'unix-time';
-import {transformArrayToObject} from '../../util/helpers'
+import {transformArrayToObject, dynamicSortMultiple} from '../../util/helpers'
 import {authToken} from './auth';
 import * as actions from '../../store/actions';
 
 // Async Action
 
 const sortEvents = events => {
-    return [...events].sort((a, b) => {
-        if (a.eventStartDate > b.eventStartDate) {
-            return 1
-        } else if (a.eventStartDate === b.eventStartDate) {
-            if (a.eventStartTime > b.eventStartTime) {
-                return 1
-            } else if (a.eventStartTime === b.eventStartTime) {
-                if (a.eventName > b.eventName) {
-                    return 1
-                } else {return -1}
-            } else {return -1}
-        } else {return -1}
-    }) 
+    return [...events].sort(dynamicSortMultiple('eventStartDate','eventStartTime','eventName'))
 }
 
 export const fetchEvents = () => {
@@ -32,15 +20,16 @@ export const fetchEvents = () => {
         return axios.get(url, config)
             .then(response => {
                 const events = response.data;
-                const sortedEventsArray = sortEvents(events).map(event => event.eventId);
-                const eventsById = transformArrayToObject(events,'eventId');
-                const listofCategories = [].concat(...events.filter((event)=> event.categories.length > 0).map((event) => event.categories))
+                const activeEvents = events.filter(event => event.eventStatus === 1);
+                const sortedEventsArray = sortEvents(activeEvents).map(event => event.eventId);
+                const eventsById = transformArrayToObject(activeEvents,'eventId');
+                const listofCategories = [].concat(...activeEvents.filter((event)=> event.categories.length > 0).map((event) => event.categories))
                 const uniqueCategories = [...new Set(listofCategories.map(x => x.slug)) ].map(slug => {return {slug:slug, name:listofCategories.find( x => x.slug === slug).name}})
-                const uniqueDates = [...new Set(events.map(x => x.eventStartDate)) ]
+                const uniqueDates = [...new Set(activeEvents.map(x => x.eventStartDate)) ].sort()
                 
                 dispatch(fetchEventsSuccess({
                     sortedEventsArray: sortedEventsArray,
-                    eventsById:eventsById,
+                    eventsById: eventsById,
                     categories: uniqueCategories,
                     dates: uniqueDates,
                     epochtime: unixTime(new Date())
@@ -53,9 +42,11 @@ export const fetchEvents = () => {
     }
 }
 
-const fetchEventsSuccess = ({sortedEventsArray,eventsById,categories,dates,epochtime}) => {
+const fetchEventsSuccess = ({duplicateEvents,events,sortedEventsArray,eventsById,categories,dates,epochtime}) => {
     return {
         type: actionTypes.GET_EVENTS_ALL,
+        duplicateEvents,
+        events,
         sortedEventsArray,
         eventsById,
         categories,

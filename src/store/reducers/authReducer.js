@@ -8,7 +8,9 @@ export const authReducer = (state = {}, action) => {
         case actionTypes.AUTH_LOGOUT:
             return {}
         case actionTypes.GET_MY_USER_DATA:
-            return {...state, userData: action.userData, favEvents:action.favEvents}
+            return {...state, userData: action.userData, favEvents:action.favEvents, allUserData: action.allData}
+        case actionTypes.IS_ADMIN:
+            return {...state, isAdmin: action.isAdmin}
         default: return state
     }
 }

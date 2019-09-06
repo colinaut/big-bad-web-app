@@ -13,3 +13,9 @@ TODO:
 * Improve CSS for Blog
 * Look at how Blog grabs data
 * Make individual events fetch new data on open and incorpoarate into Redux store. Also should fetch new on booking/unbooking.
+
+* Check to see if event is exempt from quota for changing available game slots
+* Change fetch so that it uses Epochtime for Public and then when user is logged in it only grabs individual data for events when they are opened (or maybe epoch?) — though I need to make sure it either closes events or grabs ones that are currently open
+* Add Fetch Event Epoch for logged in so that I can use the Open filter
+* Add sort by game system
+* Add All Ages, Playtest, Volunteer, Panel, Boardgames, Performance, Social, Etc.

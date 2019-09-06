@@ -6,6 +6,8 @@ export const eventsReducer = (state = {}, action) => {
     switch (action.type) {
         case actionTypes.GET_EVENTS_ALL:
             return {...state, 
+                duplicateEvents: action.duplicateEvents,
+                eventsRaw: action.events,
                 sortedEventsArray: action.sortedEventsArray,
                 eventsById: action.eventsById,
                 categories: action.categories,

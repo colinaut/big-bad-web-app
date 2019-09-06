@@ -58,9 +58,11 @@ const Event = props => {
   const toggleDetailsHandler = () => {
     if (authStatus && !detailsToggle) fetchEvent(id) //Fetch the Event info again on opening the details as long as user is logged in.
     toggleDetails()
+    console.log(event)
   }
 
   const displayEvent = () => {
+    if (event.eventStatus !== 1) return false;
     if (authStatus && filters.favs && !favStarStatus) return false;
     if (authStatus && filters.availability && availabileSlots < 1) return false;
     if (filters.dates !== "all" && filters.dates !== event.eventStartDate) return false;
@@ -68,32 +70,30 @@ const Event = props => {
     return true;
   }
 
-  if (displayEvent()) {
-    return (
-      <div className={eventStyle}>
-        <div className={eventSummaryStyle}>
-          <div className={styles.TitleColumn} onClick={toggleDetailsHandler}>
-            <div className={styles.Title} dangerouslySetInnerHTML={getMarkup(event.eventName)} />
-            <div className={styles.System}>{metaFields.System}</div>
-          </div>
-          <div className={styles.TimeColumn} onClick={toggleDetailsHandler}>
-            <div className={styles.Date}>{convertDate(event.eventStartDate)}</div>
-            <div className={styles.Time}>{convertTime(event.eventStartTime)} - {convertTime(event.eventEndTime)}</div>
-          </div>
+  return (displayEvent()) ? (
+    <div className={eventStyle}>
+      <div className={eventSummaryStyle}>
+        <div className={styles.TitleColumn} onClick={toggleDetailsHandler}>
+          <div className={styles.Title} dangerouslySetInnerHTML={getMarkup(event.eventName)} />
+          <div className={styles.System}>{metaFields.System}</div>
         </div>
-        { authStatus ? <div className={styles.FavStarWrapper}><Star className={favStarStyle} onClick={toggleFavStar} /></div> : null}
-        {detailsToggle ? 
-          <Fragment>
-            <div className={detailsStyle} >
-              <EventDetails eventRoom={event.eventRoom} description={event.postContent} meta={metaFields} categories={event.categories}/> 
-              { authStatus ? <EventBooking id={id} /> : null }
-            </div> 
-            <CloseAccordianBtn close={toggleDetails} color='Red' />
-          </Fragment>
-          : null }
+        <div className={styles.TimeColumn} onClick={toggleDetailsHandler}>
+          <div className={styles.Date}>{convertDate(event.eventStartDate)}</div>
+          <div className={styles.Time}>{convertTime(event.eventStartTime)} - {convertTime(event.eventEndTime)}</div>
+        </div>
       </div>
-    )
-  } else return null
+      { authStatus ? <div className={styles.FavStarWrapper}><Star className={favStarStyle} onClick={toggleFavStar} /></div> : null}
+      {detailsToggle ? 
+        <Fragment>
+          <div className={detailsStyle} >
+            <EventDetails eventRoom={event.eventRoom} description={event.postContent} meta={metaFields} categories={event.categories}/> 
+            { authStatus ? <EventBooking id={id} /> : null }
+          </div> 
+          <CloseAccordianBtn close={toggleDetails} color='Red' />
+        </Fragment>
+        : null }
+    </div>
+  ) : null
 }
 
 const mapStateToProps = ({auth,booking,events},ownProps) => {

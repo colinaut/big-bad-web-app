@@ -17,6 +17,7 @@ export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const GET_MY_USER_DATA = 'GET_MY_USER_DATA';
+export const IS_ADMIN = 'IS_ADMIN';
 
 // Fav Events
 export const SET_MY_FAV_EVENTS = 'GET_MY_FAV_EVENTS';

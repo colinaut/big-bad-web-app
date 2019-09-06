@@ -36,3 +36,13 @@
     margin: 0 0 1rem;
     font-weight: 400;
 }
+.Exempt {
+    font-style: italic;
+    font-weight: 700;
+}
+.Full {
+    font-weight: 700;
+}
+.NoBookings {
+    font-style: italic;
+}

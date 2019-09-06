@@ -34,7 +34,11 @@ const Events = props => {
   return (
     <div className={styles.Events}>
       <PageTitle>Events</PageTitle>
-      <p className={styles.Test}>Temp Admin Testing Button: <button onClick={()=> props.fetchEventsSince({epochtime:epochtime })}>grab new stuff</button></p>
+      <p className={styles.Test}>Temp Admin Testing Button: 
+        <button onClick={()=> props.fetchEventsSince({epochtime:epochtime })}>grab new stuff</button> 
+        <button onClick={()=> props.fetchEventsSince({epochtime:'1546321746'})}>grab all</button>
+        <button onClick={()=> props.fetchMyAvailableGameSlots()}>fetch my available slots</button>
+      </p>
       {sortedEventsArray ? <EventList dates={dates} categories={categories} sortedEventsArray={sortedEventsArray} events={props.events} /> : <LoadingSpinner/>}
     </div>
   )
@@ -46,7 +50,8 @@ const mapStateToProps = ({auth,events}) => {
       dates: events.dates,
       sortedEventsArray: events.sortedEventsArray,
       epochtime: events.epochtime, 
-      authStatus: auth.authStatus
+      authStatus: auth.authStatus,
+      isAdmin: auth.isAdmin,
   }
 }
 
@@ -54,6 +59,7 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchEvents: () => dispatch(actions.fetchEvents()),
     fetchEventsSince: (payload) => dispatch(actions.fetchEventsSince(payload)),
+    fetchMyAvailableGameSlots: () => dispatch(actions.fetchMyAvailableGameSlots())
   }
 }
 

@@ -1,6 +1,8 @@
-const isProdution = false; //set to true to use bigbadcon.com
+const isProdution = true; //set to true to use bigbadcon.com
 
-// API Docs are here: https://www.logictwine.com:8091/api/swagger-ui.html
+const baseAPIurl = isProdution? "https://www.bigbadcon.com:8091/api/" : "https://www.logictwine.com:8091/api/"
+
+// API Docs are here: https://bigbadcon.com:8091/api/swagger-ui.html https://www.logictwine.com:8091/api/swagger-ui.html
 
 export const POSTS = 'POSTS';
 export const PAGES = 'PAGES';
@@ -21,9 +23,9 @@ export const BOOKINGS_BOOK_ME_INTO_GAME = 'BOOKINGS_BOOK_ME_INTO_GAME';
 export const BOOKINGS_REMOVE_ME_FROM_GAME = 'BOOKINGS_REMOVE_ME_FROM_GAME';
 export const BOOKINGS_MY_AVAILABLE_GAME_SLOTS = 'BOOKINGS_MY_AVAILABLE_GAME_SLOTS';
 export const LOGIN = 'LOGIN'
+export const IS_ADMIN = 'IS_ADMIN'
 
 export const getUrl = (type,options) => {
-    const baseAPIurl = isProdution? "https://www.bigbadcon.com:8091/api/" : "https://www.logictwine.com:8091/api/"
     
     switch(type){
         case POSTS:
@@ -64,6 +66,8 @@ export const getUrl = (type,options) => {
             return baseAPIurl + 'bookings/myAvailableSlots';
         case LOGIN:
             return baseAPIurl + 'login';
+        case IS_ADMIN:
+            return baseAPIurl + 'users/me/isadmin';
         default:
             return false;
     }

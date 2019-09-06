@@ -8,3 +8,6 @@
    border: 1px solid #999;
    background: #ccc;
 }
+.Test button {
+   margin-right: .5rem;
+}

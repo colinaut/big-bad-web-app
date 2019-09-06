@@ -45,12 +45,14 @@ export const auth = (username, password) => {
             dispatch(authSuccess(authToken))
             // Get User Data including fav events
             dispatch(actions.fetchMyUserData())
+            // Check to see if user is Admin
+            dispatch(isAdmin());
             // Get Users Available Game Slots
             dispatch(actions.fetchMyAvailableGameSlots())
             // Get User's Events
             dispatch(actions.fetchMyEvents())
             //Grab events with complete logged in available data
-            dispatch(actions.fetchEvents()) 
+            dispatch(actions.fetchEventsSince({epochtime:'1546321746'})) 
         })
         .catch(err => {console.log(err);dispatch(authFail())})
     }
@@ -91,11 +93,30 @@ export const fetchMyUserData = () => {
 
                 dispatch({
                     type: actionTypes.GET_MY_USER_DATA,
+                    allData,
                     userData
                 })
                 dispatch({
                     type: actionTypes.SET_MY_FAV_EVENTS,
                     favEvents
+                })
+            })
+            .catch(error => {
+                throw(error);
+            });
+    }
+}
+
+export const isAdmin = () => {
+    return (dispatch, getState) => {
+        const config = { headers: authToken(getState) }
+        return axios.get(APIurl.getUrl(APIurl.IS_ADMIN), config )
+            .then(response => {
+                const isAdmin = response.data
+
+                dispatch({
+                    type: actionTypes.IS_ADMIN,
+                    isAdmin
                 })
             })
             .catch(error => {
