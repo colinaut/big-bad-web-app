@@ -31,8 +31,8 @@ const Events = props => {
   },[epochtime, currentTime, fetchEvents])
 
   const [progress, setProgress] = useState(1)
-  
-  useEffect(() => { //Progress Bar animation
+
+  useEffect(() => { //Progress Bar animation TODO: get this working with event count so that it is more dynamic in how it animates. Right now it just based on current run time
     var interval
     var intervalTime = 150 + Math.floor((Math.random() * 150) + 1);
 
@@ -48,11 +48,10 @@ const Events = props => {
   return (
     <div className={styles.Events}>
       <PageTitle>Events</PageTitle>
-      <p className={styles.Test}>Admin Testing: 
+      {isAdmin ? <p className={styles.Test}>Admin Testing: 
         <button onClick={()=> props.fetchEventsSince({epochtime:epochtime })}>grab new stuff</button> 
         <button onClick={()=> props.fetchEventsSince({epochtime:'1546321746'})}>grab all this year</button>
-        <button onClick={()=> props.fetchEventsCount()}>fetch events count</button>
-      </p>
+      </p> : null}
       
       {sortedEventsArray ? <EventList dates={dates} categories={categories} sortedEventsArray={sortedEventsArray} events={props.events} /> : <ProgressBar color='teal' percentage={progress} />}
     </div>
