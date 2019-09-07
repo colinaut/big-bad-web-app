@@ -18,3 +18,4 @@ TODO:
 * Add sort by game system
 * Make it so you can highlight more than one category at once?
 * add progress bar based on number of items
+* sort My Bookings by time/date

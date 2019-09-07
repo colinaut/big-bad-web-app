@@ -1,13 +1,18 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styles from './MyBookings.module.css';
 import { connect } from 'react-redux';
-import MyBookingsListItem from '../MyBookingsListItem'
+import MyBookingsListItem from '../MyBookingsListItem';
+import * as actions from '../../store/actions';
 
 const MyBookings = props => {
-  const {myEvents, myAvailableGameSlots} = props;
+  const {myEvents, myAvailableGameSlots, fetchMyEvents,fetchMyAvailableGameSlots} = props;
 
   const gameSlotText = (myAvailableGameSlots === 1) ? `You have ${myAvailableGameSlots} Game Slot Available` : `You have ${myAvailableGameSlots} Game Slots Available`
 
+  useEffect(()=>{
+    fetchMyEvents()
+    fetchMyAvailableGameSlots()
+  },[fetchMyEvents,fetchMyAvailableGameSlots])
 
   return (
     <div className={styles.MyBookings}>
@@ -31,4 +36,11 @@ const mapStateToProps = ({booking}) => {
   }
 }
 
-export default connect(mapStateToProps)(MyBookings)
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchMyEvents: () => dispatch(actions.fetchMyEvents()),
+    fetchMyAvailableGameSlots: () => dispatch(actions.fetchMyAvailableGameSlots())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyBookings)

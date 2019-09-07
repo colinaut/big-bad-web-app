@@ -13,8 +13,11 @@ const sortEvents = events => {
 }
 
 export const fetchEventsCount = () => {
-    return (dispatch) => {
-        return axios.get(APIurl.getUrl(APIurl.EVENTS_COUNT))
+    return (dispatch, getState) => {
+        const authHeader = authToken(getState)
+        const url = authHeader ? APIurl.getUrl(APIurl.EVENTS_COUNT) : APIurl.getUrl(APIurl.EVENTS_COUNT);
+        const config = { headers: authHeader }
+        return axios.get(url, config)
             .then(response => {
                 const eventsCount = response.data;
                 console.log(eventsCount)

@@ -1,12 +1,11 @@
 import { connect } from 'react-redux';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import unixTime from 'unix-time';
 
 import * as actions from '../../store/actions';
 import EventList from '../EventList';
-import LoadingSpinner from '../LoadingSpinner';
 import PageTitle from '../PageTitle';
-
+import ProgressBar from '../ProgressBar'
 import styles from './Events.module.css';
 
 const Events = props => {
@@ -31,16 +30,31 @@ const Events = props => {
     }
   },[epochtime, currentTime, fetchEvents])
 
+  const [progress, setProgress] = useState(1)
+  
+  useEffect(() => { //Progress Bar animation
+    var interval
+    var intervalTime = 150 + Math.floor((Math.random() * 150) + 1);
+
+    if (!sortedEventsArray) {
+      interval = setInterval(() => {
+        intervalTime = 150 + Math.floor((Math.random() * 150) + 1);
+        setProgress(prevState => prevState + 1)
+      }, intervalTime);
+    }
+    return () => clearInterval(interval);
+  }, [sortedEventsArray]);
+
   return (
     <div className={styles.Events}>
       <PageTitle>Events</PageTitle>
       <p className={styles.Test}>Admin Testing: 
         <button onClick={()=> props.fetchEventsSince({epochtime:epochtime })}>grab new stuff</button> 
         <button onClick={()=> props.fetchEventsSince({epochtime:'1546321746'})}>grab all this year</button>
-        <button onClick={()=> props.fetchMyAvailableGameSlots()}>fetch my available slots</button>
         <button onClick={()=> props.fetchEventsCount()}>fetch events count</button>
       </p>
-      {sortedEventsArray ? <EventList dates={dates} categories={categories} sortedEventsArray={sortedEventsArray} events={props.events} /> : <LoadingSpinner/>}
+      
+      {sortedEventsArray ? <EventList dates={dates} categories={categories} sortedEventsArray={sortedEventsArray} events={props.events} /> : <ProgressBar color='teal' percentage={progress} />}
     </div>
   )
 }

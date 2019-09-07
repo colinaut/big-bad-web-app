@@ -4,6 +4,7 @@
     padding-left: 1.2rem;
     color: #dddddd;
     position: relative;
+    line-height: 130%;
 }
 .MyBookingsListItem::before {
     content: '•';
@@ -15,6 +16,17 @@
     margin-left: 1rem;
     font-style: italic;
 }
+.EventName {
+    font-weight: 700;
+    color: #ffffff;
+}
 .Room {
     display: block;
+    font-size: .9rem
+}
+
+.Time, .Date {
+    display: inline-block;
+    margin-right: 1rem;
+    font-size: .9rem
 }

@@ -81,7 +81,7 @@ const Event = props => {
       {detailsToggle ? 
         <Fragment>
           <div className={detailsStyle} >
-            <EventDetails eventRoom={event.eventRoom} description={event.postContent} meta={event.metadata} categories={event.categories}/> 
+            <EventDetails description={event.postContent} metadata={event.metadata} categories={event.categories}/> 
             { authStatus ? <EventBooking id={id} /> : null }
           </div> 
           <CloseAccordianBtn close={toggleDetails} color='Red' />

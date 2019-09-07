@@ -83,7 +83,7 @@ export const bookMeIntoGame = eventId => {
         // Preventatively remove from available game slots. Doing this to make sure users can't double book by clicking fast
         const myAvailableGameSlots = getState().booking.myAvailableGameSlots;
         const event = getState().events.eventsById[eventId];
-        const exempt = event.metadata.some(meta => meta.metaKey = 'exempt')
+        const exempt = event.metadata.exempt
 
         if (!exempt) { dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots-1)) }
 
@@ -114,7 +114,7 @@ export const removeMeFromGame = eventId => {
 
         const myAvailableGameSlots = getState().booking.myAvailableGameSlots;
         const event = getState().events.eventsById[eventId];
-        const exempt = event.metadata.some(meta => meta.metaKey = 'exempt')
+        const exempt = event.metadata.exempt
 
         return axios({
             method: 'DELETE',
