@@ -6,6 +6,28 @@ import * as actions from '../../store/actions';
 
 // Favorite Events List
 
+export const fetchFavEvents = () => {
+    return (dispatch, getState) => {
+        const authHeader = authToken(getState)
+        if (authHeader) {
+            const url = APIurl.getUrl(APIurl.EVENTS_ME_FAV)
+            const config = { headers: authHeader }
+            return axios.get(url, config)
+                .then(response => {
+                    const favEvents = response.data.map(fav => fav.eventId)
+                    dispatch({
+                        type: actionTypes.SET_MY_FAV_EVENTS,
+                        favEvents
+                    })
+                })
+                .catch(error => {
+                    if (error.message.match(/403/g)) { dispatch(actions.logout()) }
+                    throw(error);
+                });
+        } else console.log('not logged in')      
+    }
+}
+
 export const addFavEvent = eventId => {
     return (dispatch, getState) => {
         const postData = { eventId: eventId }

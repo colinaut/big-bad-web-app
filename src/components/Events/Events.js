@@ -50,8 +50,8 @@ const Events = props => {
     <div className={styles.Events}>
       <PageTitle>Events</PageTitle>
       {isAdmin ? <p className={styles.Test}>Admin Testing: 
-        <button onClick={()=> props.fetchEventsSince({epochtime:epochtime })}>grab new stuff</button> 
-        <button onClick={()=> props.fetchEventsSince({epochtime:'1546321746'})}>grab all this year</button>
+        <button onClick={()=> props.fetchEventsSince({epochtime:epochtime })}>get events since last load</button> 
+        <button onClick={()=> props.fetchEventsSince({epochtime:'1546321746'})}>get all events this year</button>
       </p> : null}
       
       {sortedEventsArray ? <EventList dates={dates} categories={categories} sortedEventsArray={sortedEventsArray} events={props.events} /> : <ProgressBar color='teal' percentage={progress} />}
@@ -75,7 +75,8 @@ const mapDispatchToProps = dispatch => {
     fetchEvents: () => dispatch(actions.fetchEvents()),
     fetchEventsSince: (payload) => dispatch(actions.fetchEventsSince(payload)),
     fetchMyAvailableGameSlots: () => dispatch(actions.fetchMyAvailableGameSlots()),
-    fetchEventsCount: () => dispatch(actions.fetchEventsCount())
+    fetchEventsCount: () => dispatch(actions.fetchEventsCount()),
+    fetchFavEvents: () => dispatch(actions.fetchFavEvents()),
   }
 }
 

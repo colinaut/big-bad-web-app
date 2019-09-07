@@ -15,6 +15,7 @@ export {
 
 export {
     fetchMyEvents,
+    fetchFavEvents,
     addFavEvent,
     deleteFavEvent,
     bookMeIntoGame,

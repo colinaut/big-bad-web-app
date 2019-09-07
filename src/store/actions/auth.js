@@ -49,6 +49,8 @@ export const auth = (username, password) => {
             dispatch(isAdmin());
             // Get Users Available Game Slots
             dispatch(actions.fetchMyAvailableGameSlots())
+            // Get User's Fav Events
+            dispatch(actions.fetchFavEvents());
             // Get User's Events
             dispatch(actions.fetchMyEvents())
             //Grab events with complete logged in available data
@@ -89,16 +91,11 @@ export const fetchMyUserData = () => {
             .then(response => {
                 const allData = response.data
                 const userData = {displayName: allData.displayName, userNicename: allData.userNicename, id:allData.id}
-                const favEvents = allData.bbcUserFavorites.map(fav => fav.eventId)
 
                 dispatch({
                     type: actionTypes.GET_MY_USER_DATA,
                     allData,
                     userData
-                })
-                dispatch({
-                    type: actionTypes.SET_MY_FAV_EVENTS,
-                    favEvents
                 })
             })
             .catch(error => {

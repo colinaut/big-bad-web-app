@@ -16,6 +16,7 @@ export const EVENTS_PAGED_PUBLIC = 'EVENTS_PAGED_PUBLIC';
 export const EVENTS_SINCE = 'EVENTS_SINCE';
 export const EVENTS_SINCE_PUBLIC = 'EVENTS_SINCE_PUBLIC';
 export const EVENTS_FIND_EVENT = 'EVENTS_FIND_EVENT';
+export const EVENTS_ME_FAV = 'EVENTS_ME_FAV';
 export const EVENTS_ME_FAV_CREATE = 'EVENTS_ME_FAV_CREATE';
 export const EVENTS_ME_FAV_DELETE = 'EVENTS_ME_FAV_DELETE';
 export const USERS_ME = 'USERS_ME';
@@ -53,6 +54,8 @@ export const getUrl = (type,options) => {
             return baseAPIurl + 'events/since/' + options.epochtime + '/public';
         case EVENTS_FIND_EVENT:
             return baseAPIurl + 'events/find/';
+        case EVENTS_ME_FAV:
+            return baseAPIurl + '/events/me/favorites';
         case EVENTS_ME_FAV_CREATE:
             return baseAPIurl + 'events/me/favorite/create';
         case EVENTS_ME_FAV_DELETE:
