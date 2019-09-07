@@ -13,10 +13,6 @@
     margin: .5rem 0;
 }
 
-.Button:hover {
-    background-color: var(--dark-teal);
-}
-
 .Button:disabled {
     color: #ccc;
     cursor: not-allowed;
@@ -26,13 +22,19 @@
     background: var(--bright-red);
     color: var(--off-white);
 }
-.Danger:hover {
-    background: var(--red);
-    color: var(--off-white);
-}
+
 .White {
     color: #ffffff;
 }
 .Gray {
     background-color: var(--mid-gray);
+}
+@media (hover: hover) {
+    .Button:hover {
+        background-color: var(--dark-teal);
+    }
+    .Danger:hover {
+        background: var(--red);
+        color: var(--off-white);
+    }
 }

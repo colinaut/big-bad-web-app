@@ -16,6 +16,7 @@ const Events = props => {
     dates,
     fetchEvents,
     epochtime,
+    isAdmin,
   } = props;
 
   useEffect(()=>{

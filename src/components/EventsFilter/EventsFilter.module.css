@@ -27,9 +27,10 @@
     margin: 0 .25rem;
     color: #000;
 }
-
-.FilterButton:hover {
-    color: var(--dark-red)
+@media (hover: hover) {
+    .FilterButton:hover {
+        color: var(--dark-red)
+    }    
 }
 
 .FilterButton:last-child::after {

@@ -13,18 +13,13 @@
     cursor: pointer;
     border-radius: 3px;
 }
-.Eventsummary:hover {
-    background: var(--dark-tan);
-}
+
 .MyEvent {
     background: var(--dark-red) !important;
     color: var(--off-white) !important;
 }
 .MyEvent .Title {
     color: var(--off-white) !important;
-}
-.MyEvent:hover {
-    background: var(--red);
 }
 
 .Active {
@@ -63,15 +58,25 @@
     stroke: #000;
     fill: #000;
 }
-.FavStar:hover path {
-    fill: var(--off-white);
-}
+
 
 .FavStarActive path {
     fill: var(--yellow);
 }
-.FavStarActive:hover path {
-    fill: #555;
+
+@media (hover: hover) {
+    .FavStar:hover path {
+        fill: var(--off-white);
+    }
+    .FavStarActive:hover path {
+        fill: #555;
+    }
+    .MyEvent:hover {
+        background: var(--red);
+    }
+    .Eventsummary:hover {
+        background: var(--dark-tan);
+    }
 }
 
 @media only screen and (min-width: _menuwidth) {
