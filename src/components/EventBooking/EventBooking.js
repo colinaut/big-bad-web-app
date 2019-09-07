@@ -50,7 +50,7 @@ const EventBooking = props => {
       return (
         <Fragment>
           { metadata.exempt ? <p className={styles.Exempt}>This game is exempt from your quota</p> : <p className={styles.GameSlots}>{gameSlotText}</p>}
-          { props.isAdmin ? <Button style={btnStyle} clicked={()=> props.bookMeIntoGame(id)}>Book Event</Button> : null } {/* IMPORTANT TODO: Remove isAdmin before publishing for public */}
+          <Button style={btnStyle} clicked={()=> props.bookMeIntoGame(id)}>Book Event</Button>
         </Fragment>
       )
     }
