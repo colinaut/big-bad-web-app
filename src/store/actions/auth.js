@@ -94,7 +94,6 @@ export const fetchMyUserData = () => {
 
                 dispatch({
                     type: actionTypes.GET_MY_USER_DATA,
-                    allData,
                     userData
                 })
             })

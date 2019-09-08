@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-TODO:
+#TODO:
 
 * Add filter function to show games that are still open
 * Add booking functionality
@@ -19,3 +19,16 @@ TODO:
 * Make it so you can highlight more than one category at once?
 * add progress bar based on number of items
 * sort My Bookings by time/date
+* make Open fitler not appear until all event booking data working
+
+#Review what's not needed for local storage
+* eventsById
+    * eventSlug
+    * eventCategoryId
+    * eventAttributes
+    * blogId
+    * groupId
+    * postId
+    * lastUpdated ?
+    * categories (revamp to a list of names and slugs)
+    

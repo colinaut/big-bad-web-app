@@ -22,10 +22,10 @@ const EventBooking = props => {
   else if (myAvailableGameSlots === 0) { gameSlotText = `You have no bookings left!` }
   else if (myAvailableGameSlots < 0) { gameSlotText = `We're sorry something went wrong and you are overbooked! Please cancel ${-1*myAvailableGameSlots} of your bookings` }
 
-  const playerList = bookings.filter(booking => booking.bookingStatus === 1 && booking.bookingComment === null).map(booking => { return {bookingId: booking.bookingId, bookingComment: booking.bookingComment, displayName: booking.user.displayName, userId: booking.user.id}})
-  const gm = bookings.filter(booking => booking.bookingStatus === 1 && booking.bookingComment)[0]
+  const playerList = bookings.filter(booking => booking.bookingComment === null)
+  const gm = bookings.filter(booking => booking.bookingComment)[0]
 
-  const isBookedIntoGame = myEvents.includes(id) || playerList.some(player => player.userId === userId)
+  const isBookedIntoGame = myEvents.includes(id) || bookings.some(player => player.userId === userId)
 
   const btnStyle = {
     margin: '0'
@@ -58,14 +58,14 @@ const EventBooking = props => {
 
   return props.bookings ? (
     <div className={styles.EventBooking}>
-      {gm ? <h3 className={styles.GM}><strong>{gm.bookingComment}:</strong> {gm.user.displayName}</h3> : null}
+      {gm ? <h3 className={styles.GM}><strong>{gm.bookingComment}:</strong> {gm.displayName}</h3> : null}
       {metadata.players ? <h3 className={styles.Heading}>Event Bookings:
         <span className={styles.AvailableSlots}>(Openings: <strong className={styles.AvailableSlotsNumber}>{metadata.players - playerList.length} of {metadata.players}</strong>)</span>
       </h3> : null}
       {playerList ? 
       <div className={styles.PlayersListWrapper}>
         <ul className={styles.PlayersList}>
-          {playerList.map(player => <li className={styles.PlayersListItem} key={player.bookingId}>{player.displayName}</li>)}
+          {playerList.map(player => <li className={styles.PlayersListItem} key={player.id}>{player.displayName}</li>)}
         </ul> 
       </div>: null}
       {metadata.volunteer_shift ? <p className={styles.Volunteer}>You must be a volunteer to sign up for this.</p> : null}
