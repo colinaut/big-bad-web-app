@@ -9,6 +9,7 @@ const EventBooking = props => {
   const {
     id,
     bookings = [],
+    bookingExempt,
     metadata,
     myEvents,
     myAvailableGameSlots,
@@ -49,7 +50,7 @@ const EventBooking = props => {
     } else {
       return (
         <Fragment>
-          { metadata.exempt ? <p className={styles.Exempt}>This game is exempt from your quota</p> : <p className={styles.GameSlots}>{gameSlotText}</p>}
+          { bookingExempt ? <p className={styles.Exempt}>This game is exempt from your quota</p> : <p className={styles.GameSlots}>{gameSlotText}</p>}
           <Button style={btnStyle} clicked={()=> props.bookMeIntoGame(id)}>Book Event</Button>
         </Fragment>
       )
@@ -77,6 +78,7 @@ const EventBooking = props => {
 const mapStateToProps = ({events, booking, auth}, ownProps) => {
   return {
       bookings: events.eventsById[ownProps.id].bookings,
+      bookingExempt: events.eventsById[ownProps.id].bookingExempt,
       metadata: events.eventsById[ownProps.id].metadata,
       myEvents: booking.myEvents,
       myAvailableGameSlots: booking.myAvailableGameSlots,
