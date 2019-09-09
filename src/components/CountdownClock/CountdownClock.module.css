@@ -16,9 +16,11 @@
     padding: .3rem .6rem .4rem;
     border: 1px solid var(--navy-blue);
     border-radius: 4px;
-    background: var(--light-teal);
+    background: var(--yellow);
     color: var(--navy-blue);
     display: inline-block;
     width: 8rem;
     text-align: center;
+    font-weight: 500;
+    font-family: 'IBM Plex Mono', monospace;
 }
