@@ -8,15 +8,28 @@ import {transformObjectToArray, dynamicSort} from '../../util/helpers';
 import {convertDate} from '../../util/helpers';
 import { ReactComponent as D6 } from '../../assets/die-6.svg'
 import { ReactComponent as Star } from '../../assets/star.svg';
+import { connect } from 'react-redux';
 
 const EventList = props => {
 
   const {
     categories = [], 
     dates = [],
-    sortedEventsArray = []
+    sortedEventsByDate = [],
+    sortedEventsByName = [],
+    sortedEventsBySystem = [],
   } = props;
 
+  // SORTED EVENTS
+
+  const sortOrders = [
+    {name:'Date', data:sortedEventsByDate},
+    {name:'Name', data:sortedEventsByName},
+    {name:'System',data:sortedEventsBySystem}
+  ]
+  const [sortedEvents,setSortedEvents] = useState(sortOrders[0])
+
+  // FILTERS
   const [currentFilters, setCurrentFilters] = useState({categories: 'all',dates: 'all', availability:false, favs:false});
 
   // Setting up all the Filter buttons
@@ -105,9 +118,22 @@ const EventList = props => {
   
   return (
     <div className={styles.EventlistWrapper}>
+      <div className={styles.EventsSort}>
+        <h4>Sort by:</h4>
+        { sortOrders.map( sortButton => {
+            return (
+              <button
+                key={sortButton.name}
+                className={(sortedEvents.name === sortButton.name) ? [styles.SortButton, styles.On].join(' ') : styles.SortButton} 
+                onClick={()=> setSortedEvents(sortButton)} 
+              ><span className={styles.Name}>{sortButton.name}</span></button>
+            )
+          })
+        }
+      </div>
       <EventsFilter buttonPanel={transformObjectToArray(filterButtons).sort(dynamicSort('priority'))}/>
       <div className={styles.Eventlist}>
-        {sortedEventsArray.map(id => (
+        {sortedEvents.data.map(id => (
           <Event 
             key={id + uuid()}
             id={id}
@@ -119,4 +145,14 @@ const EventList = props => {
   )
 }
 
-export default EventList
+const mapStateToProps = ({events}) => {
+  return {
+    categories: events.categories,
+    dates: events.dates,
+    sortedEventsByDate: events.sortedEventsByDate,
+    sortedEventsByName: events.sortedEventsByName,
+    sortedEventsBySystem: events.sortedEventsBySystem,
+  }
+}
+
+export default connect(mapStateToProps)(EventList)

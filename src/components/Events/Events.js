@@ -7,21 +7,20 @@ import EventList from '../EventList';
 import PageTitle from '../PageTitle';
 import ProgressBar from '../ProgressBar'
 import styles from './Events.module.css';
+import {transformObjectToArray} from '../../util/helpers';
 
 const Events = props => {
 
   const {
-    sortedEventsArray,
-    categories,
-    dates,
+    sortedEventsByDate,
     fetchEvents,
     epochtime,
     isAdmin,
   } = props;
 
   useEffect(()=>{
-    if (!sortedEventsArray || (sortedEventsArray && sortedEventsArray.length < 1)) {fetchEvents()}
-  },[sortedEventsArray,fetchEvents])
+    if (!sortedEventsByDate || (sortedEventsByDate && sortedEventsByDate.length < 1)) {fetchEvents()}
+  },[sortedEventsByDate,fetchEvents])
 
   const currentTime = unixTime(new Date())
 
@@ -37,14 +36,14 @@ const Events = props => {
     var interval
     var intervalTime = 150 + Math.floor((Math.random() * 150) + 1);
 
-    if (!sortedEventsArray) {
+    if (!sortedEventsByDate) {
       interval = setInterval(() => {
         intervalTime = 150 + Math.floor((Math.random() * 150) + 1);
         setProgress(prevState => prevState + 1)
       }, intervalTime);
     }
     return () => clearInterval(interval);
-  }, [sortedEventsArray]);
+  }, [sortedEventsByDate]);
 
   return (
     <div className={styles.Events}>
@@ -52,21 +51,22 @@ const Events = props => {
       {isAdmin ? <p className={styles.Test}>Admin Testing: 
         <button onClick={()=> props.fetchEventsSince({epochtime:epochtime })}>get events since last load</button> 
         <button onClick={()=> props.fetchEventsSince({epochtime:'1546321746'})}>get all events this year</button>
+        <button onClick={()=> props.fetchEvents()}>get all events</button>
+        <button onClick={()=> props.sortEvents(transformObjectToArray(props.eventsById))}>sort events</button>
       </p> : null}
       
-      {sortedEventsArray ? <EventList dates={dates} categories={categories} sortedEventsArray={sortedEventsArray} events={props.events} /> : <ProgressBar color='teal' percentage={progress} />}
+      {sortedEventsByDate ? <EventList /> : <ProgressBar color='teal' percentage={progress} />}
     </div>
   )
 }
 
 const mapStateToProps = ({auth,events}) => {
   return {
-      categories: events.categories,
-      dates: events.dates,
-      sortedEventsArray: events.sortedEventsArray,
-      epochtime: events.epochtime, 
-      authStatus: auth.authStatus,
-      isAdmin: auth.isAdmin,
+    sortedEventsByDate: events.sortedEventsByDate,
+    eventsById: events.eventsById,
+    epochtime: events.epochtime, 
+    authStatus: auth.authStatus,
+    isAdmin: auth.isAdmin,
   }
 }
 
@@ -77,6 +77,7 @@ const mapDispatchToProps = dispatch => {
     fetchMyAvailableGameSlots: () => dispatch(actions.fetchMyAvailableGameSlots()),
     fetchEventsCount: () => dispatch(actions.fetchEventsCount()),
     fetchFavEvents: () => dispatch(actions.fetchFavEvents()),
+    sortEvents: (events) => dispatch(actions.sortEvents(events))
   }
 }
 

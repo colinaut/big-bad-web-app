@@ -6,13 +6,14 @@ export const eventsReducer = (state = {}, action) => {
     switch (action.type) {
         case actionTypes.GET_EVENTS_ALL:
             return {...state, 
-                duplicateEvents: action.duplicateEvents,
-                eventsRaw: action.events,
-                sortedEventsArray: action.sortedEventsArray,
                 eventsById: action.eventsById,
-                categories: action.categories,
-                dates: action.dates,
                 epochtime: action.epochtime,
+            }
+        case actionTypes.SORT_EVENTS:
+            return {...state,
+                sortedEventsByDate: action.sortedEventsByDate,
+                sortedEventsByName: action.sortedEventsByName,
+                sortedEventsBySystem: action.sortedEventsBySystem,
             }
         case actionTypes.GET_SINGLE_EVENT:
             return {...state, 
@@ -22,6 +23,14 @@ export const eventsReducer = (state = {}, action) => {
             return {...state,
                 eventsById: update(state.eventsById, {$merge: action.eventsById}),
                 epochtime: action.epochtime,
+            }
+        case actionTypes.SET_EVENT_DATES:
+            return {...state, 
+                dates: action.dates,
+            }
+        case actionTypes.SET_EVENT_CATEGORIES:
+            return {...state, 
+                categories: action.categories,
             }
         default: return state
     }

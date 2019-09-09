@@ -1,9 +1,14 @@
 .Eventsfilter {
     display: flex;
+    padding: .5rem 0;
+    border-bottom: 1px solid var(--blue-gray);
 }
 .Panel {
-    padding: 0 .5rem 0 .5rem;
+    padding: 0 1rem 0 0;
     line-height: .5rem;
+}
+.Panel:last-child {
+    padding: 0;
 }
 .PanelLabel {
     margin: 0 .3rem .5rem 0 ;

@@ -2,3 +2,51 @@
 .Eventlist {
 
 }
+.EventsSort {
+    padding: .5rem 0;
+    border-bottom: 1px solid var(--blue-gray);
+    border-top: 1px solid var(--blue-gray);
+}
+.EventsSort h4 {
+    display: inline-block;
+    margin: 0 0.5rem 0 0;
+    font-size: .9rem;
+}
+.SortButton {
+    background: none;
+    border: 0;
+    padding: 0;
+    font-size: .9rem;
+} 
+
+.SortButton::after {
+    content: "\2027";
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 .25rem;
+    color: #000;
+}
+
+.SortButton:last-child::after {
+    content: "";
+}
+
+@media (hover: hover) {
+    .SortButton:hover {
+        color: var(--dark-red)
+    }    
+}
+
+.SortButton.On {
+    color: var(--red);
+}
+
+.Name {
+    padding-bottom: 1px;
+    border-bottom: 1px solid transparent;
+    display: inline-block;
+}
+.SortButton.On .Name {
+    border-bottom: 1px solid var(--putty);
+    display: inline-block;
+}

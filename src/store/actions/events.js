@@ -8,10 +8,6 @@ import * as actions from '../../store/actions';
 
 // Async Action
 
-const sortEvents = events => {
-    return [...events].sort(dynamicSortMultiple('eventStartDate','eventStartTime','eventName'))
-}
-
 const simplifyEvents = events => {
     return events.map(data => { return {
         //...data,
@@ -30,6 +26,7 @@ const simplifyEvents = events => {
         //eventEndDate: data.eventEndDate,
         eventId: data.eventId,
         eventName: data.eventName,
+        eventSystem: data.metadata.find(meta => meta.metaKey === 'System') ? data.metadata.find(meta => meta.metaKey === 'System').metaValue : null,
         eventOwner: data.eventOwner ? {id: data.eventOwner.id, displayName: data.eventOwner.displayName} : null, 
         eventPrivate: data.eventPrivate || null,
         //eventRoom: data.eventRoom || null,
@@ -58,7 +55,6 @@ export const fetchEventsCount = () => {
             .then(response => {
                 const eventsCount = response.data;
                 console.log(eventsCount)
-                
             })
             .catch(error => {
                 if (error.message.match(/403/g)) { dispatch(actions.logout()) }
@@ -74,19 +70,13 @@ export const fetchEvents = () => {
         const config = { headers: authHeader }
         return axios.get(url, config)
             .then(response => {
-                const eventsSimplified = simplifyEvents(response.data);
-                const activeEvents = eventsSimplified.filter(event => event.eventStatus === 1);
-                const sortedEventsArray = sortEvents(activeEvents).map(event => event.eventId);
-                const eventsById = transformArrayToObject(activeEvents,'eventId');
-                const listofCategories = [].concat(...activeEvents.filter((event)=> event.categories.length > 0).map((event) => event.categories))
-                const uniqueCategories = [...new Set(listofCategories.map(x => x.slug)) ].map(slug => {return {slug:slug, name:listofCategories.find( x => x.slug === slug).name}})
-                const uniqueDates = [...new Set(activeEvents.map(x => x.eventStartDate)) ].sort()
+                const activeEvents = simplifyEvents(response.data).filter(event => event.eventStatus === 1);
                 
+                dispatch(sortEvents(activeEvents))
+                dispatch(setEventDates(activeEvents))
+                dispatch(setEventCategories(activeEvents))
                 dispatch(fetchEventsSuccess({
-                    sortedEventsArray: sortedEventsArray,
-                    eventsById: eventsById,
-                    categories: uniqueCategories,
-                    dates: uniqueDates,
+                    eventsById: transformArrayToObject(activeEvents,'eventId'),
                     epochtime: unixTime(new Date())
                 }))
             })
@@ -97,17 +87,55 @@ export const fetchEvents = () => {
     }
 }
 
-const fetchEventsSuccess = ({duplicateEvents,events,sortedEventsArray,eventsById,categories,dates,epochtime}) => {
+const fetchEventsSuccess = ({eventsById,categories,dates,epochtime}) => {
     return {
         type: actionTypes.GET_EVENTS_ALL,
-        duplicateEvents,
-        events,
-        sortedEventsArray,
         eventsById,
         categories,
         dates,
         epochtime
       }
+}
+
+const setEventDates = events => {
+    return dispatch => {
+        const dates = [...new Set(events.map(x => x.eventStartDate)) ].sort()
+        dispatch(() => { return {
+            type: actionTypes.SET_EVENT_DATES,
+            dates
+        }})
+    }
+}
+
+const setEventCategories = events => {
+    return dispatch => {
+        const listofCategories = [].concat(...events.filter((event)=> event.categories.length > 0).map((event) => event.categories))
+        const categories = [...new Set(listofCategories.map(x => x.slug)) ].map(slug => {return {slug:slug, name:listofCategories.find( x => x.slug === slug).name}})
+                
+        dispatch(() => { return {
+            type: actionTypes.SET_EVENT_CATEGORIES,
+            categories
+        }})
+    }
+}
+
+export const sortEvents = events => {
+    return dispatch => {
+        dispatch(sortEventsSuccess({
+            sortedEventsByDate: [...events].sort(dynamicSortMultiple('eventStartDate','eventStartTime','eventName')).map(event => event.eventId),
+            sortedEventsByName: [...events].sort(dynamicSortMultiple('eventName','eventStartDate','eventStartTime')).map(event => event.eventId),
+            sortedEventsBySystem: [...events].sort(dynamicSortMultiple('eventSystem','eventStartDate','eventStartTime')).map(event => event.eventId),
+        }))
+    }
+}
+
+const sortEventsSuccess = ({sortedEventsByDate,sortedEventsByName,sortedEventsBySystem}) => {
+    return {
+        type: actionTypes.SORT_EVENTS,
+        sortedEventsByDate,
+        sortedEventsByName,
+        sortedEventsBySystem
+    }
 }
 
 export const fetchEventsSince = (payload) => { // TODO: get this working with public too
