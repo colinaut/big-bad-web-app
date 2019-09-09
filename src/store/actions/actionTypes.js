@@ -13,6 +13,7 @@ export const GET_EVENTS_SINCE = 'GET_EVENTS_SINCE';
 export const SORT_EVENTS = 'SORT_EVENTS';
 export const SET_EVENT_DATES = 'SET_EVENT_DATES';
 export const SET_EVENT_CATEGORIES = 'SET_EVENT_CATEGORIES';
+export const GET_COUNTDOWN = 'GET_COUNTDOWN';
 
 // Auth
 export const AUTH_START = 'AUTH_START';

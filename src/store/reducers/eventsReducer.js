@@ -32,6 +32,11 @@ export const eventsReducer = (state = {}, action) => {
             return {...state, 
                 categories: action.categories,
             }
+        case actionTypes.GET_COUNTDOWN:
+            return {
+                ...state,
+                countdown: action.countdown
+            }
         default: return state
     }
 }

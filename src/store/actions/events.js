@@ -71,7 +71,7 @@ export const fetchEvents = () => {
         return axios.get(url, config)
             .then(response => {
                 const activeEvents = simplifyEvents(response.data).filter(event => event.eventStatus === 1);
-                
+                dispatch(fetchCountdown())
                 dispatch(sortEvents(activeEvents))
                 dispatch(setEventDates(activeEvents))
                 dispatch(setEventCategories(activeEvents))
@@ -138,7 +138,7 @@ const sortEventsSuccess = ({sortedEventsByDate,sortedEventsByName,sortedEventsBy
     }
 }
 
-export const fetchEventsSince = (payload) => { // TODO: get this working with public too
+export const fetchEventsSince = (payload) => { // TODO: get this working with public too; //TODO add sort function if date/time/name/system changes
     const {epochtime} = payload
     return (dispatch, getState) => {
         const authHeader = authToken(getState)
@@ -166,7 +166,7 @@ const fetchEventsSinceSuccess = ({eventsById,epochtime}) => {
       }
 }
 
-export const fetchEvent = eventId => {
+export const fetchEvent = eventId => { //TODO add sort function if date/time/name/system changes
     return (dispatch, getState) => {
         const config = { headers: authToken(getState) }
         const params = { id: eventId }
@@ -187,5 +187,28 @@ const fetchEventSuccess = (event) => {
         type: actionTypes.GET_SINGLE_EVENT,
         id: event.eventId,
         event
+    }
+}
+
+export const fetchCountdown = () => {
+    return dispatch => {
+        return axios.get(APIurl.getUrl(APIurl.COUNTDOWN))
+            .then(response => {
+                
+                const countdown = JSON.parse(response.data.files['bbcCountdown.json'].content)
+                dispatch(fetchCountdownSuccess(countdown))
+            })
+            .catch(error => {
+                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
+                throw(error);
+            });
+
+    }
+}
+
+const fetchCountdownSuccess = (countdown) => {
+    return {
+        type: actionTypes.GET_COUNTDOWN,
+        countdown
     }
 }

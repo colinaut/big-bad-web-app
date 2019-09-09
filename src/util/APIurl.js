@@ -26,6 +26,7 @@ export const BOOKINGS_REMOVE_ME_FROM_GAME = 'BOOKINGS_REMOVE_ME_FROM_GAME';
 export const BOOKINGS_MY_AVAILABLE_GAME_SLOTS = 'BOOKINGS_MY_AVAILABLE_GAME_SLOTS';
 export const LOGIN = 'LOGIN'
 export const IS_ADMIN = 'IS_ADMIN'
+export const COUNTDOWN = 'COUNTDOWN'
 
 export const getUrl = (type,options) => {
     
@@ -74,6 +75,8 @@ export const getUrl = (type,options) => {
             return baseAPIurl + 'login';
         case IS_ADMIN:
             return baseAPIurl + 'users/me/isadmin';
+        case COUNTDOWN:
+            return "https://api.github.com/gists/90b6782b0e52ca48127763c15d544724"
         default:
             return false;
     }

@@ -2,12 +2,14 @@ import { connect } from 'react-redux';
 import React, {useEffect, useState} from 'react';
 import unixTime from 'unix-time';
 
+import {transformObjectToArray} from '../../util/helpers';
 import * as actions from '../../store/actions';
+import CountdownClock from '../CountdownClock'
 import EventList from '../EventList';
 import PageTitle from '../PageTitle';
 import ProgressBar from '../ProgressBar'
+
 import styles from './Events.module.css';
-import {transformObjectToArray} from '../../util/helpers';
 
 const Events = props => {
 
@@ -53,8 +55,9 @@ const Events = props => {
         <button onClick={()=> props.fetchEventsSince({epochtime:'1546321746'})}>get all events this year</button>
         <button onClick={()=> props.fetchEvents()}>get all events</button>
         <button onClick={()=> props.sortEvents(transformObjectToArray(props.eventsById))}>sort events</button>
+        <button onClick={()=> props.fetchCountdown()}>get countdown</button>
       </p> : null}
-      
+      <CountdownClock/>
       {sortedEventsByDate ? <EventList /> : <ProgressBar color='teal' percentage={progress} />}
     </div>
   )
@@ -77,7 +80,7 @@ const mapDispatchToProps = dispatch => {
     fetchMyAvailableGameSlots: () => dispatch(actions.fetchMyAvailableGameSlots()),
     fetchEventsCount: () => dispatch(actions.fetchEventsCount()),
     fetchFavEvents: () => dispatch(actions.fetchFavEvents()),
-    sortEvents: (events) => dispatch(actions.sortEvents(events))
+    sortEvents: (events) => dispatch(actions.sortEvents(events)),
   }
 }
 
