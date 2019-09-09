@@ -45,8 +45,9 @@ const Event = props => {
     } else addFavEvent(id);
   }
 
-  const numberOfPlayers = bookings ? bookings.filter(booking => booking.bookingStatus === 1 && booking.bookingComment === null).length : 0
+  const numberOfPlayers = bookings ? bookings.filter(booking => booking.bookingComment === null).length : 0
   const availabileSlots = event.metadata.Players - numberOfPlayers
+  
   
   const categoriesSlugArray = event.categories.map((cat) => { return cat.slug })
 
@@ -54,6 +55,7 @@ const Event = props => {
     if (authStatus && !detailsToggle) fetchEvent(id) //Fetch the Event info again on opening the details as long as user is logged in.
     toggleDetails()
     console.log(event)
+    console.log(bookings)
   }
 
   const displayEvent = () => {

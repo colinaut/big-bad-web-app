@@ -6,9 +6,10 @@ import getMarkup from '../../util/getMarkup';
 import {convertTime, convertDate} from '../../util/helpers';
 
 const MyBookingsListItem = props => {
-  const {event,authId} = props
+  const {event = {},authId} = props
 
-  const owner = (event.eventOwner && event.eventOwner.id === authId) ? <span className={styles.Owner}>(Your Event)</span> : null
+  const gm = event.bookings ? event.bookings.filter(booking => booking.bookingComment)[0] : null
+  const owner = (gm && gm.id === authId) ? <span className={styles.Owner}>({gm.bookingComment})</span> : null
 
   //TODO: Get delete booking working and add game room
   
@@ -20,7 +21,7 @@ const MyBookingsListItem = props => {
           <div className={styles.Date}>{convertDate(event.eventStartDate)}</div>
           <div className={styles.Time}>{convertTime(event.eventStartTime)} - {convertTime(event.eventEndTime)}</div>
       </div>
-      {event.metadata.room ? <div className={styles.Room}>Room: {event.metadata.room}</div> : null}
+      {(event.metadata && event.metadata.room) ? <div className={styles.Room}>Room: {event.metadata.room}</div> : null}
     </li>
   )
 }

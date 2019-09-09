@@ -13,8 +13,9 @@
     color: var(--teal)
 }
 .Owner {
-    margin-left: 1rem;
-    font-style: italic;
+    margin-left: .5rem;
+    font-weight: 700;
+    color: var(--yellow);
 }
 .EventName {
     font-weight: 700;
