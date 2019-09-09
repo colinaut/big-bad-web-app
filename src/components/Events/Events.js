@@ -18,6 +18,7 @@ const Events = props => {
     fetchEvents,
     epochtime,
     isAdmin,
+    authStatus
   } = props;
 
   useEffect(()=>{
@@ -57,7 +58,7 @@ const Events = props => {
         <button onClick={()=> props.sortEvents(transformObjectToArray(props.eventsById))}>sort events</button>
         <button onClick={()=> props.fetchCountdown()}>get countdown</button>
       </p> : null}
-      <CountdownClock/>
+      {authStatus ? <CountdownClock/> : null}
       {sortedEventsByDate ? <EventList /> : <ProgressBar color='teal' percentage={progress} />}
     </div>
   )
