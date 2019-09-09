@@ -1,10 +1,16 @@
+.FiltersHeader {
+    font-size: .9rem;
+    margin: .5rem 0 0;
+    text-transform: uppercase;
+}
 .Eventsfilter {
     display: flex;
     padding: .5rem 0;
     border-bottom: 1px solid var(--blue-gray);
+    flex-wrap: wrap;
 }
 .Panel {
-    padding: 0 1rem 0 0;
+    padding: 0 1rem 0.5rem 0;
     line-height: .5rem;
 }
 .Panel:last-child {

@@ -60,6 +60,7 @@ const Event = props => {
     //if (event.eventStatus !== 1) return false;
     if (authStatus && filters.favs && !favStarStatus) return false;
     if (authStatus && filters.availability && availabileSlots < 1) return false;
+    if (authStatus && filters.exempt && event.metadata.exempt !== '1') return false;
     if (filters.dates !== "all" && filters.dates !== event.eventStartDate) return false;
     if (filters.categories !== "all" && !categoriesSlugArray.includes(filters.categories)) return false;
     return true;

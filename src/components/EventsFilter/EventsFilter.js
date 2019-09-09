@@ -6,10 +6,14 @@ const EventsFilter = props => {
   const {buttonPanel,authStatus} = props
   
   return buttonPanel ? (
+    <div>
+      <h3 className={styles.FiltersHeader}>Filters:</h3>
     <div className={styles.Eventsfilter}>
+      
       {buttonPanel.map((panel)=>{
         return (!authStatus && panel.authOnly) ? null : <ButtonPanel panel={panel} key={panel.id}/>;
       })}
+    </div>
     </div>
   ) : null
 }

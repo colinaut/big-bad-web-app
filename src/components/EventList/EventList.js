@@ -1,14 +1,17 @@
 
+import { connect } from 'react-redux';
 import React, {useState, useEffect} from 'react'
-import styles from './EventList.module.css';
+import uuid from 'react-uuid';
+
+import {convertDate} from '../../util/helpers';
+import {transformObjectToArray, dynamicSort} from '../../util/helpers';
 import Event from '../Event';
 import EventsFilter from '../EventsFilter';
-import uuid from 'react-uuid';
-import {transformObjectToArray, dynamicSort} from '../../util/helpers';
-import {convertDate} from '../../util/helpers';
+
 import { ReactComponent as D6 } from '../../assets/die-6.svg'
 import { ReactComponent as Star } from '../../assets/star.svg';
-import { connect } from 'react-redux';
+import { ReactComponent as Exempt } from '../../assets/square-add-button.svg';
+import styles from './EventList.module.css';
 
 const EventList = props => {
 
@@ -62,8 +65,22 @@ const EventList = props => {
         }
       ]
     },
-    favs: { 
+    exempt: {
       priority: 3,
+      label: false,
+      authOnly: true,
+      buttons: [
+        {
+          slug: "exempt",
+          name:"Exempt",
+          icon: Exempt,
+          click:() => filterToggle('exempt'),
+          active: false
+        }
+      ]
+    },
+    favs: { 
+      priority: 4,
       label: false,
       authOnly: true,
       buttons: [
