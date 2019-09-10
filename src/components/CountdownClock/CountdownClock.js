@@ -11,19 +11,26 @@ import styles from './CountdownClock.module.css';
 const CountdownClock = props => {
 
   const {
-    countdown = {quotaIncrease:[],regDeskOpen:null},
+    countdown,
     fetchMyAvailableGameSlots
   } = props
 
-
-  if (countdown.quotaIncrease[0] > unixTime(new Date())) {
-    return <Clock date={countdown.quotaIncrease[0]} label='Next Quota Increase:' complete={fetchMyAvailableGameSlots}/>
-  } else if (countdown.quotaIncrease[1] > unixTime(new Date())) {
-    return <Clock date={countdown.quotaIncrease[1]} label='Next Quota Increase:' complete={fetchMyAvailableGameSlots}/>
-  } else if (countdown.regDeskOpen > unixTime(new Date())) {
-    return <Clock date={countdown.regDeskOpen} label='Big Bad Con Opens:'/>
-  } else return null
+  const CurrentClock = ()=> {
+    if (countdown && countdown.clocks && countdown.clocks.length > 0) {
+      let i = 0;
+      while (i < countdown.clocks.length) {
+        const complete = countdown.clocks[i].quotaIncrease ? fetchMyAvailableGameSlots : null
+        if (countdown.clocks[i].time > unixTime(new Date())) {
+          return <Clock date={countdown.clocks[i].time} label={countdown.clocks[i].label} complete={complete}/>
+        }
+        i++
+      }
+    } else return null
+  }
   
+  return countdown ? (
+    <CurrentClock/>
+  ) : null
 }
 
 const Clock = ({label,date,complete}) => {

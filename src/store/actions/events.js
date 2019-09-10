@@ -27,7 +27,7 @@ const simplifyEvents = events => {
         eventId: data.eventId,
         eventName: data.eventName,
         eventSystem: data.metadata.find(meta => meta.metaKey === 'System') ? data.metadata.find(meta => meta.metaKey === 'System').metaValue : null,
-        eventOwner: data.eventOwner ? {id: data.eventOwner.id, displayName: data.eventOwner.displayName} : null, 
+        //eventOwner: data.eventOwner ? {id: data.eventOwner.id, displayName: data.eventOwner.displayName} : null, 
         eventPrivate: data.eventPrivate || null,
         //eventRoom: data.eventRoom || null,
         //eventRsvp: data.eventRsvp
@@ -71,14 +71,16 @@ export const fetchEvents = () => {
         return axios.get(url, config)
             .then(response => {
                 const activeEvents = simplifyEvents(response.data).filter(event => event.eventStatus === 1);
-                dispatch(fetchCountdown())
-                dispatch(sortEvents(activeEvents))
-                dispatch(setEventDates(activeEvents))
-                dispatch(setEventCategories(activeEvents))
+            
                 dispatch(fetchEventsSuccess({
                     eventsById: transformArrayToObject(activeEvents,'eventId'),
                     epochtime: unixTime(new Date())
                 }))
+                dispatch(sortEvents(activeEvents))
+                dispatch(setEventDates(activeEvents))
+                dispatch(setEventTimes(activeEvents))
+                dispatch(setEventCategories(activeEvents))
+                dispatch(fetchCountdown());
             })
             .catch(error => {
                 if (error.message.match(/403/g)) { dispatch(actions.logout()) }
@@ -98,12 +100,23 @@ const fetchEventsSuccess = ({eventsById,categories,dates,epochtime}) => {
 }
 
 const setEventDates = events => {
+    console.log('dates')
     return dispatch => {
         const dates = [...new Set(events.map(x => x.eventStartDate)) ].sort()
-        dispatch(() => { return {
+        dispatch({
             type: actionTypes.SET_EVENT_DATES,
             dates
-        }})
+        })
+    }
+}
+
+const setEventTimes = events => {
+    return dispatch => {
+        const times = [...new Set(events.map(x => x.eventStartTime)) ].sort()
+        dispatch({
+            type: actionTypes.SET_EVENT_TIMES,
+            times
+        })
     }
 }
 
@@ -112,10 +125,10 @@ const setEventCategories = events => {
         const listofCategories = [].concat(...events.filter((event)=> event.categories.length > 0).map((event) => event.categories))
         const categories = [...new Set(listofCategories.map(x => x.slug)) ].map(slug => {return {slug:slug, name:listofCategories.find( x => x.slug === slug).name}})
                 
-        dispatch(() => { return {
+        dispatch({
             type: actionTypes.SET_EVENT_CATEGORIES,
             categories
-        }})
+        })
     }
 }
 

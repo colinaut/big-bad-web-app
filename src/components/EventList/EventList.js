@@ -18,6 +18,7 @@ const EventList = props => {
   const {
     categories = [], 
     dates = [],
+    timeChunks = ['Morning','Afternoon','Evening'],
     sortedEventsByDate = [],
     sortedEventsByName = [],
     sortedEventsBySystem = [],
@@ -33,7 +34,7 @@ const EventList = props => {
   const [sortedEvents,setSortedEvents] = useState(sortOrders[0])
 
   // FILTERS
-  const [currentFilters, setCurrentFilters] = useState({categories: 'all',dates: 'all', availability:false, favs:false});
+  const [currentFilters, setCurrentFilters] = useState({categories: 'all',dates: 'all', times: 'all', availability:false, exempt:false, favs:false});
 
   // Setting up all the Filter buttons
   const [filterButtons, setFilterButtons] = useState({
@@ -50,6 +51,13 @@ const EventList = props => {
       buttons: [
         { slug:"all", name:"All", click:()=>filterList('dates','all'), active: true }, 
         ...dates.map(d => { return {slug:d, name: convertDate(d,'ddd'), click: ()=>filterList("dates",d),active:false}})] 
+    },
+    times: {
+      priority: 1,
+      label: "Times",
+      buttons: [
+        { slug:"all", name:"All", click:()=>filterList('times','all'), active: true }, 
+        ...timeChunks.map(t => { return {slug:t, name: t, click: ()=>filterList("times",t),active:false}})] 
     },
     availability: {
       priority: 2,
@@ -166,6 +174,7 @@ const mapStateToProps = ({events}) => {
   return {
     categories: events.categories,
     dates: events.dates,
+    times: events.times,
     sortedEventsByDate: events.sortedEventsByDate,
     sortedEventsByName: events.sortedEventsByName,
     sortedEventsBySystem: events.sortedEventsBySystem,

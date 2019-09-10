@@ -28,6 +28,10 @@ export const eventsReducer = (state = {}, action) => {
             return {...state, 
                 dates: action.dates,
             }
+        case actionTypes.SET_EVENT_TIMES:
+            return {...state, 
+                times: action.times,
+            }
         case actionTypes.SET_EVENT_CATEGORIES:
             return {...state, 
                 categories: action.categories,

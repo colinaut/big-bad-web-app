@@ -17,7 +17,7 @@ const Events = props => {
     sortedEventsByDate,
     fetchEvents,
     epochtime,
-    isAdmin,
+    //isAdmin,
     authStatus
   } = props;
 
@@ -51,7 +51,7 @@ const Events = props => {
   return (
     <div className={styles.Events}>
       <PageTitle>Events</PageTitle>
-      {isAdmin ? <p className={styles.Test}>Admin Testing: 
+      { true ? <p className={styles.Test}>Admin Testing: 
         <button onClick={()=> props.fetchEventsSince({epochtime:epochtime })}>get events since last load</button> 
         <button onClick={()=> props.fetchEventsSince({epochtime:'1546321746'})}>get all events this year</button>
         <button onClick={()=> props.fetchEvents()}>get all events</button>
@@ -81,6 +81,7 @@ const mapDispatchToProps = dispatch => {
     fetchMyAvailableGameSlots: () => dispatch(actions.fetchMyAvailableGameSlots()),
     fetchEventsCount: () => dispatch(actions.fetchEventsCount()),
     fetchFavEvents: () => dispatch(actions.fetchFavEvents()),
+    fetchCountdown: () => dispatch(actions.fetchCountdown()),
     sortEvents: (events) => dispatch(actions.sortEvents(events)),
   }
 }
