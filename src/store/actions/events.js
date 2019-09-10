@@ -100,7 +100,6 @@ const fetchEventsSuccess = ({eventsById,categories,dates,epochtime}) => {
 }
 
 const setEventDates = events => {
-    console.log('dates')
     return dispatch => {
         const dates = [...new Set(events.map(x => x.eventStartDate)) ].sort()
         dispatch({

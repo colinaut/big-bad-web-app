@@ -1,8 +1,10 @@
 
 import React, {Fragment} from 'react'
-import styles from './Sidedrawer.module.css';
+
 import Backdrop from '../Backdrop';
 import Nav from '../Nav';
+
+import styles from './Sidedrawer.module.css';
 
 const Sidedrawer = props => {
 

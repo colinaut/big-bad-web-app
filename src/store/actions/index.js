@@ -27,4 +27,5 @@ export {
 
 export {
     fetchPage,
+    fetchMenus,
 } from './pages'

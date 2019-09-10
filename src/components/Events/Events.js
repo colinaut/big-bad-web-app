@@ -56,7 +56,7 @@ const Events = props => {
         <button onClick={()=> props.fetchEventsSince({epochtime:'1546321746'})}>get all events this year</button>
         <button onClick={()=> props.fetchEvents()}>get all events</button>
         <button onClick={()=> props.sortEvents(transformObjectToArray(props.eventsById))}>sort events</button>
-        <button onClick={()=> props.fetchCountdown()}>get countdown</button>
+        <button onClick={()=> props.fetchMenus('mobile')}>get mobile menu</button>
       </p> : null}
       {authStatus ? <CountdownClock/> : null}
       {sortedEventsByDate ? <EventList /> : <ProgressBar color='teal' percentage={progress} />}
@@ -83,6 +83,7 @@ const mapDispatchToProps = dispatch => {
     fetchFavEvents: () => dispatch(actions.fetchFavEvents()),
     fetchCountdown: () => dispatch(actions.fetchCountdown()),
     sortEvents: (events) => dispatch(actions.sortEvents(events)),
+    fetchMenus: (payload) => dispatch(actions.fetchMenus(payload))
   }
 }
 
