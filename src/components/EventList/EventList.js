@@ -54,7 +54,7 @@ const EventList = props => {
     },
     times: {
       priority: 1,
-      label: "Times",
+      label: "Time",
       buttons: [
         { slug:"all", name:"All", click:()=>filterList('times','all'), active: true }, 
         ...timeChunks.map(t => { return {slug:t, name: t, click: ()=>filterList("times",t),active:false}})] 
