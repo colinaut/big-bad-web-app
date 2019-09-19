@@ -53,14 +53,14 @@ const EventList = props => {
         ...dates.map(d => { return {slug:d, name: convertDate(d,'ddd'), click: ()=>filterList("dates",d),active:false}})] 
     },
     times: {
-      priority: 1,
+      priority: 2,
       label: "Time",
       buttons: [
         { slug:"all", name:"All", click:()=>filterList('times','all'), active: true }, 
         ...timeChunks.map(t => { return {slug:t, name: t, click: ()=>filterList("times",t),active:false}})] 
     },
     availability: {
-      priority: 2,
+      priority: 3,
       label: false,
       authOnly: true,
       buttons: [
@@ -74,7 +74,7 @@ const EventList = props => {
       ]
     },
     exempt: {
-      priority: 3,
+      priority: 4,
       label: false,
       authOnly: true,
       buttons: [
@@ -88,7 +88,7 @@ const EventList = props => {
       ]
     },
     favs: { 
-      priority: 4,
+      priority: 5,
       label: false,
       authOnly: true,
       buttons: [

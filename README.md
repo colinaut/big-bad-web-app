@@ -20,15 +20,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * add progress bar based on number of items
 * sort My Bookings by time/date
 * make Open fitler not appear until all event booking data working
-
-#Review what's not needed for local storage
-* eventsById
-    * eventSlug
-    * eventCategoryId
-    * eventAttributes
-    * blogId
-    * groupId
-    * postId
-    * lastUpdated ?
-    * categories (revamp to a list of names and slugs)
-    
+* fix issue with booking that it still shows booking button when event is full???
+* Add alert messages when things fail
+* add a waiting state for booking button
+* Make countdown button refresh when the time changes
