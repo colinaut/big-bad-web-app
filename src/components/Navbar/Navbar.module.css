@@ -10,7 +10,9 @@
     top: 0;
     z-index: 100;
     display: flex;
-    border-bottom: 5px solid var(--navy-blue)
+    border-bottom: 5px solid var(--navy-blue);
+    box-sizing: content-box; /* Needed for safe-area padding */
+    padding-top: env(safe-area-inset-top);
 }
 .Title {
     margin: 0;

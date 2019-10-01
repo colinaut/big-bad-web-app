@@ -1,4 +1,5 @@
 
 .Pagewrapper {
     padding: 1rem 1rem;
+    box-sizing: content-box; /* Needed for safe-area padding */
 }
