@@ -31,7 +31,7 @@ export const ADD_FAV_EVENT = 'ADD_FAV_EVENT';
 export const REMOVE_FAV_EVENT = 'REMOVE_FAV_EVENT';
 
 // My Events and Booking
-export const SET_MY_EVENTS = 'GET_MY_EVENTS';
+export const SET_MY_EVENTS = 'SET_MY_EVENTS';
 export const BOOK_ME_INTO_GAME = 'BOOK_ME_INTO_GAME';
 export const REMOVE_ME_FROM_GAME = 'REMOVE_ME_FROM_GAME';
 export const SET_MY_AVAILABLE_GAME_SLOTS = 'SET_MY_AVAILABLE_GAME_SLOTS';

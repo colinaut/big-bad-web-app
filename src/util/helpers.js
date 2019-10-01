@@ -16,7 +16,7 @@ export const transformArrayToSimpleObject = (array, keyField, valueField) =>
      return obj
    }, {})
 
-export const convertTime = (time, format = "h:mma") => {
+export const convertTime = (time, format = "ha") => {
   return moment(time,"HH:mm:ss").format(format)
 }
 

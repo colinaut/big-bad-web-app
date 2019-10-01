@@ -1,4 +1,3 @@
-
 @value variables: "../../styles/variables.css";
 @value _menuwidth from variables;
 
@@ -16,9 +15,14 @@
 
 .MyEvent {
     background: var(--dark-red) !important;
-    color: var(--off-white) !important;
 }
 .MyEvent .Title {
+    color: var(--off-white) !important;
+}
+.MyEvent .System {
+    color: var(--putty) !important;
+}
+.MyEvent .TimeColumn {
     color: var(--off-white) !important;
 }
 
@@ -59,7 +63,6 @@
     fill: #000;
 }
 
-
 .FavStarActive path {
     fill: var(--yellow);
 }
@@ -77,6 +80,27 @@
     .Eventsummary:hover {
         background: var(--dark-tan);
     }
+}
+
+.System {
+    font-weight: 700;
+    color: var(--dark-putty);
+}
+
+.TimeColumn {
+    color: var(--very-dark-putty);
+}
+
+.Time, .Date {
+    display: inline-block;
+}
+
+.Date {
+    margin-right: .3rem;
+}
+
+.Date::after {
+    content: ':'
 }
 
 @media only screen and (min-width: _menuwidth) {

@@ -1,8 +1,10 @@
 import axios from 'axios'
+
+import {authToken} from './auth';
+import {dynamicSortMultiple} from '../../util/helpers'
+import * as actions from '../../store/actions';
 import * as actionTypes from './actionTypes';
 import * as APIurl from '../../util/APIurl';  
-import {authToken} from './auth';
-import * as actions from '../../store/actions';
 
 // Favorite Events List
 
@@ -73,9 +75,28 @@ export const fetchMyEvents = () => {
         const config = { headers: authToken(getState) }
         return axios.get(APIurl.getUrl(APIurl.EVENTS_ME), config)
             .then(response => {
-                dispatch(fetchMyEventsSuccess(response.data))
+                dispatch(sortMyEvents(response.data))
             })
             .catch(error => dispatch(actions.APIfailure({error: error})));
+    }
+}
+
+export const sortMyEvents = (myEvents) => {
+
+    return (dispatch, getState) => {
+        const eventsById = getState().events.eventsById;
+        
+        const myEventsWithDate = myEvents.map(event => {
+            return {
+                eventId: event,
+                eventStartDate: eventsById[event].eventStartDate,
+                eventStartTime: eventsById[event].eventStartTime,
+                eventName: eventsById[event].eventName
+            }
+        })
+        const sortedMyEvents = [...myEventsWithDate].sort(dynamicSortMultiple('eventStartDate','eventStartTime','eventName')).map(event => event.eventId)
+
+        dispatch(fetchMyEventsSuccess(sortedMyEvents))
     }
 }
 

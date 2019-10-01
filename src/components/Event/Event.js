@@ -95,8 +95,8 @@ const Event = props => {
           {event.eventSystem ? <div className={styles.System} dangerouslySetInnerHTML={system} /> : null}
         </div>
         <div className={styles.TimeColumn} onClick={toggleDetailsHandler}>
-          <div className={styles.Date}>{convertDate(event.eventStartDate)}</div>
-          <div className={styles.Time}>{convertTime(event.eventStartTime)} - {convertTime(event.eventEndTime)}</div>
+          <div className={styles.Date}>{convertDate(event.eventStartDate, "dddd, Do")}</div>
+          <div className={styles.Time}>{convertTime(event.eventStartTime)}&ndash;{convertTime(event.eventEndTime)}</div>
         </div>
       </div>
       { authStatus ? <div className={styles.FavStarWrapper}><Star className={favStarStyle} onClick={toggleFavStar} /></div> : null}

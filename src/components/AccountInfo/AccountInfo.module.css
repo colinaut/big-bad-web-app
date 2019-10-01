@@ -2,15 +2,19 @@
 .AccountInfo {
     padding: 1rem 5%;
     width: 100%;
+    height: 100vh;
+    overflow: auto;
     margin: 0 auto;
     background: var(--blue-gray);
-    display: flex;
     font-size: .9rem;
 }
 
 .UserInfoWrapper {
-    flex: 1 1 auto;
+    display: flex;
+    
 }
+
+
 .LogOutWrapper {
     flex: 0 0 9rem;
     text-align: right;
@@ -20,6 +24,10 @@
     font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.795);
     margin: 0 0 .2rem;
+    flex: 1 1 auto;
+}
+.LogOutWrapper {
+    flex: 1 1 auto;
 }
 .Nickname {
     font-size: 1.0rem;

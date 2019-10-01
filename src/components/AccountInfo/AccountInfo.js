@@ -15,15 +15,20 @@ const AccountInfo = props => {
     props.close();
   }
 
+  const buttonStyle = {margin:0}
+
   return (
     <Fragment>
       <div className={styles.AccountInfo}>
+
         <div className={styles.UserInfoWrapper}>
           <h3 className={styles.Name}>{props.userData.displayName} <span className={styles.Nickname}>{props.userData.userNicename}</span></h3>
-          <MyBookings />
+          <div className={styles.LogOutWrapper}>
+            <Button clicked={logoutHandler} style={buttonStyle} btnType='Gray'>Logout</Button>
+          </div>
         </div>
-        <div className={styles.LogOutWrapper}>
-          <Button clicked={logoutHandler} btnType='Gray'>Logout</Button>
+        <div className={styles.MyBookingsWrapper}>
+          <MyBookings />
         </div>
       </div>
     </Fragment>

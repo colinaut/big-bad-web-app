@@ -13,20 +13,21 @@
     color: var(--teal)
 }
 .Owner {
-    margin-left: .5rem;
     font-weight: 700;
     color: var(--yellow);
 }
+
 .EventName {
     font-weight: 700;
     color: #ffffff;
 }
-.Room {
+.EventSystem {
+    font-weight: 700;
+    color: var(--gray);
     display: block;
-    font-size: .9rem
 }
 
-.Time, .Date {
+.Time, .Date, .Room {
     display: inline-block;
     margin-right: 1rem;
     font-size: .9rem
