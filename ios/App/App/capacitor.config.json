@@ -1,0 +1,7 @@
+{
+  "appId": "com.bigbadcon.app",
+  "appName": "Big Bad App",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "build"
+}
