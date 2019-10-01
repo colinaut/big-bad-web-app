@@ -29,3 +29,8 @@ export {
     fetchPage,
     fetchMenus,
 } from './pages'
+
+export {
+    setAlert,
+    APIfailure,
+} from './global'

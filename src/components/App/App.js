@@ -7,7 +7,16 @@ import Navbar from '../Navbar';
 import Events from '../Events';
 import Pagewrapper from '../Pagewrapper';
 import ContentPage from '../ContentPage'
-import {slugify} from '../../util/helpers'
+import {slugify} from '../../util/helpers';
+import { transitions, positions, Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from '../AlertTemplate';
+
+const options = {
+  position: positions.BOTTOM_CENTER,
+  timeout: 8000,
+  offset: '30px',
+  transition: transitions.SCALE
+}
 
 const App = props => {
 
@@ -37,16 +46,18 @@ const App = props => {
   },[menu,fetchMenus])
 
   return (
-    <Layout>
-      <Router>
-      <Navbar sections={sections} />
-      <Pagewrapper>
-        <Switch>
-          {routes}
-        </Switch>
-      </Pagewrapper> 
-      </Router>
-    </Layout>
+    <AlertProvider template={AlertTemplate} {...options}>
+      <Layout>
+        <Router>
+        <Navbar sections={sections} />
+        <Pagewrapper>
+          <Switch>
+            {routes}
+          </Switch>
+        </Pagewrapper> 
+        </Router>
+      </Layout>
+    </AlertProvider>
   )
 }
 

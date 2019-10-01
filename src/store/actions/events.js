@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as actionTypes from './actionTypes';
 import * as APIurl from '../../util/APIurl';  
-import unixTime from 'unix-time';
+import moment from 'moment'
 import {transformArrayToObject, transformArrayToSimpleObject, dynamicSortMultiple} from '../../util/helpers'
 import {authToken} from './auth';
 import * as actions from '../../store/actions';
@@ -56,10 +56,7 @@ export const fetchEventsCount = () => {
                 const eventsCount = response.data;
                 console.log(eventsCount)
             })
-            .catch(error => {
-                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
-                throw(error);
-            });
+            .catch(error => dispatch(actions.APIfailure({error: error})));
     }
 }
 
@@ -74,7 +71,7 @@ export const fetchEvents = () => {
             
                 dispatch(fetchEventsSuccess({
                     eventsById: transformArrayToObject(activeEvents,'eventId'),
-                    epochtime: unixTime(new Date())
+                    epochtime: moment(new Date()).valueOf()
                 }))
                 dispatch(sortEvents(activeEvents))
                 dispatch(setEventDates(activeEvents))
@@ -82,10 +79,7 @@ export const fetchEvents = () => {
                 dispatch(setEventCategories(activeEvents))
                 dispatch(fetchCountdown());
             })
-            .catch(error => {
-                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
-                throw(error);
-            });
+            .catch(error => dispatch(actions.APIfailure({error: error})));
     }
 }
 
@@ -161,12 +155,10 @@ export const fetchEventsSince = (payload) => { // TODO: get this working with pu
                 const eventsSimplified = simplifyEvents(response.data);
                 const activeEvents = eventsSimplified.filter(event => event.eventStatus === 1);
                 const eventsById = transformArrayToObject(activeEvents,'eventId');
-                dispatch(fetchEventsSinceSuccess({eventsById:eventsById,epochtime:unixTime(new Date())}))
+                dispatch(fetchEventsSinceSuccess({eventsById:eventsById,epochtime:moment(new Date()).valueOf()}))
                 //TODO: right now this is jsut grabbing data and merging with eventsById. Will need to test to see if title/date/time changed and if so resort the sortedArray
             })
-            .catch(error => {
-                throw(error);
-            });
+            .catch(error => dispatch(actions.APIfailure({error: error})));
     }
 }
 
@@ -187,10 +179,7 @@ export const fetchEvent = eventId => { //TODO add sort function if date/time/nam
                 const simplifiedEvent = simplifyEvents([response.data])[0]
                 dispatch(fetchEventSuccess(simplifiedEvent))
             })
-            .catch(error => {
-                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
-                throw(error);
-            });
+            .catch(error => dispatch(actions.APIfailure({error: error})));
     }
 }
 
@@ -210,10 +199,7 @@ export const fetchCountdown = () => {
                 const countdown = JSON.parse(response.data.files['bbcCountdown.json'].content)
                 dispatch(fetchCountdownSuccess(countdown))
             })
-            .catch(error => {
-                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
-                throw(error);
-            });
+            .catch(error => dispatch(actions.APIfailure({error: error})));
 
     }
 }

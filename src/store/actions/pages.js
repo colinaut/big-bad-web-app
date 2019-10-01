@@ -1,7 +1,8 @@
 import axios from 'axios'
 import * as actionTypes from './actionTypes';
 import * as APIurl from '../../util/APIurl';
-import unixTime from 'unix-time';
+import moment from 'moment'
+import * as actions from '../../store/actions';
 
 // Async Action
 
@@ -11,9 +12,7 @@ export const fetchPage = (id) => {
             .then(response => {
                 dispatch(fetchPageSuccess({id:id,page:response.data}))
             })
-            .catch(error => {
-                throw(error);
-            });
+            .catch(error => dispatch(actions.APIfailure({error: error})));
     }
 }
 
@@ -24,9 +23,7 @@ export const fetchMenus = (slug) => {
             .then(response => {
                 dispatch(fetchMenuSuccess(response.data))
             })
-            .catch(error => {
-                throw(error);
-            });
+            .catch(error => dispatch(actions.APIfailure({error: error})));
     }
 }
 
@@ -38,7 +35,7 @@ export const fetchPageSuccess = (payload) => {
         type: actionTypes.GET_PAGE,
         id,
         page,
-        epochtime: unixTime(new Date())
+        epochtime: moment(new Date()).valueOf()
       }
 }
 
@@ -46,6 +43,6 @@ export const fetchMenuSuccess = (menu) => {
     return {
         type: actionTypes.GET_MENU,
         menu,
-        epochtime: unixTime(new Date())
+        epochtime: moment(new Date()).valueOf()
       }
 }

@@ -10,12 +10,13 @@ const rootReducer = combineReducers({
     pages: reducers.pagesReducer,
     auth: reducers.authReducer,
     booking: reducers.bookingReducer,
+    global: reducers.globalReducer,
 })
 
 const persistConfig = {
     key: 'root',
     storage,
-    //blacklist: ['auth'] //TODO test blacklisting auth to see if this is what I want to do
+    blacklist: ['global'] //TODO test blacklisting auth to see if this is what I want to do
 }
 
 // Create store with reducers and initial state
@@ -25,6 +26,7 @@ const initialState = {
     pages: {},
     auth: {},
     booking: {},
+    global: {},
 }
 
 // Add BOTH store enhancers when making store creator

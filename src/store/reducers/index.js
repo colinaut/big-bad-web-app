@@ -7,3 +7,5 @@ export {authReducer} from './authReducer';
 export {bookingReducer} from './bookingReducer';
 
 export {pagesReducer} from './pagesReducer';
+
+export {globalReducer} from './globalReducer';

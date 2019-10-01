@@ -35,3 +35,8 @@ export const SET_MY_EVENTS = 'GET_MY_EVENTS';
 export const BOOK_ME_INTO_GAME = 'BOOK_ME_INTO_GAME';
 export const REMOVE_ME_FROM_GAME = 'REMOVE_ME_FROM_GAME';
 export const SET_MY_AVAILABLE_GAME_SLOTS = 'SET_MY_AVAILABLE_GAME_SLOTS';
+
+// Global for settings and alerts
+export const TRIGGER_ALERT = 'TRIGGER_ALERT'
+export const CLEAR_ALERT = 'CLEAR_ALERT'
+export const API_FAILURE = 'API_FAILURE'

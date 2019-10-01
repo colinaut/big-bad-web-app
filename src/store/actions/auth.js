@@ -56,7 +56,12 @@ export const auth = (username, password) => {
             //Grab events with complete logged in available data
             dispatch(actions.fetchEventsSince({epochtime:'1546321746'})) 
         })
-        .catch(err => {console.log(err);dispatch(authFail())})
+        .catch(err => {
+            console.log(err.message);
+            dispatch(authFail());
+            const message = (err.message && err.message.match(/401/g)) ? 'Login failed: incorrect username or password' : (err.message && err.message.match(/404/g)) ? 'Login failed: server not found' : 'Login Failed: ' + err.message;
+            dispatch(actions.setAlert({alertType: 'error',message: message}))
+        })
     }
 }
 
@@ -97,9 +102,7 @@ export const fetchMyUserData = () => {
                     userData
                 })
             })
-            .catch(error => {
-                throw(error);
-            });
+            .catch(error => dispatch(actions.APIfailure({error: error})));
     }
 }
 
@@ -115,8 +118,6 @@ export const isAdmin = () => {
                     isAdmin
                 })
             })
-            .catch(error => {
-                throw(error);
-            });
+            .catch(error => dispatch(actions.APIfailure({error: error})));
     }
 }

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import * as actionTypes from './actionTypes';
 import * as APIurl from '../../util/APIurl'
+import * as actions from '../../store/actions';
 
 // Async Action
 
@@ -10,11 +11,8 @@ export const fetchBlog = () => {
             .then(response => {
                 dispatch(fetchBlogSuccess(response.data))
             })
-            .catch(error => {
-                throw(error);
-            });
-    }
-}
+            .catch(error => dispatch(actions.APIfailure({error: error})));
+}}
 
 // Action Middleware
 

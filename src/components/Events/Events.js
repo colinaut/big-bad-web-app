@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, {useEffect, useState} from 'react';
-import unixTime from 'unix-time';
+import moment from 'moment'
 
 import {transformObjectToArray} from '../../util/helpers';
 import * as actions from '../../store/actions';
@@ -17,7 +17,6 @@ const Events = props => {
     sortedEventsByDate,
     fetchEvents,
     epochtime,
-    //isAdmin,
     authStatus
   } = props;
 
@@ -25,7 +24,7 @@ const Events = props => {
     if (!sortedEventsByDate || (sortedEventsByDate && sortedEventsByDate.length < 1)) {fetchEvents()}
   },[sortedEventsByDate,fetchEvents])
 
-  const currentTime = unixTime(new Date())
+  const currentTime = moment(new Date()).valueOf()
 
   useEffect(()=>{
     if (epochtime && epochtime + 3600 < currentTime ) {

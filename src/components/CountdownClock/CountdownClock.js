@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import Countdown from 'react-countdown-now';
 import React from 'react'
-import unixTime from 'unix-time';
 import moment from 'moment'
 
 import * as actions from '../../store/actions';
@@ -20,7 +19,7 @@ const CountdownClock = props => {
       let i = 0;
       while (i < countdown.clocks.length) {
         const complete = countdown.clocks[i].quotaIncrease ? fetchMyAvailableGameSlots : null
-        if (countdown.clocks[i].time > unixTime(new Date())) {
+        if (countdown.clocks[i].time > moment(new Date()).valueOf()) {
           return <Clock date={countdown.clocks[i].time} label={countdown.clocks[i].label} complete={complete}/>
         }
         i++

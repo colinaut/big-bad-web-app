@@ -20,10 +20,7 @@ export const fetchFavEvents = () => {
                         favEvents
                     })
                 })
-                .catch(error => {
-                    if (error.message.match(/403/g)) { dispatch(actions.logout()) }
-                    throw(error);
-                });
+                .catch(error => dispatch(actions.APIfailure({error: error})));
         } else console.log('not logged in')      
     }
 }
@@ -36,10 +33,7 @@ export const addFavEvent = eventId => {
             .then(response => {
                 dispatch(addFavEventSuccess(eventId));
             })
-            .catch(error => {
-                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
-                throw(error);
-            });
+            .catch(error => dispatch(actions.APIfailure({error: error})));
     }
 }
 
@@ -54,10 +48,7 @@ export const deleteFavEvent = eventId => {
         }).then(response => {
                 dispatch(deleteFavEventSuccess(eventId));
             })
-            .catch(error => {
-                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
-                throw(error);
-            });
+            .catch(error => dispatch(actions.APIfailure({error: error})));
     }
 }
 
@@ -84,10 +75,7 @@ export const fetchMyEvents = () => {
             .then(response => {
                 dispatch(fetchMyEventsSuccess(response.data))
             })
-            .catch(error => {
-                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
-                throw(error);
-            });
+            .catch(error => dispatch(actions.APIfailure({error: error})));
     }
 }
 
@@ -117,8 +105,7 @@ export const bookMeIntoGame = eventId => {
             .catch(error => {
                 // If fails then revert Available Game Slots as long as it's not exempt
                 if (!exempt) { dispatch(fetchMyAvailableGameSlotsSuccess(getState().booking.myAvailableGameSlots)+1)}
-                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
-                throw(error);
+                dispatch(actions.APIfailure({error: error}))
             });
     }
 }
@@ -150,10 +137,7 @@ export const removeMeFromGame = eventId => {
             if (!exempt) { dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots+1)) }
             dispatch(actions.fetchEvent(eventId));
         })
-        .catch(error => {
-            if (error.message.match(/403/g)) { dispatch(actions.logout()) }
-            throw(error);
-        });
+        .catch(error => dispatch(actions.APIfailure({error: error})));
     }
 }
 
@@ -171,10 +155,7 @@ export const fetchMyAvailableGameSlots = () => { //TODO: make sure it grabs this
             .then(response => {
                 dispatch(fetchMyAvailableGameSlotsSuccess(response.data))
             })
-            .catch(error => {
-                if (error.message.match(/403/g)) { dispatch(actions.logout()) }
-                throw(error);
-            });
+            .catch(error => dispatch(actions.APIfailure({error: error})));
     }
 }
 
