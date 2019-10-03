@@ -4,6 +4,7 @@
     color: #fff;
     border: 0;
     transition: color .5s;
+    box-sizing: border-box;
 }
 .Blue {
     background: var(--navy-blue);
