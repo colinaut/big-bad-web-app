@@ -56,7 +56,7 @@ export const fetchEventsCount = () => {
                 const eventsCount = response.data;
                 console.log(eventsCount)
             })
-            .catch(error => dispatch(actions.APIfailure({error: error})));
+            .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'fetchEventsCount error'})));
     }
 }
 
@@ -79,7 +79,7 @@ export const fetchEvents = () => {
                 dispatch(setEventCategories(activeEvents))
                 dispatch(fetchCountdown());
             })
-            .catch(error => dispatch(actions.APIfailure({error: error})));
+            .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'fetchEvents error'})));
     }
 }
 
@@ -158,7 +158,7 @@ export const fetchEventsSince = (payload) => { // TODO: get this working with pu
                 dispatch(fetchEventsSinceSuccess({eventsById:eventsById,epochtime:moment(new Date()).valueOf()}))
                 //TODO: right now this is jsut grabbing data and merging with eventsById. Will need to test to see if title/date/time changed and if so resort the sortedArray
             })
-            .catch(error => dispatch(actions.APIfailure({error: error})));
+            .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'fetchEventsSince error'})));
     }
 }
 
@@ -179,7 +179,7 @@ export const fetchEvent = eventId => { //TODO add sort function if date/time/nam
                 const simplifiedEvent = simplifyEvents([response.data])[0]
                 dispatch(fetchEventSuccess(simplifiedEvent))
             })
-            .catch(error => dispatch(actions.APIfailure({error: error})));
+            .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'fetchEvent error'})));
     }
 }
 
@@ -199,7 +199,7 @@ export const fetchCountdown = () => {
                 const countdown = JSON.parse(response.data.files['bbcCountdown.json'].content)
                 dispatch(fetchCountdownSuccess(countdown))
             })
-            .catch(error => dispatch(actions.APIfailure({error: error})));
+            .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'fetchCountdown error'})));
 
     }
 }

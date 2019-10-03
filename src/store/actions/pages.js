@@ -12,7 +12,7 @@ export const fetchPage = (id) => {
             .then(response => {
                 dispatch(fetchPageSuccess({id:id,page:response.data}))
             })
-            .catch(error => dispatch(actions.APIfailure({error: error})));
+            .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'fetchPage error'})));
     }
 }
 
@@ -23,7 +23,7 @@ export const fetchMenus = (slug) => {
             .then(response => {
                 dispatch(fetchMenuSuccess(response.data))
             })
-            .catch(error => dispatch(actions.APIfailure({error: error})));
+            .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'fetchMenus error'})));
     }
 }
 

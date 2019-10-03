@@ -11,7 +11,7 @@ export const fetchBlog = () => {
             .then(response => {
                 dispatch(fetchBlogSuccess(response.data))
             })
-            .catch(error => dispatch(actions.APIfailure({error: error})));
+            .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'fetchBlog error'})));
 }}
 
 // Action Middleware

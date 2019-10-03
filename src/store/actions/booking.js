@@ -22,7 +22,7 @@ export const fetchFavEvents = () => {
                         favEvents
                     })
                 })
-                .catch(error => dispatch(actions.APIfailure({error: error})));
+                .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'fetchFavEvents error'})));
         } else console.log('not logged in')      
     }
 }
@@ -35,7 +35,7 @@ export const addFavEvent = eventId => {
             .then(response => {
                 dispatch(addFavEventSuccess(eventId));
             })
-            .catch(error => dispatch(actions.APIfailure({error: error})));
+            .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'addFavEvent error'})));
     }
 }
 
@@ -50,7 +50,7 @@ export const deleteFavEvent = eventId => {
         }).then(response => {
                 dispatch(deleteFavEventSuccess(eventId));
             })
-            .catch(error => dispatch(actions.APIfailure({error: error})));
+            .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'deleteFavEvent error'})));
     }
 }
 
@@ -77,7 +77,7 @@ export const fetchMyEvents = () => {
             .then(response => {
                 dispatch(sortMyEvents(response.data))
             })
-            .catch(error => dispatch(actions.APIfailure({error: error})));
+            .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'fetchMyEvents error'})));
     }
 }
 
@@ -126,7 +126,7 @@ export const bookMeIntoGame = eventId => {
             .catch(error => {
                 // If fails then revert Available Game Slots as long as it's not exempt
                 if (!exempt) { dispatch(fetchMyAvailableGameSlotsSuccess(getState().booking.myAvailableGameSlots)+1)}
-                dispatch(actions.APIfailure({error: error}))
+                dispatch(actions.APIfailure({error: error, messageStart: 'bookMeIntoGame error'}))
             });
     }
 }
@@ -158,7 +158,7 @@ export const removeMeFromGame = eventId => {
             if (!exempt) { dispatch(fetchMyAvailableGameSlotsSuccess(myAvailableGameSlots+1)) }
             dispatch(actions.fetchEvent(eventId));
         })
-        .catch(error => dispatch(actions.APIfailure({error: error})));
+        .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'removeMeFromGame error'})));
     }
 }
 
@@ -176,7 +176,7 @@ export const fetchMyAvailableGameSlots = () => { //TODO: make sure it grabs this
             .then(response => {
                 dispatch(fetchMyAvailableGameSlotsSuccess(response.data))
             })
-            .catch(error => dispatch(actions.APIfailure({error: error})));
+            .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'fetchMyAvailableGameSlots error'})));
     }
 }
 

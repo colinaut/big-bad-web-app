@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import React, {useEffect, useState} from 'react';
 import moment from 'moment'
 
-import {transformObjectToArray} from '../../util/helpers';
 import * as actions from '../../store/actions';
 import CountdownClock from '../CountdownClock'
 import EventList from '../EventList';
@@ -70,13 +69,6 @@ const mapStateToProps = ({auth,events}) => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchEvents: () => dispatch(actions.fetchEvents()),
-    fetchEventsSince: (payload) => dispatch(actions.fetchEventsSince(payload)),
-    fetchMyAvailableGameSlots: () => dispatch(actions.fetchMyAvailableGameSlots()),
-    fetchEventsCount: () => dispatch(actions.fetchEventsCount()),
-    fetchFavEvents: () => dispatch(actions.fetchFavEvents()),
-    fetchCountdown: () => dispatch(actions.fetchCountdown()),
-    sortEvents: (events) => dispatch(actions.sortEvents(events)),
-    fetchMenus: (payload) => dispatch(actions.fetchMenus(payload))
   }
 }
 

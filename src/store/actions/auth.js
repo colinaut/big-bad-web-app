@@ -102,7 +102,7 @@ export const fetchMyUserData = () => {
                     userData
                 })
             })
-            .catch(error => dispatch(actions.APIfailure({error: error})));
+            .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'fetchMyUserData error'})));
     }
 }
 
