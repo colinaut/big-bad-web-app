@@ -50,13 +50,7 @@ const Events = props => {
   return (
     <div className={styles.Events}>
       <PageTitle>Events</PageTitle>
-      { true ? <p className={styles.Test}>Admin Testing: 
-        <button onClick={()=> props.fetchEventsSince({epochtime:epochtime })}>get events since last load</button> 
-        <button onClick={()=> props.fetchEventsSince({epochtime:'1546321746'})}>get all events this year</button>
-        <button onClick={()=> props.fetchEvents()}>get all events</button>
-        <button onClick={()=> props.sortEvents(transformObjectToArray(props.eventsById))}>sort events</button>
-        <button onClick={()=> props.fetchMenus('mobile')}>get mobile menu</button>
-      </p> : null}
+      
       {authStatus ? <CountdownClock/> : null}
       {sortedEventsByDate ? <EventList /> : <ProgressBar color='teal' percentage={progress} />}
     </div>
