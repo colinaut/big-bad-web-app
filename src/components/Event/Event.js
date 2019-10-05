@@ -70,7 +70,7 @@ const Event = props => {
   const toggleDetailsHandler = () => {
     if (authStatus && !detailsToggle) fetchEvent(id) //Fetch the Event info again on opening the details as long as user is logged in.
     toggleDetails()
-    console.log(event)
+    //console.log(event)
   }
 
   const displayEvent = () => {

@@ -20,6 +20,7 @@ const TestingActionButtons = props => {
       <Button style={buttonInlineStyle} clicked={()=> props.fetchEvents()} btnType='Gray'>Fetch All Events</Button>
       <Button style={buttonInlineStyle} clicked={()=> props.fetchMyAvailableGameSlots()} btnType='Gray'>Fetch Game Slots</Button>
       <Button style={buttonInlineStyle} clicked={()=> props.fetchEventsSince({epochtime:props.epochtime})} btnType='Gray'>Fetch New Event Changes</Button>
+      <Button style={buttonInlineStyle} clicked={()=> props.fetchMenus()} btnType='Gray'>fetch menus</Button>
     </div>
   )
 }
@@ -38,6 +39,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchMyUserData: () => dispatch(actions.fetchMyUserData()),
     fetchMyAvailableGameSlots: () => dispatch(actions.fetchMyAvailableGameSlots()),
     fetchEventsSince: (payload) => dispatch(actions.fetchEventsSince(payload)),
+    fetchMenus: () => dispatch(actions.fetchMenus())
   }
 }
 

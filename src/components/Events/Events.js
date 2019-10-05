@@ -3,11 +3,10 @@ import React, {useEffect, useState} from 'react';
 import moment from 'moment'
 
 import * as actions from '../../store/actions';
-import CountdownClock from '../CountdownClock'
 import EventList from '../EventList';
 import PageTitle from '../PageTitle';
 import ProgressBar from '../ProgressBar'
-
+import TestingActionButtons from '../TestingActionButtons'
 import styles from './Events.module.css';
 
 const Events = props => {
@@ -16,7 +15,6 @@ const Events = props => {
     sortedEventsByDate,
     fetchEvents,
     epochtime,
-    authStatus
   } = props;
 
   useEffect(()=>{
@@ -49,8 +47,7 @@ const Events = props => {
   return (
     <div className={styles.Events}>
       <PageTitle>Events</PageTitle>
-      
-      {authStatus ? <CountdownClock/> : null}
+      <TestingActionButtons/>
       {sortedEventsByDate ? <EventList /> : <ProgressBar color='teal' percentage={progress} />}
     </div>
   )
@@ -61,8 +58,6 @@ const mapStateToProps = ({auth,events}) => {
     sortedEventsByDate: events.sortedEventsByDate,
     eventsById: events.eventsById,
     epochtime: events.epochtime, 
-    authStatus: auth.authStatus,
-    isAdmin: auth.isAdmin,
   }
 }
 

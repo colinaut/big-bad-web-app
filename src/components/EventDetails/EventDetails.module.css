@@ -6,6 +6,7 @@
     margin-bottom: 1rem;
     font-size: .9rem;
     max-width: 45rem;
+    line-height: 130%;
 }
 .Description img {
     max-width: 100%;
@@ -15,6 +16,20 @@
     margin-top: .5rem;
     font-size: .9rem;
 }
-.Meta span, .SafetyTools span, .Maturity span {
-    margin-right: 1rem;
+.Meta, .Maturity {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+.Meta > span, .Maturity > span {
+    margin: .2rem 1rem 0 0;
+}
+
+.CategoryTag::after {
+    content: '·';
+    margin: 0 .2rem
+}
+
+.CategoryTag:last-child::after {
+    content: '';
 }

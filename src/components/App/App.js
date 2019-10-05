@@ -10,6 +10,8 @@ import ContentPage from '../ContentPage'
 import {slugify} from '../../util/helpers';
 import { transitions, positions, Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from '../AlertTemplate';
+import { Plugins } from '@capacitor/core';
+const { SplashScreen } = Plugins;
 
 const options = {
   position: positions.BOTTOM_CENTER,
@@ -45,6 +47,11 @@ const App = props => {
     if (!menu) fetchMenus('mobile');
   },[menu,fetchMenus])
 
+  useEffect(() => {
+    SplashScreen.hide();
+    window.screen.orientation.lock('portrait-primary');
+  }, [])
+
   return (
     <AlertProvider template={AlertTemplate} {...options}>
       <Layout>
@@ -74,3 +81,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(App)
+
