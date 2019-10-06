@@ -44,23 +44,29 @@ const Navbar = props => {
           {props.authStatus ? <button className={styles.AccountBtn} onClick={toggleAuthPanel}>My Account</button> : <button className={styles.AccountBtn} onClick={toggleAuthPanel}>Login</button> }
         </div>
   
-        <div className={styles.NavWrapper}>
-          <Nav sections={props.sections}/>
-        </div>
-        
-        <div className={styles.HamburgerWrapper}>
-          <MenuBtn click={toggleMenu} active={menuToggle} anim="Squeeze" />
-        </div>
+        { (props.menu && props.menu.slug) ? 
+          <Fragment>
+            <div className={styles.NavWrapper}>
+              <Nav sections={props.sections}/>
+            </div>
+            
+            <div className={styles.HamburgerWrapper}>
+              <MenuBtn click={toggleMenu} active={menuToggle} anim="Squeeze" />
+            </div>
+          </Fragment>
+          : null
+        }
       </div>
       <AuthPanel show={authPanelToggle} close={toggleAuthPanel} authStatus={props.authStatus} />
-      <Slidedrawer showMenu={menuToggle} closeBtn={toggleMenu} sections={props.sections} /> 
+      { (props.menu && props.menu.slug) ? <Slidedrawer showMenu={menuToggle} closeBtn={toggleMenu} sections={props.sections} /> : null }
     </Fragment>
   )
 }
 
-const mapStateToProps = ({auth}) => {
+const mapStateToProps = ({auth,pages}) => {
   return {
-      authStatus: auth.authStatus
+      authStatus: auth.authStatus,
+      menu: pages.menu
   }
 }
 

@@ -78,6 +78,7 @@ const Event = props => {
     if (authStatus && filters.favs && !favStarStatus) return false;
     if (authStatus && filters.availability && availabileSlots < 1) return false;
     if (authStatus && filters.exempt && event.metadata.exempt !== '1') return false;
+    if (authStatus && filters.booked && !myEvents.includes(id)) return false;
     if (filters.dates !== "all" && filters.dates !== event.eventStartDate) return false;
     if (filters.categories !== "all" && !categoriesSlugArray.includes(filters.categories)) return false;
     if (filters.times !== "all" && filters.times !== timeChunk) return false;

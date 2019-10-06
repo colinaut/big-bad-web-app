@@ -31,6 +31,13 @@ export const authFail = (error) => {
     }
 }
 
+export const cordovaAuthSuccess = (authHeader) => {
+    return {
+        type: actionTypes.CORDOVA_AUTH_SUCCESS,
+        authHeader
+    }
+}
+
 export const auth = (username, password) => {
     return dispatch => {
         dispatch(authStart())
@@ -38,6 +45,11 @@ export const auth = (username, password) => {
             "username": username,
             "password": password
         }
+        if (window.cordova) {
+            const header = window.cordova.plugin.http.getBasicAuthHeader(username, password)
+            dispatch(cordovaAuthSuccess(header))
+        }
+
         axios.post(APIurl.getUrl(APIurl.LOGIN),authData)
         .then(response => {
             const authToken = response.headers.authorization

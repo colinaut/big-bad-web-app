@@ -6,7 +6,6 @@ import * as actions from '../../store/actions';
 import EventList from '../EventList';
 import PageTitle from '../PageTitle';
 import ProgressBar from '../ProgressBar'
-import TestingActionButtons from '../TestingActionButtons'
 import styles from './Events.module.css';
 
 const Events = props => {
@@ -47,7 +46,6 @@ const Events = props => {
   return (
     <div className={styles.Events}>
       <PageTitle>Events</PageTitle>
-      <TestingActionButtons/>
       {sortedEventsByDate ? <EventList /> : <ProgressBar color='teal' percentage={progress} />}
     </div>
   )

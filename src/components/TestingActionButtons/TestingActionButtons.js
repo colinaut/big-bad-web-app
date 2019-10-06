@@ -20,15 +20,17 @@ const TestingActionButtons = props => {
       <Button style={buttonInlineStyle} clicked={()=> props.fetchEvents()} btnType='Gray'>Fetch All Events</Button>
       <Button style={buttonInlineStyle} clicked={()=> props.fetchMyAvailableGameSlots()} btnType='Gray'>Fetch Game Slots</Button>
       <Button style={buttonInlineStyle} clicked={()=> props.fetchEventsSince({epochtime:props.epochtime})} btnType='Gray'>Fetch New Event Changes</Button>
-      <Button style={buttonInlineStyle} clicked={()=> props.fetchMenus()} btnType='Gray'>fetch menus</Button>
+      <Button style={buttonInlineStyle} clicked={()=> props.fetchMenus('mobile')} btnType='Gray'>fetch menus</Button>
+      {(props.menu && props.menu.slug && props.menu.items) ? <div>slug: {props.menu.slug} item 0: {props.menu.items[0].title}</div> : 'no menu'}
     </div>
   )
 }
 
-const mapStateToProps = ({auth,events}) => {
+const mapStateToProps = ({auth,events, pages}) => {
   return {
       epochtime: events.epochtime, 
-      authStatus: auth.authStatus
+      authStatus: auth.authStatus,
+      menu: pages.menu
   }
 }
 
@@ -39,7 +41,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchMyUserData: () => dispatch(actions.fetchMyUserData()),
     fetchMyAvailableGameSlots: () => dispatch(actions.fetchMyAvailableGameSlots()),
     fetchEventsSince: (payload) => dispatch(actions.fetchEventsSince(payload)),
-    fetchMenus: () => dispatch(actions.fetchMenus())
+    fetchMenus: (payload) => dispatch(actions.fetchMenus(payload))
   }
 }
 

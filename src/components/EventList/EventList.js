@@ -10,7 +10,8 @@ import EventsFilter from '../EventsFilter';
 
 import { ReactComponent as D6 } from '../../assets/die-6.svg'
 import { ReactComponent as Star } from '../../assets/star.svg';
-import { ReactComponent as Exempt } from '../../assets/square-add-button.svg';
+import { ReactComponent as Marker } from '../../assets/marker.svg';
+//import { ReactComponent as Exempt } from '../../assets/square-add-button.svg';
 import styles from './EventList.module.css';
 
 const EventList = props => {
@@ -73,7 +74,7 @@ const EventList = props => {
         }
       ]
     },
-    exempt: {
+    /* exempt: {
       priority: 4,
       label: false,
       authOnly: true,
@@ -86,9 +87,23 @@ const EventList = props => {
           active: false
         }
       ]
+    }, */
+    booked: { 
+      priority: 5,
+      label: false,
+      authOnly: true,
+      buttons: [
+        {
+          slug: "booked",
+          name:"My Bookings",
+          icon: Marker,
+          click:() => filterToggle('booked'),
+          active: false
+        }
+      ]
     },
     favs: { 
-      priority: 5,
+      priority: 6,
       label: false,
       authOnly: true,
       buttons: [
