@@ -3,5 +3,5 @@
   "appName": "Big Bad App",
   "bundledWebRuntime": false,
   "npmClient": "yarn",
-  "webDir": "build",
+  "webDir": "build"
 }

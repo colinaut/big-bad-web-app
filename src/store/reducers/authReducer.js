@@ -5,6 +5,8 @@ export const authReducer = (state = {}, action) => {
     switch (action.type) {
         case actionTypes.AUTH_SUCCESS:
             return {...state, authToken: action.authToken, authStatus: true}
+        case actionTypes.CORDOVA_AUTH_SUCCESS:
+            return {...state, cordovaAuthHeader: action.authHeader}
         case actionTypes.AUTH_LOGOUT:
             return {}
         case actionTypes.GET_MY_USER_DATA:
