@@ -26,7 +26,7 @@ export const setAlert = (payload) => {
 export const APIfailure = ({error,messageStart}) => dispatch => {
     messageStart = messageStart ?  messageStart + ': ' : 'Error: ';
     dispatch({type: actionTypes.API_FAILURE})
-    console.log(error)
+    console.log(messageStart, error)
 
     if (error.message.match(/403/g)) { 
         dispatch(actions.logout()) 
