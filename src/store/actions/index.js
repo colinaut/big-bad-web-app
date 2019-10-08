@@ -11,8 +11,7 @@ export {
     fetchEvents,
     fetchEvent,
     fetchEventsSince,
-    sortEvents,
-    fetchCountdown
+    sortEvents
 } from './events';
 
 export {

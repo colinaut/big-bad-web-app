@@ -23,7 +23,7 @@ const simplifyEvents = events => {
         eventStartTime: data.eventStartTime,
         eventEndTime: data.eventEndTime,
         eventStartDate: data.eventStartDate,
-        //eventEndDate: data.eventEndDate,
+        eventEndDate: data.eventEndDate,
         eventId: data.eventId,
         eventName: data.eventName,
         eventSystem: data.metadata.find(meta => meta.metaKey === 'System') ? data.metadata.find(meta => meta.metaKey === 'System').metaValue : null,
@@ -77,7 +77,6 @@ export const fetchEvents = () => {
                 dispatch(setEventDates(activeEvents))
                 dispatch(setEventTimes(activeEvents))
                 dispatch(setEventCategories(activeEvents))
-                dispatch(fetchCountdown());
             })
             .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'fetchEvents error'})));
     }
@@ -188,25 +187,5 @@ const fetchEventSuccess = (event) => {
         type: actionTypes.GET_SINGLE_EVENT,
         id: event.eventId,
         event
-    }
-}
-
-export const fetchCountdown = () => {
-    return dispatch => {
-        return axios.get(APIurl.getUrl(APIurl.COUNTDOWN))
-            .then(response => {
-                
-                const countdown = JSON.parse(response.data.files['bbcCountdown.json'].content)
-                dispatch(fetchCountdownSuccess(countdown))
-            })
-            .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'fetchCountdown error'})));
-
-    }
-}
-
-const fetchCountdownSuccess = (countdown) => {
-    return {
-        type: actionTypes.GET_COUNTDOWN,
-        countdown
     }
 }

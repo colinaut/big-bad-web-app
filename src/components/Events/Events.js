@@ -23,7 +23,7 @@ const Events = props => {
   const currentTime = moment(new Date()).valueOf()
 
   useEffect(()=>{
-    if (epochtime && epochtime + 3600 < currentTime ) {
+    if (epochtime && epochtime + 3600000 < currentTime ) {
       fetchEvents()
     }
   },[epochtime, currentTime, fetchEvents])

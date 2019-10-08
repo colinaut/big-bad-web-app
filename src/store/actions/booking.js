@@ -4,7 +4,12 @@ import {authToken} from './auth';
 import {dynamicSortMultiple} from '../../util/helpers'
 import * as actions from '../../store/actions';
 import * as actionTypes from './actionTypes';
-import * as APIurl from '../../util/APIurl';  
+import * as APIurl from '../../util/APIurl';
+
+//import Moment from 'moment';
+//import { extendMoment } from 'moment-range';
+ 
+//const moment = extendMoment(Moment);
 
 // Favorite Events List
 
@@ -90,7 +95,9 @@ export const sortMyEvents = (myEvents) => {
             return {
                 eventId: event,
                 eventStartDate: eventsById[event].eventStartDate,
+                eventEndDate: eventsById[event].eventEndDate,
                 eventStartTime: eventsById[event].eventStartTime,
+                eventEndTime: eventsById[event].eventEndTime,
                 eventName: eventsById[event].eventName
             }
         })

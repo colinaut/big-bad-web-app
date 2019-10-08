@@ -36,6 +36,7 @@ export const SET_MY_EVENTS = 'SET_MY_EVENTS';
 export const BOOK_ME_INTO_GAME = 'BOOK_ME_INTO_GAME';
 export const REMOVE_ME_FROM_GAME = 'REMOVE_ME_FROM_GAME';
 export const SET_MY_AVAILABLE_GAME_SLOTS = 'SET_MY_AVAILABLE_GAME_SLOTS';
+export const SET_BOOKING_RANGE = 'SET_BOOKING_RANGE';
 
 // Global for settings and alerts
 export const TRIGGER_ALERT = 'TRIGGER_ALERT'
