@@ -1,6 +1,6 @@
-const isProdution = true; //set to true to use bigbadcon.com
+const isDev = process.env.IS_DEVELOPMENT_API || false; //set in .env
 
-const baseAPIurl = isProdution? "https://www.bigbadcon.com:8091/api/" : "https://www.logictwine.com:8091/api/"
+const baseAPIurl = isDev? "https://www.logictwine.com:8091/api/" : "https://www.bigbadcon.com:8091/api/";
 
 // API Docs are here: https://bigbadcon.com:8091/api/swagger-ui.html https://www.logictwine.com:8091/api/swagger-ui.html
 

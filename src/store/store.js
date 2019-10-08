@@ -4,7 +4,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import thunk from 'redux-thunk'
 
-const isProdution = true; //set to true to use bigbadcon.com
+const isDev = process.env.IS_DEVELOPMENT_REDUX || false; //set in .env
 
 const rootReducer = combineReducers({
     events: reducers.eventsReducer,
@@ -32,7 +32,7 @@ const initialState = {
 }
 
 // Add BOTH store enhancers when making store creator
-const composeEnhancers = isProdution ? compose : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = isDev ? compose : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
