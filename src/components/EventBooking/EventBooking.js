@@ -44,7 +44,7 @@ const EventBooking = props => {
       )
     } else if (!metadata.exempt && myAvailableGameSlots < 1) {
       return <p className={styles.GameSlots}>{gameSlotText}</p>
-    } else if (metadata.players - playerList.length <= 0) {
+    } else if (metadata.Players - playerList.length <= 0) {
       return <p className={styles.Full}>This event is full.</p>
     } else {
       return (
@@ -59,8 +59,8 @@ const EventBooking = props => {
   return props.bookings ? (
     <div className={styles.EventBooking}>
       {gm ? <h3 className={styles.GM}><strong>{gm.bookingComment}:</strong> {gm.displayName}</h3> : null}
-      {metadata.players ? <h3 className={styles.Heading}>Event Bookings:
-        <span className={styles.AvailableSlots}>(Openings: <strong className={styles.AvailableSlotsNumber}>{metadata.players - playerList.length} of {metadata.players}</strong>)</span>
+      {metadata.Players ? <h3 className={styles.Heading}>Event Bookings:
+        <span className={styles.AvailableSlots}>(Openings: <strong className={styles.AvailableSlotsNumber}>{metadata.Players - playerList.length} of {metadata.Players}</strong>)</span>
       </h3> : null}
       {playerList ? 
       <div className={styles.PlayersListWrapper}>
