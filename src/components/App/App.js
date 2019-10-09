@@ -49,7 +49,7 @@ const App = props => {
 
   useEffect(() => {
     SplashScreen.hide();
-    window.screen.orientation.lock('portrait-primary');
+    if (window.screen.orientation) window.screen.orientation.lock('portrait-primary');
   }, [])
 
   return (
