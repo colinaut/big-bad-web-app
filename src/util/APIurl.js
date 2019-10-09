@@ -1,6 +1,7 @@
 const isDev = process.env.IS_DEVELOPMENT_API || false; //set in .env
 
 const baseAPIurl = isDev? "https://www.logictwine.com:8091/api/" : "https://www.bigbadcon.com:8091/api/";
+//const baseAPIurl = '/api/'
 
 // API Docs are here: https://bigbadcon.com:8091/api/swagger-ui.html https://www.logictwine.com:8091/api/swagger-ui.html
 

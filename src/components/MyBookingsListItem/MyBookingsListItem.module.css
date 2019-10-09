@@ -7,7 +7,7 @@
     line-height: 130%;
 }
 .MyBookingsListItem::before {
-    content: '•';
+    content: '\2022';
     position: absolute;
     left: .4rem;
     color: var(--teal)

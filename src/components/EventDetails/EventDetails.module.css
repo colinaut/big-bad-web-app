@@ -26,7 +26,7 @@
 }
 
 .CategoryTag::after {
-    content: '·';
+    content: '\00B7';
     margin: 0 .2rem
 }
 
