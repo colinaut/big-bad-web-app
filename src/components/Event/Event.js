@@ -27,6 +27,7 @@ const Event = props => {
     deleteFavEvent,
     addFavEvent,
     fetchEvent,
+    isAdmin,
   } = props
 
   const [detailsToggle, toggleDetails] = useToggle(false);
@@ -70,11 +71,11 @@ const Event = props => {
   const toggleDetailsHandler = () => {
     if (authStatus && !detailsToggle) fetchEvent(id) //Fetch the Event info again on opening the details as long as user is logged in.
     toggleDetails()
-    //console.log(event)
+    console.log(event)
   }
 
   const displayEvent = () => {
-    //if (event.eventStatus !== 1) return false;
+    if (event.eventPrivate === 1 && !isAdmin) return false;
     if (authStatus && filters.favs && !favStarStatus) return false;
     if (authStatus && filters.availability && availabileSlots < 1) return false;
     if (authStatus && filters.exempt && event.metadata.exempt !== '1') return false;
@@ -120,6 +121,7 @@ const mapStateToProps = ({auth,booking,events},ownProps) => {
       authStatus: auth.authStatus,
       myEvents: booking.myEvents,
       event: events.eventsById ? events.eventsById[ownProps.id] : null,
+      isAdmin: auth.isAdmin,
   }
 }
 

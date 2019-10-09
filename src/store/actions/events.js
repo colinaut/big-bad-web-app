@@ -8,7 +8,7 @@ import * as actions from '../../store/actions';
 
 // Async Action
 
-const simplifyEvents = events => {
+const simplifyEvents = (events = []) => {
     return events.map(data => { return {
         //...data,
         //blogId: data.blogId
@@ -62,16 +62,19 @@ export const fetchEventsCount = () => {
 
 export const fetchEvents = () => {
     return (dispatch, getState) => {
+        dispatch({type:actionTypes.START_GET_EVENTS_ALL})
         const authHeader = authToken(getState)
         const url = authHeader ? APIurl.getUrl(APIurl.EVENTS_ALL) : APIurl.getUrl(APIurl.EVENTS_ALL_PUBLIC);
         const config = { headers: authHeader }
         return axios.get(url, config)
             .then(response => {
                 const activeEvents = simplifyEvents(response.data).filter(event => event.eventStatus === 1);
-            
+                const isLoggedInData = authHeader ? true : false; //false if wasn't logged in as that is public API
+                
                 dispatch(fetchEventsSuccess({
                     eventsById: transformArrayToObject(activeEvents,'eventId'),
-                    epochtime: moment(new Date()).valueOf()
+                    epochtime: moment(new Date()).valueOf(),
+                    isLoggedInData
                 }))
                 dispatch(sortEvents(activeEvents))
                 dispatch(setEventDates(activeEvents))
@@ -82,12 +85,11 @@ export const fetchEvents = () => {
     }
 }
 
-const fetchEventsSuccess = ({eventsById,categories,dates,epochtime}) => {
+const fetchEventsSuccess = ({eventsById,isLoggedInData,epochtime}) => {
     return {
         type: actionTypes.GET_EVENTS_ALL,
         eventsById,
-        categories,
-        dates,
+        isLoggedInData,
         epochtime
       }
 }
@@ -154,18 +156,25 @@ export const fetchEventsSince = (payload) => { // TODO: get this working with pu
                 const eventsSimplified = simplifyEvents(response.data);
                 const activeEvents = eventsSimplified.filter(event => event.eventStatus === 1);
                 const eventsById = transformArrayToObject(activeEvents,'eventId');
-                dispatch(fetchEventsSinceSuccess({eventsById:eventsById,epochtime:moment(new Date()).valueOf()}))
+                const isLoggedInData = authHeader ? true : false; //false if wasn't logged in as that is public API
+
+                dispatch(fetchEventsSinceSuccess({
+                    eventsById:eventsById,
+                    epochtime:moment(new Date()).valueOf(),
+                    isLoggedInData
+                }))
                 //TODO: right now this is jsut grabbing data and merging with eventsById. Will need to test to see if title/date/time changed and if so resort the sortedArray
             })
             .catch(error => dispatch(actions.APIfailure({error: error, messageStart: 'fetchEventsSince error'})));
     }
 }
 
-const fetchEventsSinceSuccess = ({eventsById,epochtime}) => {
+const fetchEventsSinceSuccess = ({eventsById,epochtime,isLoggedInData}) => {
     return {
         type: actionTypes.GET_EVENTS_SINCE,
         eventsById,
-        epochtime
+        epochtime,
+        isLoggedInData
       }
 }
 

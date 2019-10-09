@@ -64,6 +64,7 @@ const EventList = props => {
       priority: 3,
       label: false,
       authOnly: true,
+      needsAllEventData: true,
       buttons: [
         {
           slug: "open",

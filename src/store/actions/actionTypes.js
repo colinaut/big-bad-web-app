@@ -8,6 +8,7 @@ export const GET_PAGE = 'GET_PAGE';
 export const GET_MENU = 'GET_MENU';
 
 // Events
+export const START_GET_EVENTS_ALL = 'START_GET_EVENTS_ALL';
 export const GET_EVENTS_ALL = 'GET_EVENTS_ALL'; //Used for both public and logged in data
 export const GET_SINGLE_EVENT = 'GET_SINGLE_EVENT';
 export const GET_EVENTS_SINCE = 'GET_EVENTS_SINCE';

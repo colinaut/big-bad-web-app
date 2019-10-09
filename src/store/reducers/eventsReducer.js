@@ -8,6 +8,7 @@ export const eventsReducer = (state = {}, action) => {
             return {...state, 
                 eventsById: action.eventsById,
                 epochtime: action.epochtime,
+                isLoggedInData: action.isLoggedInData,
             }
         case actionTypes.SORT_EVENTS:
             return {...state,
@@ -23,6 +24,7 @@ export const eventsReducer = (state = {}, action) => {
             return {...state,
                 eventsById: update(state.eventsById, {$merge: action.eventsById}),
                 epochtime: action.epochtime,
+                isLoggedInData: action.isLoggedInData,
             }
         case actionTypes.SET_EVENT_DATES:
             return {...state, 

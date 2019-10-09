@@ -1,5 +1,4 @@
 const isDev = process.env.IS_DEVELOPMENT_API || false; //set in .env
-
 const baseAPIurl = isDev? "https://www.logictwine.com:8091/api/" : "https://www.bigbadcon.com:8091/api/";
 //const baseAPIurl = '/api/'
 

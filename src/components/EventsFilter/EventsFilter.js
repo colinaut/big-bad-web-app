@@ -3,15 +3,19 @@ import styles from './EventsFilter.module.css';
 import { connect } from 'react-redux';
 
 const EventsFilter = props => {
-  const {buttonPanel,authStatus} = props
-  
+  const {buttonPanel,authStatus,isLoggedInData} = props
+
   return buttonPanel ? (
     <div>
       <h3 className={styles.FiltersHeader}>Filters:</h3>
     <div className={styles.Eventsfilter}>
       
       {buttonPanel.map((panel)=>{
-        return (!authStatus && panel.authOnly) ? null : <ButtonPanel panel={panel} key={panel.id}/>;
+        let showButtonPanel = true
+        if (!authStatus && panel.authOnly) showButtonPanel = false
+        if (!isLoggedInData && panel.needsAllEventData) showButtonPanel = false
+        
+        return showButtonPanel ? <ButtonPanel panel={panel} key={panel.id}/> : null;
       })}
     </div>
     </div>
@@ -51,9 +55,10 @@ const FilterButton = ({button}) => {
   )
 }
 
-const mapStateToProps = ({auth}) => {
+const mapStateToProps = ({auth, events}) => {
   return {
       authStatus: auth.authStatus,
+      isLoggedInData: events.isLoggedInData,
   }
 }
 
