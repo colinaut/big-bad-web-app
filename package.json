@@ -14,7 +14,7 @@
     "es6-promise-plugin": "^4.2.2",
     "html-entities": "^1.2.1",
     "immutability-helper": "^3.0.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "moment-range": "^4.0.2",
     "react": "^16.8.6",
     "react-alert": "^5.5.0",
